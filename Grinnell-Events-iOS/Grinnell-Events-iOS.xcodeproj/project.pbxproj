@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		162AD93D17E6418F00867115 /* GAEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 162AD93C17E6418F00867115 /* GAEventCell.m */; };
+		165D7D3517E6393600CFB87F /* GAEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 165D7D3417E6393600CFB87F /* GAEvent.m */; };
 		8B58DD5617DCFE360041EBD3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B58DD5517DCFE360041EBD3 /* UIKit.framework */; };
 		8B58DD5817DCFE360041EBD3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B58DD5717DCFE360041EBD3 /* Foundation.framework */; };
 		8B58DD5A17DCFE360041EBD3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B58DD5917DCFE360041EBD3 /* CoreGraphics.framework */; };
@@ -18,9 +20,16 @@
 		8B58DD6C17DCFE360041EBD3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B58DD6B17DCFE360041EBD3 /* Default-568h@2x.png */; };
 		8B58DD6F17DCFE360041EBD3 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B58DD6D17DCFE360041EBD3 /* MainStoryboard_iPhone.storyboard */; };
 		8B58DD7517DCFE360041EBD3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B58DD7417DCFE360041EBD3 /* ViewController.m */; };
+		CAEB22646BFC4240B4536B61 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 006EC76A916046F3A152CA44 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		006EC76A916046F3A152CA44 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		162AD93B17E6418F00867115 /* GAEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAEventCell.h; sourceTree = "<group>"; };
+		162AD93C17E6418F00867115 /* GAEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAEventCell.m; sourceTree = "<group>"; };
+		165D7D3317E6393600CFB87F /* GAEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAEvent.h; sourceTree = "<group>"; };
+		165D7D3417E6393600CFB87F /* GAEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAEvent.m; sourceTree = "<group>"; };
+		4D8FEE04A3994B96994EAFAB /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		8B58DD5217DCFE360041EBD3 /* Grinnell-Events-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grinnell-Events-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B58DD5517DCFE360041EBD3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8B58DD5717DCFE360041EBD3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -47,18 +56,29 @@
 				8B58DD5617DCFE360041EBD3 /* UIKit.framework in Frameworks */,
 				8B58DD5817DCFE360041EBD3 /* Foundation.framework in Frameworks */,
 				8B58DD5A17DCFE360041EBD3 /* CoreGraphics.framework in Frameworks */,
+				CAEB22646BFC4240B4536B61 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		165D7D3217E638F400CFB87F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				165D7D3317E6393600CFB87F /* GAEvent.h */,
+				165D7D3417E6393600CFB87F /* GAEvent.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		8B58DD4917DCFE360041EBD3 = {
 			isa = PBXGroup;
 			children = (
 				8B58DD5B17DCFE360041EBD3 /* Grinnell-Events-iOS */,
 				8B58DD5417DCFE360041EBD3 /* Frameworks */,
 				8B58DD5317DCFE360041EBD3 /* Products */,
+				4D8FEE04A3994B96994EAFAB /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -76,6 +96,7 @@
 				8B58DD5517DCFE360041EBD3 /* UIKit.framework */,
 				8B58DD5717DCFE360041EBD3 /* Foundation.framework */,
 				8B58DD5917DCFE360041EBD3 /* CoreGraphics.framework */,
+				006EC76A916046F3A152CA44 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -83,11 +104,14 @@
 		8B58DD5B17DCFE360041EBD3 /* Grinnell-Events-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				165D7D3217E638F400CFB87F /* Models */,
 				8B58DD6417DCFE360041EBD3 /* AppDelegate.h */,
 				8B58DD6517DCFE360041EBD3 /* AppDelegate.m */,
 				8B58DD6D17DCFE360041EBD3 /* MainStoryboard_iPhone.storyboard */,
 				8B58DD7317DCFE360041EBD3 /* ViewController.h */,
 				8B58DD7417DCFE360041EBD3 /* ViewController.m */,
+				162AD93B17E6418F00867115 /* GAEventCell.h */,
+				162AD93C17E6418F00867115 /* GAEventCell.m */,
 				8B58DD5C17DCFE360041EBD3 /* Supporting Files */,
 			);
 			path = "Grinnell-Events-iOS";
@@ -114,9 +138,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8B58DD7817DCFE360041EBD3 /* Build configuration list for PBXNativeTarget "Grinnell-Events-iOS" */;
 			buildPhases = (
+				4F7C2715F4064BE2AF16CF3C /* Check Pods Manifest.lock */,
 				8B58DD4E17DCFE360041EBD3 /* Sources */,
 				8B58DD4F17DCFE360041EBD3 /* Frameworks */,
 				8B58DD5017DCFE360041EBD3 /* Resources */,
+				A8A5BC79BB12484BB775D7BE /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -168,6 +194,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4F7C2715F4064BE2AF16CF3C /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A8A5BC79BB12484BB775D7BE /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8B58DD4E17DCFE360041EBD3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -175,6 +234,8 @@
 			files = (
 				8B58DD6217DCFE360041EBD3 /* main.m in Sources */,
 				8B58DD6617DCFE360041EBD3 /* AppDelegate.m in Sources */,
+				165D7D3517E6393600CFB87F /* GAEvent.m in Sources */,
+				162AD93D17E6418F00867115 /* GAEventCell.m in Sources */,
 				8B58DD7517DCFE360041EBD3 /* ViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -261,6 +322,7 @@
 		};
 		8B58DD7917DCFE360041EBD3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4D8FEE04A3994B96994EAFAB /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Grinnell-Events-iOS/Grinnell-Events-iOS-Prefix.pch";
@@ -273,6 +335,7 @@
 		};
 		8B58DD7A17DCFE360041EBD3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4D8FEE04A3994B96994EAFAB /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Grinnell-Events-iOS/Grinnell-Events-iOS-Prefix.pch";
@@ -302,6 +365,7 @@
 				8B58DD7A17DCFE360041EBD3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

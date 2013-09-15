@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MZDayPicker.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <UISearchBarDelegate, UISearchDisplayDelegate>
+
+@property (nonatomic, strong) NSArray *eventsData;
+
+@property (weak, nonatomic) IBOutlet MZDayPicker *dayPicker;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

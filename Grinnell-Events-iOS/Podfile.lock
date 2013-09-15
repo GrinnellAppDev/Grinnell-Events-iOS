@@ -1,0 +1,10 @@
+PODS:
+  - MZDayPicker (0.0.5)
+
+DEPENDENCIES:
+  - MZDayPicker (~> 0.0.5)
+
+SPEC CHECKSUMS:
+  MZDayPicker: 1ebc98a0aa72906dc367de4c5b7d4ddb054bb910
+
+COCOAPODS: 0.22.2
