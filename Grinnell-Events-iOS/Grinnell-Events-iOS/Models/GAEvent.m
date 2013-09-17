@@ -21,11 +21,12 @@
 }
 
 
-+ (instancetype) eventWithTitle:(NSString *)aTitle andCategory:(NSString *)aCategory
++ (instancetype) eventWithTitle:(NSString *)aTitle andCategory:(NSString *)aCategory andDate:(NSDate *)aDate;
 {
     GAEvent *event = [[GAEvent alloc] init];
     event.title = aTitle;
     event.category = aCategory;
+    event.date = aDate; 
     
     return event;
 }

@@ -31,30 +31,57 @@
     [self.dayPickerdateFormatter setDateFormat:@"EE"];
     
     
+    
+    NSDate *tomorr = [NSDate dateWithTimeIntervalSinceNow:60 * 60 * 24];
+    NSLog(@"date: %@", tomorr);
     //Setup Sample data model.
     
-    GAEvent *e1 = [GAEvent eventWithTitle:@"Lea's Commemoration" andCategory:@"CSC"];
-    GAEvent *e2 = [GAEvent eventWithTitle:@"Tiffany's Commemoration" andCategory:@"CSC"];
-    GAEvent *e3 = [GAEvent eventWithTitle:@"Patrick's Commemoration" andCategory:@"CSC"];
-    GAEvent *e4 = [GAEvent eventWithTitle:@"Colin's Commemoration" andCategory:@"CSC"];
-    GAEvent *e5 = [GAEvent eventWithTitle:@"Spencer's Commemoration" andCategory:@"CSC"];
-    GAEvent *e6 = [GAEvent eventWithTitle:@"Daniel's Commemoration" andCategory:@"CSC"];
-    GAEvent *e7 = [GAEvent eventWithTitle:@"Maijid's Commemoration" andCategory:@"CSC"];
-    GAEvent *e8 = [GAEvent eventWithTitle:@"Dcow's Commemoration" andCategory:@"CSC"];
-    GAEvent *e9 = [GAEvent eventWithTitle:@"Rebelsky's Commemoration" andCategory:@"CSC"];
-    GAEvent *e0 = [GAEvent eventWithTitle:@"Walkers's Commemoration" andCategory:@"CSC"];
+    
+    GAEvent *e1 = [GAEvent eventWithTitle:@"Lea's Commemoration" andCategory:@"CSC" andDate:[NSDate date]];
+    GAEvent *e2 = [GAEvent eventWithTitle:@"Tiffany's Commemoration" andCategory:@"CSC" andDate:[NSDate date]];
+    GAEvent *e3 = [GAEvent eventWithTitle:@"Patrick's Commemoration" andCategory:@"CSC" andDate:[NSDate dateWithTimeIntervalSinceNow:60 * 60 * 24]];
+    GAEvent *e4 = [GAEvent eventWithTitle:@"Colin's Commemoration" andCategory:@"CSC" andDate:[NSDate dateWithTimeIntervalSinceNow:60 * 60 * 24]];
+    GAEvent *e5 = [GAEvent eventWithTitle:@"Spencer's Commemoration" andCategory:@"CSC" andDate:[NSDate dateWithTimeIntervalSinceNow:60 * 60 * 24 * 2]];
+    GAEvent *e6 = [GAEvent eventWithTitle:@"Daniel's Commemoration" andCategory:@"CSC" andDate:[NSDate dateWithTimeIntervalSinceNow:60 * 60 * 24 * 2]];
+    GAEvent *e7 = [GAEvent eventWithTitle:@"Maijid's Commemoration" andCategory:@"CSC" andDate:[NSDate dateWithTimeIntervalSinceNow:60 * 60 * 24 * 3]];
+    GAEvent *e8 = [GAEvent eventWithTitle:@"Dcow's Commemoration" andCategory:@"CSC" andDate:[NSDate dateWithTimeIntervalSinceNow:60 * 60 * 24 * 4]];
+    GAEvent *e9 = [GAEvent eventWithTitle:@"Rebelsky's Commemoration" andCategory:@"CSC" andDate:[NSDate dateWithTimeIntervalSinceNow:60 * 60 * 24 * 4]];
+    
+    //GAEvent *e0 = [GAEvent eventWithTitle:@"Walkers's Commemoration" andCategory:@"CSC" andDate:[NSDate dateWithTimeIntervalSinceNow:60 * 60 * 24 * 5]];
 
     
-    self.eventsData = @[@[e1, e2, e2, e4, e4, e6],
-                        @[e5, e6, e3, e2, e1],
-                        @[e4, e6, e7, e0, e8, e7],
-                        @[e2, e2, e5, e6, e6, e7, e7, e8, e0],
-                        @[e1, e1, e4, e5, e2, e6, e6, e5, e9]];
+    self.eventsData = @[@[e1, e1, e2, e2, e1],
+                        @[e3, e4, e3, e4],
+                        @[e5, e5, e5, e5, e6],
+                        @[e7, e7, e7, e7],
+                        @[e8, e8, e8, e8]
+                        ];
     
+
+    //Get the first date of available events
+    NSArray *firstArray = self.eventsData.firstObject;
+    GAEvent *firstEvent = firstArray.firstObject;
+    
+    NSArray *lastArray = self.eventsData.lastObject;
+    GAEvent *lastEvent = lastArray.firstObject;
+    
+    NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:firstEvent.date];
+
+    int firstYear = [firstComponents year];
+    int firstMonth = [firstComponents month];
+    int firstDay = [firstComponents day];
+    
+    
+    NSDateComponents *lastComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:lastEvent.date];
+    int lastYear = [lastComponents year];
+    int lastMonth = [lastComponents month];
+    int lastDay = [lastComponents day];
+    
+    NSLog(@"firstYear: %d, firstMonth: %d, firstDay: %d" , firstYear, firstMonth, firstDay);
     
     //Set up initial DatePicker values
-    [self.dayPicker setStartDate:[NSDate dateFromDay:1 month:9 year:2013] endDate:[NSDate dateFromDay:5 month:9 year:2013]];
-    [self.dayPicker setCurrentDate:[NSDate dateFromDay:1 month:9 year:2013] animated:NO];
+    [self.dayPicker setStartDate:[NSDate dateFromDay:firstDay month:firstMonth year:firstYear] endDate:[NSDate dateFromDay:lastDay month:lastMonth year:lastYear]];
+    [self.dayPicker setCurrentDate:[NSDate dateFromDay:firstDay month:firstMonth year:firstYear] animated:NO];
 
 }
 
@@ -92,7 +119,12 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return  [NSString stringWithFormat:@"Section for Day %d", section + 1];
+    NSArray *sectionArray = [self.eventsData objectAtIndex:section];
+    NSDate *sectionDate = [sectionArray[0] date];
+    
+    NSString *sectionTitle = [NSDateFormatter localizedStringFromDate:sectionDate dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterFullStyle];
+    
+    return sectionTitle;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -137,9 +169,19 @@ BOOL _dayPickerIsAnimating = NO;
     int ps = path.section + 2;
     NSLog(@"ps: %d", ps);
     
+    NSArray *eventsArray = [self.eventsData objectAtIndex:path.section];
+    
+    GAEvent *event = eventsArray[path.row];
+    
+    NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:event.date];
+    
+    int year = [firstComponents year];
+    int month = [firstComponents month];
+    int day = [firstComponents day];
+    
     //if (!_dayPickerIsAnimating) {
     //   _dayPickerIsAnimating = YES;
-    [self.dayPicker setCurrentDate:[NSDate dateFromDay:ps month:9 year:2013] animated:YES];
+    [self.dayPicker setCurrentDate:[NSDate dateFromDay:day+1 month:month year:year] animated:YES];
     //   _dayPickerIsAnimating = NO;
     // }
     

@@ -17,6 +17,6 @@
 @property (nonatomic, strong) NSDate *endTime;
 @property (nonatomic, strong) NSString *category;
 
-+ (instancetype) eventWithTitle:(NSString *)aTitle andCategory:(NSString *)aCategory;
++ (instancetype) eventWithTitle:(NSString *)aTitle andCategory:(NSString *)aCategory andDate:(NSDate *)aDate;
 
 @end

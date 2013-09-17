@@ -161,6 +161,11 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Grinnell AppDev";
+				TargetAttributes = {
+					8B58DD5117DCFE360041EBD3 = {
+						DevelopmentTeam = JW9JB29EY4;
+					};
+				};
 			};
 			buildConfigurationList = 8B58DD4D17DCFE360041EBD3 /* Build configuration list for PBXProject "Grinnell-Events-iOS" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -324,6 +329,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4D8FEE04A3994B96994EAFAB /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Grinnell-Events-iOS/Grinnell-Events-iOS-Prefix.pch";
 				INFOPLIST_FILE = "Grinnell-Events-iOS/Grinnell-Events-iOS-Info.plist";
@@ -337,6 +343,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4D8FEE04A3994B96994EAFAB /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Grinnell-Events-iOS/Grinnell-Events-iOS-Prefix.pch";
 				INFOPLIST_FILE = "Grinnell-Events-iOS/Grinnell-Events-iOS-Info.plist";
