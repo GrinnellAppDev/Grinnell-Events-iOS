@@ -13,6 +13,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    // Set up Parse Grinnell Events credentials.
+    [Parse setApplicationId:@"gxqIXbjvBCr7oYCYzNT2GYidbYv3Jiy4NJSJxxN3"
+                  clientKey:@"S0FQadLhLS5ine1wsDQ2YY3rnOKsAD2eEqNNwdY6"];
+    
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
     return YES;
 }
 							

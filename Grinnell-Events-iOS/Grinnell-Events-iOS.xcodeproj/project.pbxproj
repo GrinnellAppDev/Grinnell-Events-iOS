@@ -9,6 +9,15 @@
 /* Begin PBXBuildFile section */
 		162AD93D17E6418F00867115 /* GAEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 162AD93C17E6418F00867115 /* GAEventCell.m */; };
 		165D7D3517E6393600CFB87F /* GAEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 165D7D3417E6393600CFB87F /* GAEvent.m */; };
+		16C22F4A17FCDA7B00F0C5FE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F4917FCDA7B00F0C5FE /* AudioToolbox.framework */; };
+		16C22F4C17FCDA8300F0C5FE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F4B17FCDA8300F0C5FE /* CFNetwork.framework */; };
+		16C22F4E17FCDA8D00F0C5FE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F4D17FCDA8D00F0C5FE /* CoreLocation.framework */; };
+		16C22F5017FCDA9800F0C5FE /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F4F17FCDA9800F0C5FE /* libz.1.1.3.dylib */; };
+		16C22F5217FCDAA200F0C5FE /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F5117FCDAA200F0C5FE /* MobileCoreServices.framework */; };
+		16C22F5417FCDAA700F0C5FE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F5317FCDAA700F0C5FE /* QuartzCore.framework */; };
+		16C22F5617FCDAB000F0C5FE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F5517FCDAB000F0C5FE /* Security.framework */; };
+		16C22F5817FCDAB700F0C5FE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F5717FCDAB700F0C5FE /* StoreKit.framework */; };
+		16C22F5A17FCDAC100F0C5FE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F5917FCDAC000F0C5FE /* SystemConfiguration.framework */; };
 		8B58DD5617DCFE360041EBD3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B58DD5517DCFE360041EBD3 /* UIKit.framework */; };
 		8B58DD5817DCFE360041EBD3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B58DD5717DCFE360041EBD3 /* Foundation.framework */; };
 		8B58DD5A17DCFE360041EBD3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B58DD5917DCFE360041EBD3 /* CoreGraphics.framework */; };
@@ -29,6 +38,15 @@
 		162AD93C17E6418F00867115 /* GAEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAEventCell.m; sourceTree = "<group>"; };
 		165D7D3317E6393600CFB87F /* GAEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAEvent.h; sourceTree = "<group>"; };
 		165D7D3417E6393600CFB87F /* GAEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAEvent.m; sourceTree = "<group>"; };
+		16C22F4917FCDA7B00F0C5FE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		16C22F4B17FCDA8300F0C5FE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		16C22F4D17FCDA8D00F0C5FE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		16C22F4F17FCDA9800F0C5FE /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
+		16C22F5117FCDAA200F0C5FE /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		16C22F5317FCDAA700F0C5FE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		16C22F5517FCDAB000F0C5FE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		16C22F5717FCDAB700F0C5FE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		16C22F5917FCDAC000F0C5FE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4D8FEE04A3994B96994EAFAB /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		8B58DD5217DCFE360041EBD3 /* Grinnell-Events-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grinnell-Events-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B58DD5517DCFE360041EBD3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -53,6 +71,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16C22F5A17FCDAC100F0C5FE /* SystemConfiguration.framework in Frameworks */,
+				16C22F5817FCDAB700F0C5FE /* StoreKit.framework in Frameworks */,
+				16C22F5617FCDAB000F0C5FE /* Security.framework in Frameworks */,
+				16C22F5417FCDAA700F0C5FE /* QuartzCore.framework in Frameworks */,
+				16C22F5217FCDAA200F0C5FE /* MobileCoreServices.framework in Frameworks */,
+				16C22F5017FCDA9800F0C5FE /* libz.1.1.3.dylib in Frameworks */,
+				16C22F4E17FCDA8D00F0C5FE /* CoreLocation.framework in Frameworks */,
+				16C22F4C17FCDA8300F0C5FE /* CFNetwork.framework in Frameworks */,
+				16C22F4A17FCDA7B00F0C5FE /* AudioToolbox.framework in Frameworks */,
 				8B58DD5617DCFE360041EBD3 /* UIKit.framework in Frameworks */,
 				8B58DD5817DCFE360041EBD3 /* Foundation.framework in Frameworks */,
 				8B58DD5A17DCFE360041EBD3 /* CoreGraphics.framework in Frameworks */,
@@ -93,6 +120,15 @@
 		8B58DD5417DCFE360041EBD3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				16C22F5917FCDAC000F0C5FE /* SystemConfiguration.framework */,
+				16C22F5717FCDAB700F0C5FE /* StoreKit.framework */,
+				16C22F5517FCDAB000F0C5FE /* Security.framework */,
+				16C22F5317FCDAA700F0C5FE /* QuartzCore.framework */,
+				16C22F5117FCDAA200F0C5FE /* MobileCoreServices.framework */,
+				16C22F4F17FCDA9800F0C5FE /* libz.1.1.3.dylib */,
+				16C22F4D17FCDA8D00F0C5FE /* CoreLocation.framework */,
+				16C22F4B17FCDA8300F0C5FE /* CFNetwork.framework */,
+				16C22F4917FCDA7B00F0C5FE /* AudioToolbox.framework */,
 				8B58DD5517DCFE360041EBD3 /* UIKit.framework */,
 				8B58DD5717DCFE360041EBD3 /* Foundation.framework */,
 				8B58DD5917DCFE360041EBD3 /* CoreGraphics.framework */,
@@ -163,7 +199,7 @@
 				ORGANIZATIONNAME = "Grinnell AppDev";
 				TargetAttributes = {
 					8B58DD5117DCFE360041EBD3 = {
-						DevelopmentTeam = H69TS4DPUJ;
+						DevelopmentTeam = JW9JB29EY4;
 					};
 				};
 			};
@@ -334,6 +370,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Grinnell-Events-iOS/Grinnell-Events-iOS-Prefix.pch";
 				INFOPLIST_FILE = "Grinnell-Events-iOS/Grinnell-Events-iOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -350,6 +387,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Grinnell-Events-iOS/Grinnell-Events-iOS-Prefix.pch";
 				INFOPLIST_FILE = "Grinnell-Events-iOS/Grinnell-Events-iOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
