@@ -231,9 +231,9 @@
             NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
             NSString *dateKey =  self.sortedDateKeys[indexPath.section];
             event = self.eventsDictionary[dateKey][indexPath.row];
-            eventDetailViewController.theEvent = event;
         }
         
+        eventDetailViewController.theEvent = event;
         eventDetailViewController.title = event.title;
     }
 }
@@ -243,7 +243,6 @@
 {
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return  [NSString stringWithFormat:@"Search Results for \"%@\"", self.searchText];
-        
     } else {
         /*
          NSArray *sectionArray = [self.eventsData objectAtIndex:section];
@@ -257,9 +256,24 @@
         //NSLog(@"titleforheaderinsection: %@", self.sortedDateKeys);
         return self.sortedDateKeys[section];
     }
-    
-    
 }
+
+/*
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *scarletView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+    scarletView.backgroundColor = [UIColor colorWithRed:0.693 green:0.008 blue:0.207 alpha:1.000];
+    
+    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 20)];
+    
+    // textLabel.textColor = [UIColor whiteColor];
+    textLabel.backgroundColor = [UIColor clearColor];
+    textLabel.text = self.sortedDateKeys[section];
+    [scarletView addSubview:textLabel];
+    
+    return scarletView;
+}
+*/
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -313,6 +327,9 @@
     
     return cell;
 }
+
+
+
 
 #pragma mark - Scrollview Delegate Methods
 BOOL _dayPickerIsAnimating = NO;

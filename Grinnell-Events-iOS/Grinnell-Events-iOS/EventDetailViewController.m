@@ -14,6 +14,7 @@
 
 @interface EventDetailViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 
 @property (nonatomic, strong) EventKitController *eventKitController;
 
@@ -39,6 +40,8 @@
     self.eventKitController = [[EventKitController alloc] init];
     
     self.timeLabel.text =  [NSString stringWithFormat:@"%@ - %@", [NSDate timeStringFormatFromDate:self.theEvent.startTime], [NSDate timeStringFormatFromDate:self.theEvent.endTime]];
+    
+    self.dateLabel.text = self.theEvent.date;
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,14 +58,9 @@
 
 - (IBAction)doSpecialThings:(id)sender {
     NSArray *allCalendars = [self.eventKitController.eventStore calendarsForEntityType: EKEntityTypeEvent];
-    NSLog(@"cale: %@", allCalendars);
     
     NSPredicate *eventPredicate = [self.eventKitController.eventStore predicateForEventsWithStartDate:self.theEvent.startTime endDate:self.theEvent.endTime calendars:allCalendars];
-    NSLog(@"pred: %@", eventPredicate);
-    
     NSArray *matchingEvents = [self.eventKitController.eventStore eventsMatchingPredicate:eventPredicate];
-    
-    NSLog(@"matching Events: %@", matchingEvents);
     
     if (matchingEvents) {
         NSString *firstConflicting = [matchingEvents.firstObject title];

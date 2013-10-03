@@ -13,7 +13,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="72" sectionHeaderHeight="22" sectionFooterHeight="22" id="F10-Zi-7Tq">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="72" sectionHeaderHeight="22" sectionFooterHeight="22" id="F10-Zi-7Tq">
                                 <rect key="frame" x="0.0" y="104" width="320" height="400"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -161,7 +161,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="GtH-pK-jL6">
-                                <rect key="frame" x="100" y="436" width="121" height="30"/>
+                                <rect key="frame" x="100" y="434" width="121" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="Do Special things">
@@ -171,11 +171,19 @@
                                     <action selector="doSpecialThings:" destination="QYp-CE-YNQ" eventType="touchUpInside" id="3S6-XN-bWk"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="l1N-al-e31">
+                                <rect key="frame" x="91" y="191" width="139" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.18174027423469385" green="0.18174027423469385" blue="0.18174027423469385" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Event Title" id="Zii-Ni-iSO"/>
                     <connections>
+                        <outlet property="dateLabel" destination="l1N-al-e31" id="vqj-c1-yiT"/>
                         <outlet property="timeLabel" destination="vME-Qp-WzA" id="t1t-ol-L2F"/>
                     </connections>
                 </viewController>
