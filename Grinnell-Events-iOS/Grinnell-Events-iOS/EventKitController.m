@@ -19,12 +19,69 @@
         [_eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
             if (granted) {
                 _eventAccess = YES;
+                NSLog(@"YAY! Event access ON");
             } else {
-                  NSLog(@"Event access not granted: %@", error);
+                NSLog(@"Event access not granted: %@", error);
             }
         }];
         
     }
     return self;
+}
+
+
+- (void) addEventWithName:(NSString*) eventName startTime:(NSDate*) startDate endTime:(NSDate*) endDate {
+    
+    NSLog(@"Adding event");
+    
+    if (!_eventAccess) {
+        NSLog(@"No event acccess!");
+        return;
+    }
+    
+    //1. Create an Event
+    EKEvent *event = [EKEvent eventWithEventStore:self.eventStore];
+    event.title = eventName;
+    
+    //3. Set the start and end date
+    event.startDate = startDate;
+    event.endDate = endDate;
+    
+    //4. Set an alarm (This is optional)
+    //EKAlarm *alarm = [EKAlarm alarmWithRelativeOffset:-1800]; [event addAlarm:alarm];
+    
+    //5. Add a note (This is optional)
+    event.notes = @"This will be exciting!!";
+    //6. Specify the calendar to store the event
+    
+    event.calendar = self.eventStore.defaultCalendarForNewEvents;
+    NSLog(@"EventCal: %@", event.calendar);
+    
+    
+    NSArray *allCalendars = [self.eventStore calendarsForEntityType: EKEntityTypeEvent];
+    
+    NSMutableArray * writableCalendars = [NSMutableArray array];
+    for (EKCalendar * calendar in allCalendars) {
+        if (calendar.allowsContentModifications && [calendar.title isEqualToString:@"maijid@gmail.com"]) {
+            event.calendar = calendar;
+            [writableCalendars addObject:calendar];
+        }
+    }
+    NSLog(@"WC: %@", writableCalendars);
+    
+
+    
+    NSError *err;
+    BOOL success = [self.eventStore saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+    
+    if (!success) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"SHucks!" message:@"Error occured" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [alert show];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Event was added successfully!" message:@"yay" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [alert show];
+    }
+     
+    
 }
 @end

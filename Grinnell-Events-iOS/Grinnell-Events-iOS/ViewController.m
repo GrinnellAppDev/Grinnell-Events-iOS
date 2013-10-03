@@ -254,7 +254,7 @@
          return sectionTitle;
          */
         
-        NSLog(@"titleforheaderinsection: %@", self.sortedDateKeys);
+        //NSLog(@"titleforheaderinsection: %@", self.sortedDateKeys);
         return self.sortedDateKeys[section];
     }
     
