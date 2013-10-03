@@ -7,9 +7,14 @@
 //
 
 #import "EventDetailViewController.h"
+#import <EventKit/EventKit.h>
 
 @interface EventDetailViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+
+@property (strong, readonly) EKEventStore *eventStore;
+@property (assign, readonly) BOOL eventAccess;
+@property (assign, readonly) BOOL reminderAccess;
 
 @end
 
