@@ -8,15 +8,12 @@
 
 #import "EventDetailViewController.h"
 #import "EventKitController.h"
+#import "NSDate+GADate.h"
 #import "GAEvent.h"
 
 
 @interface EventDetailViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-
-@property (strong, readonly) EKEventStore *eventStore;
-@property (assign, readonly) BOOL eventAccess;
-@property (assign, readonly) BOOL reminderAccess;
 
 @property (nonatomic, strong) EventKitController *eventKitController;
 
@@ -41,20 +38,7 @@
     
     self.eventKitController = [[EventKitController alloc] init];
     
-    
-    NSArray * allCalendars = [_eventStore calendarsForEntityType:EKEntityMaskEvent |
-                              EKEntityMaskReminder];
-    NSMutableArray * writableCalendars = [NSMutableArray array];
-    for (EKCalendar * calendar in allCalendars) {
-        
-        if (calendar.allowsContentModifications) {
-            [writableCalendars addObject:calendar];
-        }
-    }
-    
-    EKCalendar *calendar = self.eventStore.defaultCalendarForNewEvents;
-    
-    NSLog(@"calendar: %@", calendar);
+    self.timeLabel.text =  [NSString stringWithFormat:@"%@ - %@", [NSDate timeStringFormatFromDate:self.theEvent.startTime], [NSDate timeStringFormatFromDate:self.theEvent.endTime]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,4 +53,24 @@
     [self.eventKitController addEventWithName:self.theEvent.title startTime:self.theEvent.startTime endTime:self.theEvent.endTime];
 }
 
+- (IBAction)doSpecialThings:(id)sender {
+    NSArray *allCalendars = [self.eventKitController.eventStore calendarsForEntityType: EKEntityTypeEvent];
+    NSLog(@"cale: %@", allCalendars);
+    
+    NSPredicate *eventPredicate = [self.eventKitController.eventStore predicateForEventsWithStartDate:self.theEvent.startTime endDate:self.theEvent.endTime calendars:allCalendars];
+    NSLog(@"pred: %@", eventPredicate);
+    
+    NSArray *matchingEvents = [self.eventKitController.eventStore eventsMatchingPredicate:eventPredicate];
+    
+    NSLog(@"matching Events: %@", matchingEvents);
+    
+    if (matchingEvents) {
+        NSString *firstConflicting = [matchingEvents.firstObject title];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh-oh! You have conflicts with this event!" message: [NSString stringWithFormat:@"%@ conflicts", firstConflicting]  delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [alert show];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No conflicts detected!" message:nil delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [alert show];
+    }
+}
 @end

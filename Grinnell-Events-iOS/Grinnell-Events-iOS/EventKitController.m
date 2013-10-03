@@ -63,13 +63,11 @@
     NSMutableArray * writableCalendars = [NSMutableArray array];
     for (EKCalendar * calendar in allCalendars) {
         if (calendar.allowsContentModifications && [calendar.title isEqualToString:@"maijid@gmail.com"]) {
-            event.calendar = calendar;
+            //event.calendar = calendar;
             [writableCalendars addObject:calendar];
         }
     }
     NSLog(@"WC: %@", writableCalendars);
-    
-
     
     NSError *err;
     BOOL success = [self.eventStore saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
@@ -78,10 +76,13 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"SHucks!" message:@"Error occured" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [alert show];
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Event was added successfully!" message:@"yay" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        NSString *calendarName = event.calendar.title;
+        NSString *alertTitle =  [NSString stringWithFormat:@"Event added to your %@ calendar succesfully!", calendarName];
+
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle message:@"yay!" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [alert show];
     }
-     
+    
     
 }
 @end
