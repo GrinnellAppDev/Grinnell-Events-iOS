@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "GAEvent.h"
 
 @implementation AppDelegate
 
@@ -14,6 +15,7 @@
 {
     // Override point for customization after application launch.
     
+    [GAEvent registerSubclass]; 
     // Set up Parse Grinnell Events credentials.
     [Parse setApplicationId:@"gxqIXbjvBCr7oYCYzNT2GYidbYv3Jiy4NJSJxxN3"
                   clientKey:@"S0FQadLhLS5ine1wsDQ2YY3rnOKsAD2eEqNNwdY6"];
