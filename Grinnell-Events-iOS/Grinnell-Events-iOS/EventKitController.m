@@ -73,7 +73,7 @@
     BOOL success = [self.eventStore saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
     
     if (!success) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"SHucks!" message:@"Error occured" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Shucks!" message:@"Error occured" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [alert show];
     } else {
         NSString *calendarName = event.calendar.title;
