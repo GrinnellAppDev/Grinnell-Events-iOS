@@ -37,6 +37,9 @@
 + (void)findAllEventsInBackground:(PFArrayResultBlock)resultBlock
 {
     PFQuery *query = [GAEvent query];
+    
+    //Fet
+    [query whereKey:@"startTime" greaterThan:[NSDate date]];
     [query orderByAscending:@"startTime"]; 
     query.limit = 300;
     query.cachePolicy = kPFCachePolicyCacheThenNetwork;
