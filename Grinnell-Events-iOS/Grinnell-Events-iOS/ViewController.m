@@ -21,6 +21,8 @@
 @property (nonatomic, strong) NSArray *allEvents;
 @property (nonatomic, strong) NSDictionary *eventsDictionary;
 @property (nonatomic, strong) NSArray *sortedDateKeys;
+
+@property (nonatomic, assign) BOOL datePickerSet;
 @end
 
 @implementation ViewController
@@ -48,8 +50,6 @@
     
     NSLog(@"GAevents in vdl: %@", self.allEvents);
     
-    //Setup Sample data model.
-
     
     // Initialize the filteredEventsArray with a capacity equal to the event's capacity
     self.filteredEventsArray = [NSMutableArray arrayWithCapacity:self.flatEventsData.count];
@@ -93,39 +93,34 @@
 
             /* Set the DatePicker with first and last event values */
             // TODO (DrJid): Might need to do this elsewhere since the picker is reset when back button is pressed in event Detail view
-            NSDate *firstDate = [NSDate dateFromString: self.sortedDateKeys.firstObject ];
-            NSDate *lastDate = [NSDate dateFromString:self.sortedDateKeys.lastObject];
-            
-            NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:firstDate];
-            
-            int firstYear = [firstComponents year];
-            int firstMonth = [firstComponents month];
-            int firstDay = [firstComponents day];
-            
-            NSDateComponents *lastComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:lastDate];
-            int lastYear = [lastComponents year];
-            int lastMonth = [lastComponents month];
-            int lastDay = [lastComponents day];
-            
-            NSLog(@"firstYear: %d, firstMonth: %d, firstDay: %d" , firstYear, firstMonth, firstDay);
-            
-            //Set up initial DatePicker values
-            [self.dayPicker setStartDate:[NSDate dateFromDay:firstDay month:firstMonth year:firstYear] endDate:[NSDate dateFromDay:lastDay month:lastMonth year:lastYear]];
-            [self.dayPicker setCurrentDate:[NSDate dateFromDay:firstDay month:firstMonth year:firstYear] animated:NO];
-            
-            
+            // Using this boolean to fix above. Assuming that the datePicker wouldn't need to reset all the time under viewWillAppear.
+            if (!self.datePickerSet) {
+                NSDate *firstDate = [NSDate dateFromString: self.sortedDateKeys.firstObject ];
+                NSDate *lastDate = [NSDate dateFromString:self.sortedDateKeys.lastObject];
+                
+                NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:firstDate];
+                
+                int firstYear = [firstComponents year];
+                int firstMonth = [firstComponents month];
+                int firstDay = [firstComponents day];
+                
+                NSDateComponents *lastComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:lastDate];
+                int lastYear = [lastComponents year];
+                int lastMonth = [lastComponents month];
+                int lastDay = [lastComponents day];
+                
+                NSLog(@"firstYear: %d, firstMonth: %d, firstDay: %d" , firstYear, firstMonth, firstDay);
+                
+                //Set up initial DatePicker values
+                [self.dayPicker setStartDate:[NSDate dateFromDay:firstDay month:firstMonth year:firstYear] endDate:[NSDate dateFromDay:lastDay month:lastMonth year:lastYear]];
+                [self.dayPicker setCurrentDate:[NSDate dateFromDay:firstDay month:firstMonth year:firstYear] animated:NO];
+                self.datePickerSet = YES;
+            }
         } else {
             NSLog(@"Error: %@ %@ ", error, error.userInfo);
         }
     }];
 }
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 #pragma mark - MZDayPickerDelegate methods
 - (NSString *)dayPicker:(MZDayPicker *)dayPicker titleForCellDayNameLabelInDay:(MZDay *)day
@@ -268,7 +263,6 @@ BOOL _dayPickerIsAnimating = NO;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSLog(@"Scroll view did scroll!!");
     
     NSArray *visibleRows = [self.tableView visibleCells];
     UITableViewCell *firstVisibleCell = [visibleRows objectAtIndex:0];
