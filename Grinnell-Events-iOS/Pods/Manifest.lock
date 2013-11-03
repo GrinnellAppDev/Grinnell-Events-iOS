@@ -1,5 +1,5 @@
 PODS:
-  - Facebook-iOS-SDK (3.8.0)
+  - Facebook-iOS-SDK (3.9.0)
   - MZDayPicker (0.0.5)
   - Parse (1.2.15):
     - Facebook-iOS-SDK (~> 3.7)
@@ -9,8 +9,8 @@ DEPENDENCIES:
   - Parse
 
 SPEC CHECKSUMS:
-  Facebook-iOS-SDK: 55a22fe8bcaacd638cde9014af6b3ee85f4d71fb
+  Facebook-iOS-SDK: 5e1416dbdfc17b2620c2ca31c02e6feec042f2c1
   MZDayPicker: 1ebc98a0aa72906dc367de4c5b7d4ddb054bb910
   Parse: 200f5d714e38ed4c74e93d159e6fabaf2ab8d914
 
-COCOAPODS: 0.25.0
+COCOAPODS: 0.26.2
