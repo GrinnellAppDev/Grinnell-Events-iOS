@@ -70,7 +70,7 @@
     }
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    savedCal = [defaults objectForKey:@"selectedCal"];
+    selectedCalendar = [defaults objectForKey:@"selectedCal"];
     
     
     // check how many calendars each array in the dictionary has
@@ -133,7 +133,6 @@
     UILabel *label = (UILabel *) [cell viewWithTag:13];
     
     // Set label text to calendar's title
-    NSLog(@"class: %@",[[[calendarTable allKeys] objectAtIndex:indexPath.section] class] );
     NSString *calKey = [[calendarTable allKeys] objectAtIndex:indexPath.section];
     
     NSArray *calArr = [calendarTable objectForKey:calKey];
@@ -142,7 +141,7 @@
     
     label.text = self.currentCal.title;
     
-    if([self.checkedIndexPath isEqual:indexPath] || [label.text isEqualToString:savedCal])
+    if([self.checkedIndexPath isEqual:indexPath] || [label.text isEqualToString:selectedCalendar])
     {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
@@ -158,6 +157,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Uncheck the previous checked row
+    UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+    UILabel *label = (UILabel *) [cell viewWithTag:13];
+    selectedCalendar = label.text;
+    
     if(self.checkedIndexPath)
     {
         UITableViewCell* uncheckCell = [tableView
@@ -170,11 +173,8 @@
     }
     else
     {
-        UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-        UILabel *label = (UILabel *) [cell viewWithTag:13];
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
         self.checkedIndexPath = indexPath;
-        selectedCalendar = label.text;
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
