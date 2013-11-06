@@ -22,6 +22,7 @@
 		16C22F5817FCDAB700F0C5FE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F5717FCDAB700F0C5FE /* StoreKit.framework */; };
 		16C22F5A17FCDAC100F0C5FE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F5917FCDAC000F0C5FE /* SystemConfiguration.framework */; };
 		16C22F5E17FCF5DF00F0C5FE /* NSDate+GADate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16C22F5D17FCF5DF00F0C5FE /* NSDate+GADate.m */; };
+		8B19A2081827711500F915D0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B19A2071827711500F915D0 /* Images.xcassets */; };
 		8B20D8561826D555006E7683 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B20D8551826D555006E7683 /* SettingsViewController.m */; };
 		8B58DD5617DCFE360041EBD3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B58DD5517DCFE360041EBD3 /* UIKit.framework */; };
 		8B58DD5817DCFE360041EBD3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B58DD5717DCFE360041EBD3 /* Foundation.framework */; };
@@ -60,6 +61,7 @@
 		16C22F5C17FCF5DF00F0C5FE /* NSDate+GADate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+GADate.h"; sourceTree = "<group>"; };
 		16C22F5D17FCF5DF00F0C5FE /* NSDate+GADate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+GADate.m"; sourceTree = "<group>"; };
 		4D8FEE04A3994B96994EAFAB /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		8B19A2071827711500F915D0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8B20D8541826D555006E7683 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		8B20D8551826D555006E7683 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		8B58DD5217DCFE360041EBD3 /* Grinnell-Events-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grinnell-Events-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -180,6 +182,7 @@
 				8B20D8551826D555006E7683 /* SettingsViewController.m */,
 				162AD93B17E6418F00867115 /* GAEventCell.h */,
 				162AD93C17E6418F00867115 /* GAEventCell.m */,
+				8B19A2071827711500F915D0 /* Images.xcassets */,
 				8B58DD5C17DCFE360041EBD3 /* Supporting Files */,
 			);
 			path = "Grinnell-Events-iOS";
@@ -260,6 +263,7 @@
 				8B58DD6017DCFE360041EBD3 /* InfoPlist.strings in Resources */,
 				8B58DD6817DCFE360041EBD3 /* Default.png in Resources */,
 				8B58DD6A17DCFE360041EBD3 /* Default@2x.png in Resources */,
+				8B19A2081827711500F915D0 /* Images.xcassets in Resources */,
 				8B58DD6C17DCFE360041EBD3 /* Default-568h@2x.png in Resources */,
 				8B58DD6F17DCFE360041EBD3 /* MainStoryboard_iPhone.storyboard in Resources */,
 			);
@@ -401,6 +405,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4D8FEE04A3994B96994EAFAB /* Pods.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -418,6 +424,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4D8FEE04A3994B96994EAFAB /* Pods.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
