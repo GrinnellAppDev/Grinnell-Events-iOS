@@ -19,7 +19,7 @@
 @end
 
 @implementation SettingsViewController {
-    NSString *selectedCalendar;
+    NSString *selectedCalendarString;
     NSMutableDictionary *calendarTable;
     NSString *savedCal;
 }
@@ -70,7 +70,11 @@
     }
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    selectedCalendar = [defaults objectForKey:@"selectedCal"];
+    selectedCalendarString = [defaults objectForKey:@"selectedCal"];
+    
+    if (selectedCalendarString == nil) {
+        selectedCalendarString = [eventStore defaultCalendarForNewEvents].title;
+    }
     
     
     // check how many calendars each array in the dictionary has
@@ -86,8 +90,8 @@
 //        index++;
 //    }
 //    
-//        if (selectedCalendar == nil) {
-//        selectedCalendar = [eventStore defaultCalendarForNewEvents].title;
+//        if (tedCalendar == nil) {
+//        selectedCalendarStringString = [eventStore defaultCalendarForNewEvents].title;
 //    }
 //    
 //    for (EKCalendar *cal in self.writableCalendars) {
@@ -141,7 +145,7 @@
     
     label.text = self.currentCal.title;
     
-    if([self.checkedIndexPath isEqual:indexPath] || [label.text isEqualToString:selectedCalendar])
+    if([self.checkedIndexPath isEqual:indexPath] || [label.text isEqualToString:selectedCalendarString])
     {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
@@ -159,7 +163,10 @@
     // Uncheck the previous checked row
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     UILabel *label = (UILabel *) [cell viewWithTag:13];
-    selectedCalendar = label.text;
+    selectedCalendarString = label.text;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:selectedCalendarString forKey:@"selectedCal"];
     
     if(self.checkedIndexPath)
     {
@@ -188,18 +195,12 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.checkedIndexPath];
     
     UILabel *label = (UILabel *) [cell viewWithTag:13];
-    selectedCalendar = label.text;
+    selectedCalendarString = label.text;
     
-    NSLog(@"Selected cal is: %@", selectedCalendar);
+    NSLog(@"Selected cal is: %@", selectedCalendarString);
     
     // Store the data
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:selectedCalendar forKey:@"selectedCal"];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (IBAction)cancel {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

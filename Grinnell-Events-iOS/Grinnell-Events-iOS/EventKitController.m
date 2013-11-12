@@ -57,15 +57,21 @@
     NSLog(@"EventCal: %@", event.calendar);
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *specifiedCal = [defaults objectForKey:@"selectedCal"];
-
+    NSString *specifiedCalString = [defaults objectForKey:@"selectedCal"];
+    
+    if (specifiedCalString) {
+        event.calendar = [self.eventStore calendarWithIdentifier:specifiedCalString];
+    }
+    
+    /*
     NSArray *allCalendars = [self.eventStore calendarsForEntityType: EKEntityTypeEvent];
 
     for (EKCalendar *cal in allCalendars) {
-        if ([specifiedCal isEqualToString:cal.title] && cal.allowsContentModifications) {
+        if ([specifiedCalString isEqualToString:cal.title] && cal.allowsContentModifications) {
             event.calendar = cal;
         }
     }
+     */
     //    NSLog(@"Adding event");
     //    
     //    if (!_eventAccess) {

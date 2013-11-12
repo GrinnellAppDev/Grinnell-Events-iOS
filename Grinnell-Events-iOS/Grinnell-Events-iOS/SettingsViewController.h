@@ -14,6 +14,5 @@
 @property (nonatomic, strong) NSMutableArray *selectedCals;
 
 -(IBAction)done;
--(IBAction)cancel;
 
 @end

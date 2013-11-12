@@ -37,7 +37,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="OF5-pA-dhL">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="ztf-dE-Sul">
+                        <barButtonItem key="leftBarButtonItem" id="ztf-dE-Sul">
                             <connections>
                                 <action selector="cancel" destination="1Pw-ZW-bPI" id="fOE-iR-ckz"/>
                             </connections>
