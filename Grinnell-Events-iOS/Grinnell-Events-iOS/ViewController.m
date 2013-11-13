@@ -175,7 +175,7 @@
         }
         
         eventDetailViewController.theEvent = event;
-        eventDetailViewController.title = event.title;
+        //eventDetailViewController.title = event.title;
     }
 }
 

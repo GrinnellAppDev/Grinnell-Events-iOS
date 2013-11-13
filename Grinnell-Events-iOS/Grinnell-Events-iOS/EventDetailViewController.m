@@ -15,6 +15,8 @@
 @interface EventDetailViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
 
 @property (nonatomic, strong) EventKitController *eventKitController;
 
@@ -42,6 +44,8 @@
     self.timeLabel.text =  [NSString stringWithFormat:@"%@ - %@", [NSDate timeStringFormatFromDate:self.theEvent.startTime], [NSDate timeStringFormatFromDate:self.theEvent.endTime]];
     
     self.dateLabel.text = self.theEvent.date;
+    self.titleLabel.text = self.theEvent.title;
+    //self.descriptionLabel.text = self.theEvent.description;
 }
 
 - (void)didReceiveMemoryWarning

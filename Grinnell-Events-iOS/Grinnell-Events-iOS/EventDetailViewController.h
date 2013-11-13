@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class GAEvent;
 
-@interface EventDetailViewController : UIViewController
+@interface EventDetailViewController : UITableViewController
 
 @property (nonatomic, strong) GAEvent *theEvent;
 
