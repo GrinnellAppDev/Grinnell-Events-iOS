@@ -59,9 +59,16 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *specifiedCalString = [defaults objectForKey:@"selectedCal"];
     
-    if (specifiedCalString) {
-        event.calendar = [self.eventStore calendarWithIdentifier:specifiedCalString];
+     NSArray *allCalendars = [self.eventStore calendarsForEntityType: EKEntityTypeEvent];
+    
+    for (EKCalendar *cal in allCalendars) {
+    if ([specifiedCalString isEqualToString:cal.title] && cal.allowsContentModifications) {
+           event.calendar = cal;
+        }
     }
+
+    
+        NSLog(@"specified cal %@", event.calendar);
     
     /*
     NSArray *allCalendars = [self.eventStore calendarsForEntityType: EKEntityTypeEvent];
@@ -108,8 +115,10 @@
     //        }
     //    }
     //    NSLog(@"WC: %@", writableCalendars);
-    //    
+    
     NSError *err;
+    NSLog(@"OUR EVENT %@", event);
+    
     BOOL success = [self.eventStore saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
 
     if (!success) {

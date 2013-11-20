@@ -23,7 +23,8 @@
 		16C22F5A17FCDAC100F0C5FE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F5917FCDAC000F0C5FE /* SystemConfiguration.framework */; };
 		16C22F5E17FCF5DF00F0C5FE /* NSDate+GADate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16C22F5D17FCF5DF00F0C5FE /* NSDate+GADate.m */; };
 		8B19A2081827711500F915D0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B19A2071827711500F915D0 /* Images.xcassets */; };
-		8B20D8561826D555006E7683 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B20D8551826D555006E7683 /* SettingsViewController.m */; };
+		8B20D8561826D555006E7683 /* CalendarsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B20D8551826D555006E7683 /* CalendarsViewController.m */; };
+		8B21023E183C4A9700ED3226 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B21023D183C4A9700ED3226 /* SettingsViewController.m */; };
 		8B58DD5617DCFE360041EBD3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B58DD5517DCFE360041EBD3 /* UIKit.framework */; };
 		8B58DD5817DCFE360041EBD3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B58DD5717DCFE360041EBD3 /* Foundation.framework */; };
 		8B58DD5A17DCFE360041EBD3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B58DD5917DCFE360041EBD3 /* CoreGraphics.framework */; };
@@ -62,8 +63,10 @@
 		16C22F5D17FCF5DF00F0C5FE /* NSDate+GADate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+GADate.m"; sourceTree = "<group>"; };
 		4D8FEE04A3994B96994EAFAB /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		8B19A2071827711500F915D0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		8B20D8541826D555006E7683 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
-		8B20D8551826D555006E7683 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		8B20D8541826D555006E7683 /* CalendarsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarsViewController.h; sourceTree = "<group>"; };
+		8B20D8551826D555006E7683 /* CalendarsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarsViewController.m; sourceTree = "<group>"; };
+		8B21023C183C4A9700ED3226 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		8B21023D183C4A9700ED3226 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		8B58DD5217DCFE360041EBD3 /* Grinnell-Events-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grinnell-Events-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B58DD5517DCFE360041EBD3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8B58DD5717DCFE360041EBD3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -178,8 +181,10 @@
 				16AE9C7417FD1E8200626F90 /* EventDetailViewController.m */,
 				16AE9C7817FD27C200626F90 /* EventKitController.h */,
 				16AE9C7917FD27C200626F90 /* EventKitController.m */,
-				8B20D8541826D555006E7683 /* SettingsViewController.h */,
-				8B20D8551826D555006E7683 /* SettingsViewController.m */,
+				8B20D8541826D555006E7683 /* CalendarsViewController.h */,
+				8B20D8551826D555006E7683 /* CalendarsViewController.m */,
+				8B21023C183C4A9700ED3226 /* SettingsViewController.h */,
+				8B21023D183C4A9700ED3226 /* SettingsViewController.m */,
 				162AD93B17E6418F00867115 /* GAEventCell.h */,
 				162AD93C17E6418F00867115 /* GAEventCell.m */,
 				8B19A2071827711500F915D0 /* Images.xcassets */,
@@ -312,10 +317,11 @@
 				8B58DD6217DCFE360041EBD3 /* main.m in Sources */,
 				8B58DD6617DCFE360041EBD3 /* AppDelegate.m in Sources */,
 				16C22F5E17FCF5DF00F0C5FE /* NSDate+GADate.m in Sources */,
-				8B20D8561826D555006E7683 /* SettingsViewController.m in Sources */,
+				8B20D8561826D555006E7683 /* CalendarsViewController.m in Sources */,
 				165D7D3517E6393600CFB87F /* GAEvent.m in Sources */,
 				162AD93D17E6418F00867115 /* GAEventCell.m in Sources */,
 				16AE9C7A17FD27C200626F90 /* EventKitController.m in Sources */,
+				8B21023E183C4A9700ED3226 /* SettingsViewController.m in Sources */,
 				8B58DD7517DCFE360041EBD3 /* ViewController.m in Sources */,
 				16AE9C7517FD1E8200626F90 /* EventDetailViewController.m in Sources */,
 			);

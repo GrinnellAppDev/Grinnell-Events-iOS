@@ -17,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (strong, nonatomic) IBOutlet UILabel *locationLabel;
+
 
 @property (nonatomic, strong) EventKitController *eventKitController;
 
@@ -45,9 +47,14 @@
     
     self.dateLabel.text = self.theEvent.date;
     self.titleLabel.text = self.theEvent.title;
+    self.locationLabel.text = self.theEvent.location;
     //self.descriptionLabel.text = self.theEvent.description;
+
 }
 
+- (void) viewWillAppear:(BOOL)animated {
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -57,10 +64,7 @@
 
 
 - (IBAction)addEventToCalendar:(id)sender {
-    [self.eventKitController addEventWithName:self.theEvent.title startTime:self.theEvent.startTime endTime:self.theEvent.endTime];
-}
-
-- (IBAction)doSpecialThings:(id)sender {
+    
     NSArray *allCalendars = [self.eventKitController.eventStore calendarsForEntityType: EKEntityTypeEvent];
     
     NSPredicate *eventPredicate = [self.eventKitController.eventStore predicateForEventsWithStartDate:self.theEvent.startTime endDate:self.theEvent.endTime calendars:allCalendars];
@@ -68,11 +72,24 @@
     
     if (matchingEvents) {
         NSString *firstConflicting = [matchingEvents.firstObject title];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh-oh! You have conflicts with this event!" message: [NSString stringWithFormat:@"%@ conflicts", firstConflicting]  delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh-oh! You have conflicts with this event!" message: [NSString stringWithFormat:@"%@ conflicts", firstConflicting]  delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add Anyway", nil];
+        
         [alert show];
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No conflicts detected!" message:nil delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [alert show];
+            [self.eventKitController addEventWithName:self.theEvent.title startTime:self.theEvent.startTime endTime:self.theEvent.endTime];
     }
+    
+
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+         [self.eventKitController addEventWithName:self.theEvent.title startTime:self.theEvent.startTime endTime:self.theEvent.endTime];
+    }
+}
+
+- (IBAction)doSpecialThings:(id)sender {
+
 }
 @end

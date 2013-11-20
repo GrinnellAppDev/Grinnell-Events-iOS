@@ -53,6 +53,7 @@
     
     // Initialize the filteredEventsArray with a capacity equal to the event's capacity
     self.filteredEventsArray = [NSMutableArray arrayWithCapacity:self.flatEventsData.count];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
