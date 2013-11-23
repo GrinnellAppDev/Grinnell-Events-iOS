@@ -122,18 +122,24 @@
         
         NSString *title = firstConflict.title;
         
+        
+        
         NSString *start = [NSDate timeStringFormatFromDate:firstConflict.startDate];
         
         NSString *end = [NSDate timeStringFormatFromDate:firstConflict.endDate];
         NSString *conflictText = [NSString stringWithFormat:@"%@ (%@ - %@) conflicts with this event.", title, start, end];
        
         
-        
        // DLog(@"%@", matchingEvents);
         
       //  NSString *firstConflicting = [matchingEvents.firstObject title];
+        if ([title isEqualToString:self.theEvent.title]) {
+            self.conflictLabel.text = @"Looks like you're going to this already!";
+            self.conflictImageView.image = [UIImage imageNamed:@"green_circle.jpg"];
+        } else {
         self.conflictLabel.text = conflictText;
         self.conflictImageView.image = [UIImage imageNamed:@"red_circle.jpg"];
+        }
     } else {
         self.conflictLabel.text = @"You are free for this event!";
         self.conflictImageView.image = [UIImage imageNamed:@"green_circle.jpg"];
