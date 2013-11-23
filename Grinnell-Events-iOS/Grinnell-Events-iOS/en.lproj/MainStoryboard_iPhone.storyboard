@@ -372,8 +372,29 @@
                             </tableViewSection>
                             <tableViewSection id="92L-8y-BJC">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="bSQ-dw-GBC">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="j1N-yo-BwQ">
                                         <rect key="frame" x="0.0" y="404" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j1N-yo-BwQ" id="Saj-7V-v8J">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rice pudding eating festival with a long name conflicts with this event. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="11" id="7EP-tn-G4C">
+                                                    <rect key="frame" x="61" y="4" width="239" height="35"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green_circle.jpg" id="9H0-Dq-CVN">
+                                                    <rect key="frame" x="20" y="15" width="14" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="bSQ-dw-GBC">
+                                        <rect key="frame" x="0.0" y="448" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bSQ-dw-GBC" id="i2c-E7-9M1">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -393,14 +414,6 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="j1N-yo-BwQ">
-                                        <rect key="frame" x="0.0" y="448" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j1N-yo-BwQ" id="Saj-7V-v8J">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -411,6 +424,8 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Details" id="tu2-TP-TeY"/>
                     <connections>
+                        <outlet property="conflictImageView" destination="9H0-Dq-CVN" id="z3o-FX-myB"/>
+                        <outlet property="conflictLabel" destination="7EP-tn-G4C" id="rKo-9f-2wh"/>
                         <outlet property="dateLabel" destination="l1N-al-e31" id="kTQ-Ev-oiu"/>
                         <outlet property="descriptionLabel" destination="32N-E1-TTW" id="d7y-BU-CgJ"/>
                         <outlet property="locationLabel" destination="IMN-cY-Tfx" id="gxj-dq-muv"/>
@@ -460,6 +475,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="green_circle.jpg" width="425" height="425"/>
         <image name="locationIcon" width="24" height="24"/>
         <image name="settingsIcon" width="24" height="24"/>
         <image name="timeIcon" width="24" height="24"/>

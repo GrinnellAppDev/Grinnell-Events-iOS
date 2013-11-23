@@ -18,6 +18,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (strong, nonatomic) IBOutlet UILabel *locationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *conflictLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *conflictImageView;
 
 
 @property (nonatomic, strong) EventKitController *eventKitController;
@@ -54,6 +56,7 @@
 
 - (void) viewWillAppear:(BOOL)animated {
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [self updateConflictCell];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -81,6 +84,52 @@
     
 
 }
+
+- (void)updateConflictCell {
+    
+    
+    NSArray *allCalendars = [self.eventKitController.eventStore calendarsForEntityType: EKEntityTypeEvent];
+    
+    NSPredicate *eventPredicate = [self.eventKitController.eventStore predicateForEventsWithStartDate:self.theEvent.startTime endDate:self.theEvent.endTime calendars:allCalendars];
+    
+    
+    NSArray *matches = [self.eventKitController.eventStore eventsMatchingPredicate:eventPredicate];
+    NSMutableArray *matchingEvents = [NSMutableArray arrayWithArray:matches];
+    
+    //Remove all "all-day" events;
+    for (EKEvent *event in matchingEvents) {
+        if (event.allDay) {
+            [matchingEvents removeObject:event];
+        }
+    }
+
+    
+    if (matchingEvents) {
+        
+        EKEvent *firstConflict = matchingEvents.firstObject;
+        DLog(@"even: %@", firstConflict);
+        
+        NSString *title = firstConflict.title;
+        
+        NSString *start = [NSDate timeStringFormatFromDate:firstConflict.startDate];
+        
+        NSString *end = [NSDate timeStringFormatFromDate:firstConflict.endDate];
+        NSString *conflictText = [NSString stringWithFormat:@"%@ (%@ - %@) conflicts with this event.", title, start, end];
+       
+        
+        
+       // DLog(@"%@", matchingEvents);
+        
+      //  NSString *firstConflicting = [matchingEvents.firstObject title];
+        self.conflictLabel.text = conflictText;
+        self.conflictImageView.image = [UIImage imageNamed:@"red_circle.jpg"];
+    } else {
+        self.conflictLabel.text = @"You are free for this event!";
+        self.conflictImageView.image = [UIImage imageNamed:@"green_circle.jpg"];
+    }
+}
+
+
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {

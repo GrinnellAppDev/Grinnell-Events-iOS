@@ -13,3 +13,17 @@
     #import <Foundation/Foundation.h>
     #import <Parse/Parse.h>
 #endif
+
+
+#ifdef DEBUG
+#   define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#else
+#   define DLog(...)
+#endif
+
+
+#ifdef DEBUG
+#   define ALog(fmt, ...) NSLog((@"%s [ANALYTICS] " fmt), __PRETTY_FUNCTION__, ##__VA_ARGS__);
+#else
+#   define ALog(...)
+#endif
