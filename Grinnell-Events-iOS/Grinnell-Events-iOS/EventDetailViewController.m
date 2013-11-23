@@ -96,15 +96,26 @@
     NSArray *matches = [self.eventKitController.eventStore eventsMatchingPredicate:eventPredicate];
     NSMutableArray *matchingEvents = [NSMutableArray arrayWithArray:matches];
     
-    //Remove all "all-day" events;
-    for (EKEvent *event in matchingEvents) {
-        if (event.allDay) {
-            [matchingEvents removeObject:event];
-        }
-    }
+    DLog(@"m: %@", matchingEvents);
+    DLog(@"m: %d", matchingEvents.count);
 
     
-    if (matchingEvents) {
+    //Remove all "all-day" events;
+    NSMutableArray *tmpArray = [NSMutableArray new];
+    for (EKEvent *event in matchingEvents) {
+        if (event.allDay) {
+            [tmpArray addObject:event];
+//            [matchingEvents removeObject:event];
+        }
+    }
+    [matchingEvents removeObjectsInArray:tmpArray];
+    
+    DLog(@"me: %@", matchingEvents);
+
+    
+
+    
+    if (matchingEvents.count > 0 ) {
         
         EKEvent *firstConflict = matchingEvents.firstObject;
         DLog(@"even: %@", firstConflict);
