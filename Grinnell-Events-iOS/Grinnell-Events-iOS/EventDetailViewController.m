@@ -82,6 +82,7 @@
             [self.eventKitController addEventWithName:self.theEvent.title startTime:self.theEvent.startTime endTime:self.theEvent.endTime];
     }
     
+    [self updateConflictCell];
 
 }
 
@@ -144,6 +145,7 @@
         self.conflictLabel.text = @"You are free for this event!";
         self.conflictImageView.image = [UIImage imageNamed:@"green_circle.jpg"];
     }
+    
 }
 
 
