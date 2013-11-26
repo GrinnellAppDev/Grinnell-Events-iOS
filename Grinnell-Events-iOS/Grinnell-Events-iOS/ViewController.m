@@ -286,14 +286,29 @@ BOOL _dayPickerIsAnimating = NO;
 
 #pragma mark Content Filtering
 -(void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
-    // Update the filtered array based on the search text and scope.
-    self.searchText = searchText;
-
+    
     // Remove all objects from the filtered search array
     [self.filteredEventsArray removeAllObjects];
     
+    // Update the filtered array based on the search text and scope.
+    self.searchText = searchText;
+    
+    
+    //http://stackoverflow.com/questions/15091155/nspredicate-match-any-characters
+    
+    NSMutableString *searchWithWildcards = [NSMutableString stringWithFormat:@"*%@*", searchText];
+    if (searchWithWildcards.length > 3) {
+        for (int i = 2; i < self.searchText.length * 2; i += 2) {
+            [searchWithWildcards insertString:@"*" atIndex:i];
+        }
+    }
+    
     // Filter the array using NSPredicate
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.title contains[c] %@",searchText];
+
+   NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(SELF.title LIKE[cd] %@)", searchWithWildcards];
+
+
+ 
     
     self.filteredEventsArray = [NSMutableArray arrayWithArray:[self.allEvents filteredArrayUsingPredicate:predicate]];
     NSLog(@"fileteredArr: %@" , self.filteredEventsArray);

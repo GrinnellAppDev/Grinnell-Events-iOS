@@ -135,7 +135,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <searchBar contentMode="redraw" searchBarStyle="prominent" placeholder="Search for an event or location" translucent="NO" id="How-Fc-END">
+                            <searchBar contentMode="redraw" searchBarStyle="prominent" placeholder="Search with title of event" translucent="NO" id="How-Fc-END">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.63089923469999998" green="0.0090904594779999993" blue="0.13360678910000001" alpha="1" colorSpace="calibratedRGB"/>
