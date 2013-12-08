@@ -7,8 +7,10 @@
 //
 
 #import "SettingsViewController.h"
+#import <MessageUI/MFMailComposeViewController.h>
+#import <MessageUI/MessageUI.h>
 
-@interface SettingsViewController ()
+@interface SettingsViewController () <MFMailComposeViewControllerDelegate>
 
 @end
 
@@ -42,6 +44,38 @@
 }
 
 -(IBAction)done {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSUInteger row = indexPath.row;
+    
+    NSLog(@"Contact us!");
+    if (row == 1) {
+        [self contactUs];
+    }
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)contactUs {
+    
+    // From within your active view controller
+    if([MFMailComposeViewController canSendMail]) {
+        MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
+        mailViewController.mailComposeDelegate = self;
+        
+        mailViewController.navigationBar.tintColor = [UIColor colorWithRed:135.f/255.f green:1/255.f blue:6/255.f alpha:1];
+        
+        mailViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+        
+        [mailViewController setSubject:@"Feedback - Grinnell Events!"];
+        [mailViewController setToRecipients:[NSArray arrayWithObject:@"appdev@grinnell.edu"]];
+        [self presentViewController:mailViewController animated:YES completion:nil];
+        }
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

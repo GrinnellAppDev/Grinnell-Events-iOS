@@ -11,4 +11,6 @@
 @interface SettingsViewController : UITableViewController
 
 -(IBAction)done;
+-(IBAction)showEmail:(id)sender;
+
 @end
