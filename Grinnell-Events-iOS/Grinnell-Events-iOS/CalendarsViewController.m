@@ -198,8 +198,6 @@
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-//- (void) viewDidDisappear:(BOOL)animated {
-//    
-//}
+
 
 @end
