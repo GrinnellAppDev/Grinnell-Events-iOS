@@ -306,9 +306,6 @@ BOOL _dayPickerIsAnimating = NO;
     // Filter the array using NSPredicate
 
    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(SELF.title LIKE[cd] %@)", searchWithWildcards];
-
-
- 
     
     self.filteredEventsArray = [NSMutableArray arrayWithArray:[self.allEvents filteredArrayUsingPredicate:predicate]];
     NSLog(@"fileteredArr: %@" , self.filteredEventsArray);
