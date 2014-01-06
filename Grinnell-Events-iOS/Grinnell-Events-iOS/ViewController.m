@@ -147,7 +147,6 @@
     //NSLog(@"Will select day %@",day.day);
 }
 
-
 #pragma mark - UITableView Delegate Methods
 
 #pragma mark - TableView Delegate
