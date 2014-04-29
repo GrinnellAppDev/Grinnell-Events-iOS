@@ -30,7 +30,7 @@
 
 + (NSString *)parseClassName
 {
-    return @"Event";
+    return @"Event2";
 }
 
 
@@ -38,8 +38,11 @@
 {
     PFQuery *query = [GAEvent query];
     
+    //Test date
+    NSDate *pastDate = [NSDate dateWithTimeIntervalSince1970:60 * 60 * 24 * 365 * 30];
     //Fet
-    [query whereKey:@"startTime" greaterThan:[NSDate date]];
+   // [query whereKey:@"startTime" greaterThan:[NSDate date]];
+    [query whereKey:@"startTime" greaterThanOrEqualTo:pastDate];
     [query orderByAscending:@"startTime"]; 
     query.limit = 300;
     query.cachePolicy = kPFCachePolicyCacheThenNetwork;

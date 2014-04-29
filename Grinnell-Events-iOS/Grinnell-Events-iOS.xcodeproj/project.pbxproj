@@ -255,7 +255,7 @@
 				ORGANIZATIONNAME = "Grinnell AppDev";
 				TargetAttributes = {
 					8B58DD5117DCFE360041EBD3 = {
-						DevelopmentTeam = H69TS4DPUJ;
+						DevelopmentTeam = JW9JB29EY4;
 					};
 				};
 			};

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="CKB-Ui-aIa">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="CKB-Ui-aIa">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--Calendars View Controller - Calendars-->
@@ -327,7 +327,7 @@
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="32N-E1-TTW">
                                                     <rect key="frame" x="20" y="8" width="280" height="125"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <string key="text">This is the desription. Of our event. Yay. I need to write more bullshit here to fill it up. Oh my god, I'm running out of bullshit to talk about. This is the desription. Of our event. Yay. I need to write more bullshit here to fill it up. Oh my god, I'm running out of bullshit to talk about.</string>
+                                                    <string key="text">This is the desription. Of our event. Yay. I need to write more stuff here to fill it up. Oh my god, I'm running out of stuff to talk about. This is the desription. Of our event. Yay. I need to write more bullshit here to fill it up. Oh my god, I'm running out of bullshit to talk about.</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>

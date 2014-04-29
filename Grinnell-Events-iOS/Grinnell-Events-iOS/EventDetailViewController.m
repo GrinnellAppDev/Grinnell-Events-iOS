@@ -50,7 +50,7 @@
     self.dateLabel.text = self.theEvent.date;
     self.titleLabel.text = self.theEvent.title;
     self.locationLabel.text = self.theEvent.location;
-    //self.descriptionLabel.text = self.theEvent.description;
+    self.descriptionLabel.text = self.theEvent.detailDescription;
 
 }
 
