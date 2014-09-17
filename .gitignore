@@ -1,4 +1,5 @@
-./Grinnell-Events-iOS/strings_private.strings
+# Private String File
+Grinnell-Events-iOS/Grinnell-Events-iOS/strings_private.strings
 # Xcode
 .DS_Store
 build/
