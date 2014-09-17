@@ -98,7 +98,7 @@
     NSMutableArray *matchingEvents = [NSMutableArray arrayWithArray:matches];
     
     DLog(@"m: %@", matchingEvents);
-    DLog(@"m: %d", matchingEvents.count);
+    DLog(@"m: %lu", matchingEvents.count);
 
     
     //Remove all "all-day" events;

@@ -101,16 +101,16 @@
                 
                 NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:firstDate];
                 
-                int firstYear = [firstComponents year];
-                int firstMonth = [firstComponents month];
-                int firstDay = [firstComponents day];
+                NSInteger firstYear = [firstComponents year];
+                NSInteger firstMonth = [firstComponents month];
+                NSInteger firstDay = [firstComponents day];
                 
                 NSDateComponents *lastComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:lastDate];
-                int lastYear = [lastComponents year];
-                int lastMonth = [lastComponents month];
-                int lastDay = [lastComponents day];
+                NSInteger lastYear = [lastComponents year];
+                NSInteger lastMonth = [lastComponents month];
+                NSInteger lastDay = [lastComponents day];
                 
-                NSLog(@"firstYear: %d, firstMonth: %d, firstDay: %d" , firstYear, firstMonth, firstDay);
+                NSLog(@"firstYear: %ld, firstMonth: %ld, firstDay: %ld" , (long)firstYear, (long)firstMonth, (long)firstDay);
                 
                 //Set up initial DatePicker values
                 [self.dayPicker setStartDate:[NSDate dateFromDay:firstDay month:firstMonth year:firstYear] endDate:[NSDate dateFromDay:lastDay month:lastMonth year:lastYear]];
@@ -134,7 +134,7 @@
     //We scroll to that section. Sections are labeled by the date (sortedKeys)
     NSString *selectedDateString = [NSDate formattedStringFromDate:day.date];
     NSLog(@"sd: %@", selectedDateString);
-    int index = [self.sortedDateKeys indexOfObject:selectedDateString];
+    NSInteger index = [self.sortedDateKeys indexOfObject:selectedDateString];
     
     //This way we make sure it doesn't crash if things get glitchy and index isn't found.
     if (index != NSNotFound) {
@@ -274,9 +274,9 @@ BOOL _dayPickerIsAnimating = NO;
     
     NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:toDate];
     
-    int year = [firstComponents year];
-    int month = [firstComponents month];
-    int day = [firstComponents day];
+    NSInteger year = [firstComponents year];
+    NSInteger month = [firstComponents month];
+    NSInteger day = [firstComponents day];
 
     [self.dayPicker setCurrentDate:[NSDate dateFromDay:day+1 month:month year:year] animated:YES];
 }
