@@ -48,8 +48,6 @@
    // NSDate *tomorr = [NSDate dateWithTimeIntervalSinceNow:60 * 60 * 24];
    // NSLog(@"date: %@", tomorr);
     
-    NSLog(@"GAevents in vdl: %@", self.allEvents);
-    
     
     // Initialize the filteredEventsArray with a capacity equal to the event's capacity
     self.filteredEventsArray = [NSMutableArray arrayWithCapacity:self.flatEventsData.count];
@@ -63,7 +61,6 @@
     
     [GAEvent findAllEventsInBackground:^(NSArray *events, NSError *error) {
         if (!error) {
-            // NSLog(@"Retrieved: %d, events: %@",objects.count, objects);
             
             self.allEvents = events;
             NSMutableDictionary *theEvents = [[NSMutableDictionary alloc] init];
@@ -91,6 +88,31 @@
             }];
             
             [self.tableView reloadData];
+            // Scroll the tableview to today's events
+            
+            // First, find today's date's subscript in the sortedDateKeys array, which is equal to the section index in the tableViewController.
+            
+            NSCalendar *cal = [NSCalendar currentCalendar];
+            NSDateComponents *comps1 = [cal components:(NSCalendarUnitMonth| NSCalendarUnitYear | NSCalendarUnitDay) fromDate:[NSDate date]];
+    
+            for (int i = 0 ; i < self.sortedDateKeys.count; i++){
+                NSDateComponents *comps2 = [cal components:(NSCalendarUnitMonth| NSCalendarUnitYear | NSCalendarUnitDay) fromDate:[NSDate dateFromString:self.sortedDateKeys[i]]];
+                if (comps1.day == comps2.day && comps1.month == comps2.month && comps1.year == comps2.year){
+                    //
+                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection: i] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                    break;
+                }
+            }
+        
+            
+            
+            
+            
+            
+            
+            
+            
+            
 
             /* Set the DatePicker with first and last event values */
             // TODO (DrJid): Might need to do this elsewhere since the picker is reset when back button is pressed in event Detail view
@@ -110,11 +132,9 @@
                 NSInteger lastMonth = [lastComponents month];
                 NSInteger lastDay = [lastComponents day];
                 
-                NSLog(@"firstYear: %ld, firstMonth: %ld, firstDay: %ld" , (long)firstYear, (long)firstMonth, (long)firstDay);
-                
                 //Set up initial DatePicker values
                 [self.dayPicker setStartDate:[NSDate dateFromDay:firstDay month:firstMonth year:firstYear] endDate:[NSDate dateFromDay:lastDay month:lastMonth year:lastYear]];
-                [self.dayPicker setCurrentDate:[NSDate dateFromDay:firstDay month:firstMonth year:firstYear] animated:NO];
+                [self.dayPicker setCurrentDate:[NSDate date] animated:NO];
                 self.datePickerSet = YES;
             }
         } else {
