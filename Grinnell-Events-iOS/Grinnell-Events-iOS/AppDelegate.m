@@ -8,20 +8,28 @@
 
 #import "AppDelegate.h"
 #import "GAEvent.h"
+#import <Crashlytics/Crashlytics.h>
+#import <FlurrySDK/Flurry.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSString *strings_private = [[NSBundle mainBundle] pathForResource:@"strings_private" ofType:@"strings"];
+    NSDictionary *keysDict = [NSDictionary dictionaryWithContentsOfFile:strings_private];
     // Override point for customization after application launch.
     
     [GAEvent registerSubclass]; 
     // Set up Parse Grinnell Events credentials.
-    [Parse setApplicationId:@"gxqIXbjvBCr7oYCYzNT2GYidbYv3Jiy4NJSJxxN3"
-                  clientKey:@"S0FQadLhLS5ine1wsDQ2YY3rnOKsAD2eEqNNwdY6"];
+    [Parse setApplicationId:[keysDict objectForKey:@"ParseAppID"]
+                  clientKey:[keysDict objectForKey:@"ParseClientKey"]];
     
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    [Flurry setCrashReportingEnabled:NO];
+    [Flurry startSession:[keysDict objectForKey:@"FlurrySession"]];
     
+    
+    [Crashlytics startWithAPIKey:[keysDict objectForKey:@"CrashlyticsAPIKey"]];
     return YES;
 }
 							

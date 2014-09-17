@@ -12,31 +12,28 @@
 		16AE9C7517FD1E8200626F90 /* EventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16AE9C7417FD1E8200626F90 /* EventDetailViewController.m */; };
 		16AE9C7717FD270E00626F90 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16AE9C7617FD270E00626F90 /* EventKit.framework */; };
 		16AE9C7A17FD27C200626F90 /* EventKitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16AE9C7917FD27C200626F90 /* EventKitController.m */; };
-		16C22F4A17FCDA7B00F0C5FE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F4917FCDA7B00F0C5FE /* AudioToolbox.framework */; };
-		16C22F4C17FCDA8300F0C5FE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F4B17FCDA8300F0C5FE /* CFNetwork.framework */; };
-		16C22F4E17FCDA8D00F0C5FE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F4D17FCDA8D00F0C5FE /* CoreLocation.framework */; };
-		16C22F5017FCDA9800F0C5FE /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F4F17FCDA9800F0C5FE /* libz.1.1.3.dylib */; };
-		16C22F5217FCDAA200F0C5FE /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F5117FCDAA200F0C5FE /* MobileCoreServices.framework */; };
-		16C22F5417FCDAA700F0C5FE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F5317FCDAA700F0C5FE /* QuartzCore.framework */; };
-		16C22F5617FCDAB000F0C5FE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F5517FCDAB000F0C5FE /* Security.framework */; };
-		16C22F5A17FCDAC100F0C5FE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F5917FCDAC000F0C5FE /* SystemConfiguration.framework */; };
 		16C22F5E17FCF5DF00F0C5FE /* NSDate+GADate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16C22F5D17FCF5DF00F0C5FE /* NSDate+GADate.m */; };
-		8B12C6B9185505D9005DD470 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C6B8185505D9005DD470 /* MessageUI.framework */; };
 		8B19A2081827711500F915D0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B19A2071827711500F915D0 /* Images.xcassets */; };
 		8B20D8561826D555006E7683 /* CalendarsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B20D8551826D555006E7683 /* CalendarsViewController.m */; };
 		8B21023E183C4A9700ED3226 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B21023D183C4A9700ED3226 /* SettingsViewController.m */; };
-		8B58DD5617DCFE360041EBD3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B58DD5517DCFE360041EBD3 /* UIKit.framework */; };
-		8B58DD5817DCFE360041EBD3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B58DD5717DCFE360041EBD3 /* Foundation.framework */; };
-		8B58DD5A17DCFE360041EBD3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B58DD5917DCFE360041EBD3 /* CoreGraphics.framework */; };
 		8B58DD6017DCFE360041EBD3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8B58DD5E17DCFE360041EBD3 /* InfoPlist.strings */; };
 		8B58DD6217DCFE360041EBD3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B58DD6117DCFE360041EBD3 /* main.m */; };
 		8B58DD6617DCFE360041EBD3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B58DD6517DCFE360041EBD3 /* AppDelegate.m */; };
-		8B58DD6817DCFE360041EBD3 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B58DD6717DCFE360041EBD3 /* Default.png */; };
-		8B58DD6A17DCFE360041EBD3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B58DD6917DCFE360041EBD3 /* Default@2x.png */; };
-		8B58DD6C17DCFE360041EBD3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B58DD6B17DCFE360041EBD3 /* Default-568h@2x.png */; };
 		8B58DD6F17DCFE360041EBD3 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B58DD6D17DCFE360041EBD3 /* MainStoryboard_iPhone.storyboard */; };
 		8B58DD7517DCFE360041EBD3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B58DD7417DCFE360041EBD3 /* ViewController.m */; };
 		CAEB22646BFC4240B4536B61 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 006EC76A916046F3A152CA44 /* libPods.a */; };
+		D0371F6B19C934F500C180BF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F4917FCDA7B00F0C5FE /* AudioToolbox.framework */; };
+		D0371F6C19C934FB00C180BF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F4B17FCDA8300F0C5FE /* CFNetwork.framework */; };
+		D0371F6D19C9350200C180BF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B58DD5917DCFE360041EBD3 /* CoreGraphics.framework */; };
+		D0371F6E19C9350700C180BF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F4D17FCDA8D00F0C5FE /* CoreLocation.framework */; };
+		D0371F7019C9351000C180BF /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D0371F6F19C9351000C180BF /* libz.dylib */; };
+		D0371F7119C9351700C180BF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F5117FCDAA200F0C5FE /* MobileCoreServices.framework */; };
+		D0371F7219C9351E00C180BF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F5317FCDAA700F0C5FE /* QuartzCore.framework */; };
+		D0371F7319C9352200C180BF /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F5517FCDAB000F0C5FE /* Security.framework */; };
+		D0371F7519C9352800C180BF /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0371F7419C9352800C180BF /* StoreKit.framework */; };
+		D0371F7619C9352E00C180BF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F5917FCDAC000F0C5FE /* SystemConfiguration.framework */; };
+		D0371F7719C9359000C180BF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C6B8185505D9005DD470 /* MessageUI.framework */; };
+		D0371F7919C9364D00C180BF /* strings_private.strings in Resources */ = {isa = PBXBuildFile; fileRef = D0371F7819C9364D00C180BF /* strings_private.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,12 +74,12 @@
 		8B58DD6317DCFE360041EBD3 /* Grinnell-Events-iOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Grinnell-Events-iOS-Prefix.pch"; sourceTree = "<group>"; };
 		8B58DD6417DCFE360041EBD3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8B58DD6517DCFE360041EBD3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		8B58DD6717DCFE360041EBD3 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		8B58DD6917DCFE360041EBD3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		8B58DD6B17DCFE360041EBD3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		8B58DD6E17DCFE360041EBD3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		8B58DD7317DCFE360041EBD3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		8B58DD7417DCFE360041EBD3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		D0371F6F19C9351000C180BF /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		D0371F7419C9352800C180BF /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		D0371F7819C9364D00C180BF /* strings_private.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = strings_private.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,19 +87,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B12C6B9185505D9005DD470 /* MessageUI.framework in Frameworks */,
+				D0371F7719C9359000C180BF /* MessageUI.framework in Frameworks */,
+				D0371F7619C9352E00C180BF /* SystemConfiguration.framework in Frameworks */,
+				D0371F7519C9352800C180BF /* StoreKit.framework in Frameworks */,
+				D0371F7319C9352200C180BF /* Security.framework in Frameworks */,
+				D0371F7219C9351E00C180BF /* QuartzCore.framework in Frameworks */,
+				D0371F7119C9351700C180BF /* MobileCoreServices.framework in Frameworks */,
+				D0371F7019C9351000C180BF /* libz.dylib in Frameworks */,
+				D0371F6E19C9350700C180BF /* CoreLocation.framework in Frameworks */,
+				D0371F6D19C9350200C180BF /* CoreGraphics.framework in Frameworks */,
+				D0371F6C19C934FB00C180BF /* CFNetwork.framework in Frameworks */,
+				D0371F6B19C934F500C180BF /* AudioToolbox.framework in Frameworks */,
 				16AE9C7717FD270E00626F90 /* EventKit.framework in Frameworks */,
-				16C22F5A17FCDAC100F0C5FE /* SystemConfiguration.framework in Frameworks */,
-				16C22F5617FCDAB000F0C5FE /* Security.framework in Frameworks */,
-				16C22F5417FCDAA700F0C5FE /* QuartzCore.framework in Frameworks */,
-				16C22F5217FCDAA200F0C5FE /* MobileCoreServices.framework in Frameworks */,
-				16C22F5017FCDA9800F0C5FE /* libz.1.1.3.dylib in Frameworks */,
-				16C22F4E17FCDA8D00F0C5FE /* CoreLocation.framework in Frameworks */,
-				16C22F4C17FCDA8300F0C5FE /* CFNetwork.framework in Frameworks */,
-				16C22F4A17FCDA7B00F0C5FE /* AudioToolbox.framework in Frameworks */,
-				8B58DD5617DCFE360041EBD3 /* UIKit.framework in Frameworks */,
-				8B58DD5817DCFE360041EBD3 /* Foundation.framework in Frameworks */,
-				8B58DD5A17DCFE360041EBD3 /* CoreGraphics.framework in Frameworks */,
 				CAEB22646BFC4240B4536B61 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -149,6 +145,8 @@
 		8B58DD5417DCFE360041EBD3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0371F7419C9352800C180BF /* StoreKit.framework */,
+				D0371F6F19C9351000C180BF /* libz.dylib */,
 				8B12C6B8185505D9005DD470 /* MessageUI.framework */,
 				16AE9C7617FD270E00626F90 /* EventKit.framework */,
 				16C22F5917FCDAC000F0C5FE /* SystemConfiguration.framework */,
@@ -200,9 +198,7 @@
 				8B58DD5E17DCFE360041EBD3 /* InfoPlist.strings */,
 				8B58DD6117DCFE360041EBD3 /* main.m */,
 				8B58DD6317DCFE360041EBD3 /* Grinnell-Events-iOS-Prefix.pch */,
-				8B58DD6717DCFE360041EBD3 /* Default.png */,
-				8B58DD6917DCFE360041EBD3 /* Default@2x.png */,
-				8B58DD6B17DCFE360041EBD3 /* Default-568h@2x.png */,
+				D0371F7819C9364D00C180BF /* strings_private.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -219,6 +215,7 @@
 				8B58DD4F17DCFE360041EBD3 /* Frameworks */,
 				8B58DD5017DCFE360041EBD3 /* Resources */,
 				A8A5BC79BB12484BB775D7BE /* Copy Pods Resources */,
+				D06AC42819C9328A00ECAAC6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -271,11 +268,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B58DD6017DCFE360041EBD3 /* InfoPlist.strings in Resources */,
-				8B58DD6817DCFE360041EBD3 /* Default.png in Resources */,
-				8B58DD6A17DCFE360041EBD3 /* Default@2x.png in Resources */,
 				8B19A2081827711500F915D0 /* Images.xcassets in Resources */,
-				8B58DD6C17DCFE360041EBD3 /* Default-568h@2x.png in Resources */,
 				8B58DD6F17DCFE360041EBD3 /* MainStoryboard_iPhone.storyboard in Resources */,
+				D0371F7919C9364D00C180BF /* strings_private.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,6 +306,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		D06AC42819C9328A00ECAAC6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 45894d9e8a6bc3b8513651d6de36159e2c836e51 e63db966a2704d736a61d448865ca84d08aaaa601dce5b22725702038b26a699";
 		};
 /* End PBXShellScriptBuildPhase section */
 

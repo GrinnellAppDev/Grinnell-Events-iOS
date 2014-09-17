@@ -1,3 +1,5 @@
 platform :ios, '8.0'
-pod 'MZDayPicker', '~> 0.0.5'
+pod 'MZDayPicker'
 pod 'Parse'
+pod 'CrashlyticsFramework'
+pod 'FlurrySDK'
