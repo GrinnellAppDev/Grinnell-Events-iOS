@@ -128,7 +128,7 @@
         NSString *calendarName = event.calendar.title;
         NSString *alertTitle =  [NSString stringWithFormat:@"Event added to your %@ calendar succesfully!", calendarName];
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle message:@"yay!" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle message:@"" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [alert show];
     }
 
