@@ -344,17 +344,17 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" id="9H0-Dq-CVN">
+                                                    <rect key="frame" x="8" y="9" width="26" height="26"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rice pudding eating festival with a long name conflicts with this event. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="11" id="7EP-tn-G4C">
-                                                    <rect key="frame" x="39" y="4" width="256" height="35"/>
+                                                    <rect key="frame" x="42" y="4" width="256" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" id="9H0-Dq-CVN">
-                                                    <rect key="frame" x="12" y="15" width="14" height="14"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -440,7 +440,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="checkmark" width="15" height="15"/>
+        <image name="checkmark" width="39" height="39"/>
         <image name="locationIcon" width="24" height="24"/>
         <image name="settingsIcon" width="24" height="24"/>
         <image name="timeIcon" width="24" height="24"/>
