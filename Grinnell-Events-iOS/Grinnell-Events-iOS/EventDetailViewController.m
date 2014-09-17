@@ -136,14 +136,14 @@
       //  NSString *firstConflicting = [matchingEvents.firstObject title];
         if ([title isEqualToString:self.theEvent.title]) {
             self.conflictLabel.text = @"Looks like you're going to this already!";
-            self.conflictImageView.image = [UIImage imageNamed:@"checkmarkIcon.png"];
+            self.conflictImageView.image = [UIImage imageNamed:@"checkmark"];
         } else {
         self.conflictLabel.text = conflictText;
-        self.conflictImageView.image = [UIImage imageNamed:@"unavailableIcon.png"];
+        self.conflictImageView.image = [UIImage imageNamed:@"unavailable"];
         }
     } else {
         self.conflictLabel.text = @"You are free for this event!";
-        self.conflictImageView.image = [UIImage imageNamed:@"checkmarkIcon.png"];
+        self.conflictImageView.image = [UIImage imageNamed:@"checkmark"];
     }
     
 }
