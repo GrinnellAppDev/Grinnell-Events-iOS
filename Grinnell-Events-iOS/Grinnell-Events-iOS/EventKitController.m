@@ -29,7 +29,7 @@
     return self;
     }
 
-- (void) addEventWithName:(NSString*) eventName startTime:(NSDate*) startDate endTime:(NSDate*) endDate {
+- (void) addEventWithName:(NSString*) eventName startTime:(NSDate*) startDate endTime:(NSDate*) endDate description:(NSString*) description{
 
     NSLog(@"Adding event");
 
@@ -50,7 +50,7 @@
     //EKAlarm *alarm = [EKAlarm alarmWithRelativeOffset:-1800]; [event addAlarm:alarm];
 
     //5. Add a note (This is optional)
-    event.notes = @"This will be exciting!!";
+    event.notes = description;
     //6. Specify the calendar to store the event
 
     event.calendar = self.eventStore.defaultCalendarForNewEvents;

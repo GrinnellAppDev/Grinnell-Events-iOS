@@ -16,6 +16,6 @@
 @property (assign, readonly) BOOL reminderAccess;
 
 
-- (void) addEventWithName:(NSString*) eventName startTime:(NSDate*) startDate endTime:(NSDate*) endDate;
+- (void) addEventWithName:(NSString*) eventName startTime:(NSDate*) startDate endTime:(NSDate*) endDate description:(NSString*) description;
 
 @end
