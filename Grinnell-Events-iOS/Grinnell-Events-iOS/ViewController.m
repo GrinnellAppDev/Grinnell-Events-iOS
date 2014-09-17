@@ -99,13 +99,13 @@
                 NSDate *firstDate = [NSDate dateFromString: self.sortedDateKeys.firstObject ];
                 NSDate *lastDate = [NSDate dateFromString:self.sortedDateKeys.lastObject];
                 
-                NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:firstDate];
+                NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:firstDate];
                 
                 NSInteger firstYear = [firstComponents year];
                 NSInteger firstMonth = [firstComponents month];
                 NSInteger firstDay = [firstComponents day];
                 
-                NSDateComponents *lastComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:lastDate];
+                NSDateComponents *lastComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:lastDate];
                 NSInteger lastYear = [lastComponents year];
                 NSInteger lastMonth = [lastComponents month];
                 NSInteger lastDay = [lastComponents day];
@@ -272,7 +272,7 @@ BOOL _dayPickerIsAnimating = NO;
     //Scroll to the selected date.
     NSDate *toDate = [NSDate dateFromString:self.sortedDateKeys[path.section] ];
     
-    NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:toDate];
+    NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:toDate];
     
     NSInteger year = [firstComponents year];
     NSInteger month = [firstComponents month];
