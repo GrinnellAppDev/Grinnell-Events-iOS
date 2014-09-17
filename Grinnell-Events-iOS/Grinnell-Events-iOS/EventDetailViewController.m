@@ -79,7 +79,7 @@
         
         [alert show];
     } else {
-            [self.eventKitController addEventWithName:self.theEvent.title startTime:self.theEvent.startTime endTime:self.theEvent.endTime description:self.theEvent.detailDescription];
+            [self.eventKitController addEventToCalendar:self.theEvent];
     }
     
     [self updateConflictCell];
@@ -153,7 +153,7 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-         [self.eventKitController addEventWithName:self.theEvent.title startTime:self.theEvent.startTime endTime:self.theEvent.endTime description:self.theEvent.detailDescription];
+         [self.eventKitController addEventToCalendar:self.theEvent];
     }
 }
 

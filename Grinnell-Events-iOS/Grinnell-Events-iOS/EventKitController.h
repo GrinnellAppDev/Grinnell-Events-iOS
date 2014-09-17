@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <EventKit/EventKit.h>
+#import "GAEvent.h"
 
 @interface EventKitController : NSObject
 
@@ -16,6 +17,6 @@
 @property (assign, readonly) BOOL reminderAccess;
 
 
-- (void) addEventWithName:(NSString*) eventName startTime:(NSDate*) startDate endTime:(NSDate*) endDate description:(NSString*) description;
+- (void) addEventToCalendar:(GAEvent*)eventToSave;
 
 @end

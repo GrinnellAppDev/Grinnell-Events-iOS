@@ -29,7 +29,7 @@
     return self;
     }
 
-- (void) addEventWithName:(NSString*) eventName startTime:(NSDate*) startDate endTime:(NSDate*) endDate description:(NSString*) description{
+- (void) addEventToCalendar:(GAEvent*)eventToSave{
 
     NSLog(@"Adding event");
 
@@ -38,23 +38,19 @@
         return;
     }
 
-    //1. Create an Event
+    // Create an Event
     EKEvent *event = [EKEvent eventWithEventStore:self.eventStore];
-    event.title = eventName;
+    event.title = eventToSave.title;
 
-    //3. Set the start and end date
-    event.startDate = startDate;
-    event.endDate = endDate;
-
-    //4. Set an alarm (This is optional)
-    //EKAlarm *alarm = [EKAlarm alarmWithRelativeOffset:-1800]; [event addAlarm:alarm];
-
-    //5. Add a note (This is optional)
-    event.notes = description;
-    //6. Specify the calendar to store the event
+    // Set the start and end date
+    event.startDate = eventToSave.startTime;
+    event.endDate =  eventToSave.endTime;
+    
+    // Add details
+    event.notes = eventToSave.detailDescription;
+    event.location = eventToSave.location;
 
     event.calendar = self.eventStore.defaultCalendarForNewEvents;
-    NSLog(@"EventCal: %@", event.calendar);
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *specifiedCalString = [defaults objectForKey:@"selectedCal"];
@@ -66,55 +62,6 @@
            event.calendar = cal;
         }
     }
-
-    
-        NSLog(@"specified cal %@", event.calendar);
-    
-    /*
-    NSArray *allCalendars = [self.eventStore calendarsForEntityType: EKEntityTypeEvent];
-
-    for (EKCalendar *cal in allCalendars) {
-        if ([specifiedCalString isEqualToString:cal.title] && cal.allowsContentModifications) {
-            event.calendar = cal;
-        }
-    }
-     */
-    //    NSLog(@"Adding event");
-    //    
-    //    if (!_eventAccess) {
-    //        NSLog(@"No event acccess!");
-    //        return;
-    //    }
-    //    
-    //    //1. Create an Event
-    //    EKEvent *event = [EKEvent eventWithEventStore:self.eventStore];
-    //    event.title = eventName;
-    //    
-    //    //3. Set the start and end date
-    //    event.startDate = startDate;
-    //    event.endDate = endDate;
-    //    
-    //    //4. Set an alarm (This is optional)
-    //    //EKAlarm *alarm = [EKAlarm alarmWithRelativeOffset:-1800]; [event addAlarm:alarm];
-    //    
-    //    //5. Add a note (This is optional)
-    //    event.notes = @"This will be exciting!!";
-    //    //6. Specify the calendar to store the event
-    //    
-    //    event.calendar = self.eventStore.defaultCalendarForNewEvents;
-    //    NSLog(@"EventCal: %@", event.calendar);
-    //    
-    //    
-    //    NSArray *allCalendars = [self.eventStore calendarsForEntityType: EKEntityTypeEvent];
-    //    
-    //    NSMutableArray * writableCalendars = [NSMutableArray array];
-    //    for (EKCalendar * calendar in allCalendars) {
-    //        if (calendar.allowsContentModifications && [calendar.title isEqualToString:@"maijid@gmail.com"]) {
-    //            //event.calendar = calendar;
-    //            [writableCalendars addObject:calendar];
-    //        }
-    //    }
-    //    NSLog(@"WC: %@", writableCalendars);
     
     NSError *err;
     NSLog(@"OUR EVENT %@", event);
