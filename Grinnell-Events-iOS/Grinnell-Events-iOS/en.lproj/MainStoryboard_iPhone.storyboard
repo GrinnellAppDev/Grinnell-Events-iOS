@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="14A329r" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="CKB-Ui-aIa">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6246" systemVersion="14A361c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="CKB-Ui-aIa">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6239"/>
     </dependencies>
     <scenes>
-        <!--Calendars View Controller - Calendars-->
+        <!--Calendars-->
         <scene sceneID="hDQ-SO-vho">
             <objects>
                 <tableViewController id="1Bf-fm-TOH" customClass="CalendarsViewController" sceneMemberID="viewController">
@@ -42,7 +43,7 @@
             </objects>
             <point key="canvasLocation" x="2200" y="-698"/>
         </scene>
-        <!--View Controller - Events-->
+        <!--Events-->
         <scene sceneID="5">
             <objects>
                 <viewController id="2" customClass="ViewController" sceneMemberID="viewController">
@@ -179,7 +180,7 @@
             </objects>
             <point key="canvasLocation" x="1058" y="-8"/>
         </scene>
-        <!--Settings View Controller - Settings-->
+        <!--Settings-->
         <scene sceneID="DY5-YR-EM6">
             <objects>
                 <tableViewController id="39Z-WF-xMl" customClass="SettingsViewController" sceneMemberID="viewController">
@@ -245,7 +246,7 @@
             </objects>
             <point key="canvasLocation" x="1735" y="-698"/>
         </scene>
-        <!--Event Detail View Controller - Details-->
+        <!--Details-->
         <scene sceneID="kBY-pg-PIH">
             <objects>
                 <tableViewController id="1Fx-fm-IMF" customClass="EventDetailViewController" sceneMemberID="viewController">
@@ -323,7 +324,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="119"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="7VH-Wk-wwZ">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="7VH-Wk-wwZ">
                                                     <rect key="frame" x="11" y="9" width="299" height="101"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -449,10 +450,10 @@
         <image name="settingsIcon" width="24" height="24"/>
         <image name="timeIcon" width="24" height="24"/>
     </resources>
-    <color key="tintColor" red="0.63089923469999998" green="0.0090904594779999993" blue="0.13360678910000001" alpha="1" colorSpace="calibratedRGB"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <color key="tintColor" red="0.63089923469999998" green="0.0090904594779999993" blue="0.13360678910000001" alpha="1" colorSpace="calibratedRGB"/>
 </document>

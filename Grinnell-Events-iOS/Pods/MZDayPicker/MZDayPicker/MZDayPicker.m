@@ -172,7 +172,7 @@ static BOOL NSRangeContainsRow (NSRange range, NSInteger row) {
 - (void)setCurrentDate:(NSDate *)date animated:(BOOL)animated
 {
     if (date) {
-        NSInteger components = (NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit);
+        NSInteger components = (NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear);
         
         NSCalendar *currentCalendar = [NSCalendar currentCalendar];
         NSDateComponents *componentsFromDate = [currentCalendar components:components
@@ -673,10 +673,10 @@ static BOOL NSRangeContainsRow (NSRange range, NSInteger row) {
         dateTime = [NSDate date];
     }
     
-    NSCalendar       *calendar   = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar       *calendar   = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     [calendar setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
     NSDateComponents *components = [[NSDateComponents alloc] init];
-    components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
+    components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay
                              fromDate:dateTime];
     
     NSDate *dateOnly = [calendar dateFromComponents:components];
@@ -690,8 +690,8 @@ static BOOL NSRangeContainsRow (NSRange range, NSInteger row) {
 - (NSUInteger)numberOfDaysInMonth
 {
     NSCalendar *c = [NSCalendar currentCalendar];
-    NSRange days = [c rangeOfUnit:NSDayCalendarUnit
-                           inUnit:NSMonthCalendarUnit
+    NSRange days = [c rangeOfUnit:NSCalendarUnitDay
+                           inUnit:NSCalendarUnitMonth
                           forDate:self];
     
     return days.length;
