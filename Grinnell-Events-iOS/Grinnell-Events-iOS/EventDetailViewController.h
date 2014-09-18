@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 @class GAEvent;
 
-@interface EventDetailViewController : UITableViewController
+@interface EventDetailViewController : UITableViewController<UIScrollViewDelegate>
 
 @property (nonatomic, strong) GAEvent *theEvent;
+@property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
 
 @end

@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
-@property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (strong, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *conflictLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *conflictImageView;
@@ -50,7 +49,12 @@
     self.dateLabel.text = self.theEvent.date;
     self.titleLabel.text = self.theEvent.title;
     self.locationLabel.text = self.theEvent.location;
-    self.descriptionLabel.text = self.theEvent.detailDescription;
+    if (self.theEvent.detailDescription) {
+        self.descriptionTextView.text = self.theEvent.detailDescription;
+    }
+    else {
+        self.descriptionTextView.text = @"Sorry. No details were given for this event :(";
+    }
 
 }
 
@@ -160,4 +164,25 @@
 - (IBAction)doSpecialThings:(id)sender {
 
 }
+
+#pragma Scroll View Methods
+
+
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    NSLog(@"Did end decelerating");
+}
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    //    NSLog(@"Did scroll");
+}
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView
+                 willDecelerate:(BOOL)decelerate{
+    NSLog(@"Did end dragging");
+}
+-(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
+    NSLog(@"Did begin decelerating");
+}
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    NSLog(@"Did begin dragging");
+}
+
 @end

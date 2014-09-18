@@ -3,25 +3,20 @@
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "GrinnellEventsLogo58.png",
+      "filename" : "Icon-29@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "GrinnellEventsLogo80.png",
+      "filename" : "Icon-40@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "GrinellEventsLogo120.png",
+      "filename" : "Icon-60@2x.png",
       "scale" : "2x"
-    },
-    {
-      "idiom" : "iphone",
-      "size" : "60x60",
-      "scale" : "3x"
     }
   ],
   "info" : {

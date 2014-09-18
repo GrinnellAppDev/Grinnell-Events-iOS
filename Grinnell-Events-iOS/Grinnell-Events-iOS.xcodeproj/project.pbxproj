@@ -13,6 +13,8 @@
 		16AE9C7717FD270E00626F90 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16AE9C7617FD270E00626F90 /* EventKit.framework */; };
 		16AE9C7A17FD27C200626F90 /* EventKitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16AE9C7917FD27C200626F90 /* EventKitController.m */; };
 		16C22F5E17FCF5DF00F0C5FE /* NSDate+GADate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16C22F5D17FCF5DF00F0C5FE /* NSDate+GADate.m */; };
+		6708178E19CA7DA200502DB6 /* strings_private.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6708178D19CA7DA200502DB6 /* strings_private.strings */; };
+		6708179019CA804200502DB6 /* strings_private.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6708178F19CA804200502DB6 /* strings_private.strings */; };
 		8B19A2081827711500F915D0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B19A2071827711500F915D0 /* Images.xcassets */; };
 		8B20D8561826D555006E7683 /* CalendarsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B20D8551826D555006E7683 /* CalendarsViewController.m */; };
 		8B21023E183C4A9700ED3226 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B21023D183C4A9700ED3226 /* SettingsViewController.m */; };
@@ -33,20 +35,19 @@
 		D0371F7519C9352800C180BF /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0371F7419C9352800C180BF /* StoreKit.framework */; };
 		D0371F7619C9352E00C180BF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F5917FCDAC000F0C5FE /* SystemConfiguration.framework */; };
 		D0371F7719C9359000C180BF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C6B8185505D9005DD470 /* MessageUI.framework */; };
-		D0371F7919C9364D00C180BF /* strings_private.strings in Resources */ = {isa = PBXBuildFile; fileRef = D0371F7819C9364D00C180BF /* strings_private.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		006EC76A916046F3A152CA44 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		162AD93B17E6418F00867115 /* GAEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAEventCell.h; sourceTree = "<group>"; };
-		162AD93C17E6418F00867115 /* GAEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAEventCell.m; sourceTree = "<group>"; };
+		162AD93B17E6418F00867115 /* GAEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAEventCell.h; path = ../GAEventCell.h; sourceTree = "<group>"; };
+		162AD93C17E6418F00867115 /* GAEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GAEventCell.m; path = ../GAEventCell.m; sourceTree = "<group>"; };
 		165D7D3317E6393600CFB87F /* GAEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAEvent.h; sourceTree = "<group>"; };
 		165D7D3417E6393600CFB87F /* GAEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAEvent.m; sourceTree = "<group>"; };
 		16AE9C7317FD1E8200626F90 /* EventDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDetailViewController.h; sourceTree = "<group>"; };
 		16AE9C7417FD1E8200626F90 /* EventDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetailViewController.m; sourceTree = "<group>"; };
 		16AE9C7617FD270E00626F90 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
-		16AE9C7817FD27C200626F90 /* EventKitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventKitController.h; sourceTree = "<group>"; };
-		16AE9C7917FD27C200626F90 /* EventKitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventKitController.m; sourceTree = "<group>"; };
+		16AE9C7817FD27C200626F90 /* EventKitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventKitController.h; path = ../EventKitController.h; sourceTree = "<group>"; };
+		16AE9C7917FD27C200626F90 /* EventKitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventKitController.m; path = ../EventKitController.m; sourceTree = "<group>"; };
 		16C22F4917FCDA7B00F0C5FE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		16C22F4B17FCDA8300F0C5FE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		16C22F4D17FCDA8D00F0C5FE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -58,6 +59,8 @@
 		16C22F5C17FCF5DF00F0C5FE /* NSDate+GADate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+GADate.h"; sourceTree = "<group>"; };
 		16C22F5D17FCF5DF00F0C5FE /* NSDate+GADate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+GADate.m"; sourceTree = "<group>"; };
 		4D8FEE04A3994B96994EAFAB /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		6708178D19CA7DA200502DB6 /* strings_private.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = strings_private.strings; sourceTree = "<group>"; };
+		6708178F19CA804200502DB6 /* strings_private.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = strings_private.strings; sourceTree = "<group>"; };
 		8B12C6B8185505D9005DD470 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		8B19A2071827711500F915D0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8B20D8541826D555006E7683 /* CalendarsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarsViewController.h; sourceTree = "<group>"; };
@@ -79,7 +82,6 @@
 		8B58DD7417DCFE360041EBD3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		D0371F6F19C9351000C180BF /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		D0371F7419C9352800C180BF /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		D0371F7819C9364D00C180BF /* strings_private.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = strings_private.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,10 @@
 		165D7D3217E638F400CFB87F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				16AE9C7817FD27C200626F90 /* EventKitController.h */,
+				16AE9C7917FD27C200626F90 /* EventKitController.m */,
+				162AD93B17E6418F00867115 /* GAEventCell.h */,
+				162AD93C17E6418F00867115 /* GAEventCell.m */,
 				165D7D3317E6393600CFB87F /* GAEvent.h */,
 				165D7D3417E6393600CFB87F /* GAEvent.m */,
 			);
@@ -122,6 +128,30 @@
 				16C22F5D17FCF5DF00F0C5FE /* NSDate+GADate.m */,
 			);
 			path = Categories;
+			sourceTree = "<group>";
+		};
+		6708179219CA819700502DB6 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8B58DD7317DCFE360041EBD3 /* ViewController.h */,
+				8B58DD7417DCFE360041EBD3 /* ViewController.m */,
+				16AE9C7317FD1E8200626F90 /* EventDetailViewController.h */,
+				16AE9C7417FD1E8200626F90 /* EventDetailViewController.m */,
+				8B20D8541826D555006E7683 /* CalendarsViewController.h */,
+				8B20D8551826D555006E7683 /* CalendarsViewController.m */,
+				8B21023C183C4A9700ED3226 /* SettingsViewController.h */,
+				8B21023D183C4A9700ED3226 /* SettingsViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		6708179319CA81A100502DB6 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				8B58DD6417DCFE360041EBD3 /* AppDelegate.h */,
+				8B58DD6517DCFE360041EBD3 /* AppDelegate.m */,
+			);
+			name = AppDelegate;
 			sourceTree = "<group>";
 		};
 		8B58DD4917DCFE360041EBD3 = {
@@ -170,22 +200,10 @@
 			children = (
 				16C22F5B17FCF5CD00F0C5FE /* Categories */,
 				165D7D3217E638F400CFB87F /* Models */,
-				8B58DD6417DCFE360041EBD3 /* AppDelegate.h */,
-				8B58DD6517DCFE360041EBD3 /* AppDelegate.m */,
-				8B58DD6D17DCFE360041EBD3 /* MainStoryboard_iPhone.storyboard */,
-				8B58DD7317DCFE360041EBD3 /* ViewController.h */,
-				8B58DD7417DCFE360041EBD3 /* ViewController.m */,
-				16AE9C7317FD1E8200626F90 /* EventDetailViewController.h */,
-				16AE9C7417FD1E8200626F90 /* EventDetailViewController.m */,
-				16AE9C7817FD27C200626F90 /* EventKitController.h */,
-				16AE9C7917FD27C200626F90 /* EventKitController.m */,
-				8B20D8541826D555006E7683 /* CalendarsViewController.h */,
-				8B20D8551826D555006E7683 /* CalendarsViewController.m */,
-				8B21023C183C4A9700ED3226 /* SettingsViewController.h */,
-				8B21023D183C4A9700ED3226 /* SettingsViewController.m */,
-				162AD93B17E6418F00867115 /* GAEventCell.h */,
-				162AD93C17E6418F00867115 /* GAEventCell.m */,
+				6708179319CA81A100502DB6 /* AppDelegate */,
+				6708179219CA819700502DB6 /* Controllers */,
 				8B19A2071827711500F915D0 /* Images.xcassets */,
+				8B58DD6D17DCFE360041EBD3 /* MainStoryboard_iPhone.storyboard */,
 				8B58DD5C17DCFE360041EBD3 /* Supporting Files */,
 			);
 			path = "Grinnell-Events-iOS";
@@ -194,11 +212,12 @@
 		8B58DD5C17DCFE360041EBD3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6708178F19CA804200502DB6 /* strings_private.strings */,
+				6708178D19CA7DA200502DB6 /* strings_private.strings */,
 				8B58DD5D17DCFE360041EBD3 /* Grinnell-Events-iOS-Info.plist */,
 				8B58DD5E17DCFE360041EBD3 /* InfoPlist.strings */,
 				8B58DD6117DCFE360041EBD3 /* main.m */,
 				8B58DD6317DCFE360041EBD3 /* Grinnell-Events-iOS-Prefix.pch */,
-				D0371F7819C9364D00C180BF /* strings_private.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -270,7 +289,8 @@
 				8B58DD6017DCFE360041EBD3 /* InfoPlist.strings in Resources */,
 				8B19A2081827711500F915D0 /* Images.xcassets in Resources */,
 				8B58DD6F17DCFE360041EBD3 /* MainStoryboard_iPhone.storyboard in Resources */,
-				D0371F7919C9364D00C180BF /* strings_private.strings in Resources */,
+				6708179019CA804200502DB6 /* strings_private.strings in Resources */,
+				6708178E19CA7DA200502DB6 /* strings_private.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,7 +338,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run 45894d9e8a6bc3b8513651d6de36159e2c836e51 e63db966a2704d736a61d448865ca84d08aaaa601dce5b22725702038b26a699";
+			shellScript = "${PODS_ROOT}/CrashlyticsFramework/Crashlytics.framework/run 45894d9e8a6bc3b8513651d6de36159e2c836e51 e63db966a2704d736a61d448865ca84d08aaaa601dce5b22725702038b26a699";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -431,7 +451,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Grinnell-Events-iOS/Grinnell-Events-iOS-Prefix.pch";
 				INFOPLIST_FILE = "Grinnell-Events-iOS/Grinnell-Events-iOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -450,7 +470,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Grinnell-Events-iOS/Grinnell-Events-iOS-Prefix.pch";
 				INFOPLIST_FILE = "Grinnell-Events-iOS/Grinnell-Events-iOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
