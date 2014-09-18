@@ -11,6 +11,7 @@
 #import "NSDate+GADate.h"
 #import "GAEvent.h"
 
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
 @interface EventDetailViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
@@ -165,24 +166,54 @@
 
 }
 
-#pragma Scroll View Methods
+#pragma mark - Table View Methods
 
 
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-    NSLog(@"Did end decelerating");
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    if (indexPath.section == 1) {
+        
+        float height = [self findHeightForText:self.theEvent.detailDescription havingWidth:300.0 andFont:[UIFont fontWithName:@"AvenirNext-Regular" size:13.0]];
+        
+        NSLog(@"HEIGHT: %f and STRING: %@", height, self.theEvent.detailDescription);
+        
+        if (height > 120) {
+            return 120;
+        }
+        else {
+            return [super tableView:tableView heightForRowAtIndexPath:indexPath];
+        }
+
+    }else {
+        // return height from the storyboard
+        return [super tableView:tableView heightForRowAtIndexPath:indexPath];
+    }
+    
 }
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    //    NSLog(@"Did scroll");
-}
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView
-                 willDecelerate:(BOOL)decelerate{
-    NSLog(@"Did end dragging");
-}
--(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
-    NSLog(@"Did begin decelerating");
-}
--(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-    NSLog(@"Did begin dragging");
+
+- (CGFloat)findHeightForText:(NSString *)text havingWidth:(CGFloat)widthValue andFont:(UIFont *)font
+{
+    CGFloat result = font.pointSize+4;
+    CGFloat width = widthValue;
+    if (text) {
+        CGSize textSize = { width, CGFLOAT_MAX };       //Width and height of text area
+        CGSize size;
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            //iOS 7
+            CGRect frame = [text boundingRectWithSize:CGSizeMake(widthValue, CGFLOAT_MAX)
+                                              options:NSStringDrawingUsesLineFragmentOrigin
+                                           attributes:@{NSFontAttributeName:font}
+                                              context:nil];
+            size = CGSizeMake(frame.size.width, frame.size.height+1);
+        }
+        else
+        {
+            //iOS 6.0
+            size = [text sizeWithFont:font constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
+        }
+        result = MAX(size.height, result); //At least one row
+    }
+    return result;
 }
 
 @end

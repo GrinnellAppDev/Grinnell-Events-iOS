@@ -13,5 +13,7 @@
 
 @property (nonatomic, strong) GAEvent *theEvent;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
+@property (weak, nonatomic) IBOutlet UITableViewCell *availabilityCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *addToCalendarCell;
 
 @end

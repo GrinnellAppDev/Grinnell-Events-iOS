@@ -316,15 +316,15 @@
                             </tableViewSection>
                             <tableViewSection id="BHG-AR-Wj5">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="134" id="Obm-a6-13w">
-                                        <rect key="frame" x="0.0" y="267" width="320" height="134"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="120" id="Obm-a6-13w">
+                                        <rect key="frame" x="0.0" y="267" width="320" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Obm-a6-13w" id="wer-eo-9of">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="133"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="119"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="7VH-Wk-wwZ">
-                                                    <rect key="frame" x="11" y="7" width="299" height="120"/>
+                                                    <rect key="frame" x="11" y="9" width="299" height="101"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <string key="text">This is the desription. Of our event. Yay. I need to write more stuff here to fill it up. Oh my god, I'm running out of stuff to talk about. This is the desription. Of our event. Yay. I need to write more bullshit here to fill it up. Oh my god, I'm running out of bullshit to talk about.</string>
@@ -339,7 +339,7 @@
                             <tableViewSection id="92L-8y-BJC">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="j1N-yo-BwQ">
-                                        <rect key="frame" x="0.0" y="421" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="407" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j1N-yo-BwQ" id="Saj-7V-v8J">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -360,7 +360,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="bSQ-dw-GBC">
-                                        <rect key="frame" x="0.0" y="465" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="451" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bSQ-dw-GBC" id="i2c-E7-9M1">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -391,6 +391,8 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Details" id="tu2-TP-TeY"/>
                     <connections>
+                        <outlet property="addToCalendarCell" destination="bSQ-dw-GBC" id="9an-BB-qAe"/>
+                        <outlet property="availabilityCell" destination="j1N-yo-BwQ" id="du0-tp-gNM"/>
                         <outlet property="conflictImageView" destination="9H0-Dq-CVN" id="z3o-FX-myB"/>
                         <outlet property="conflictLabel" destination="7EP-tn-G4C" id="rKo-9f-2wh"/>
                         <outlet property="dateLabel" destination="l1N-al-e31" id="kTQ-Ev-oiu"/>
