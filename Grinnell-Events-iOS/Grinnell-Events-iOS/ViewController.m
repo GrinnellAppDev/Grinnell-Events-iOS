@@ -88,13 +88,17 @@
             }];
             
             [self.tableView reloadData];
+
+
             // Scroll the tableview to today's events
-            
+            /* Set the DatePicker with first and last event values */
+            // TODO (DrJid): Might need to do this elsewhere since the picker is reset when back button is pressed in event Detail view
+            // Using this boolean to fix above. Assuming that the datePicker wouldn't need to reset all the time under viewWillAppear.
             // First, find today's date's subscript in the sortedDateKeys array, which is equal to the section index in the tableViewController.
-            
+            if (!self.datePickerSet) {
             NSCalendar *cal = [NSCalendar currentCalendar];
             NSDateComponents *comps1 = [cal components:(NSCalendarUnitMonth| NSCalendarUnitYear | NSCalendarUnitDay) fromDate:[NSDate date]];
-    
+            
             for (int i = 0 ; i < self.sortedDateKeys.count; i++){
                 NSDateComponents *comps2 = [cal components:(NSCalendarUnitMonth| NSCalendarUnitYear | NSCalendarUnitDay) fromDate:[NSDate dateFromString:self.sortedDateKeys[i]]];
                 if (comps1.day == comps2.day && comps1.month == comps2.month && comps1.year == comps2.year){
@@ -103,21 +107,8 @@
                     break;
                 }
             }
-        
             
             
-            
-            
-            
-            
-            
-            
-            
-
-            /* Set the DatePicker with first and last event values */
-            // TODO (DrJid): Might need to do this elsewhere since the picker is reset when back button is pressed in event Detail view
-            // Using this boolean to fix above. Assuming that the datePicker wouldn't need to reset all the time under viewWillAppear.
-            if (!self.datePickerSet) {
                 NSDate *firstDate = [NSDate dateFromString: self.sortedDateKeys.firstObject ];
                 NSDate *lastDate = [NSDate dateFromString:self.sortedDateKeys.lastObject];
                 
