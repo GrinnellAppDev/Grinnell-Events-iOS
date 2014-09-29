@@ -13,7 +13,6 @@
 		16AE9C7717FD270E00626F90 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16AE9C7617FD270E00626F90 /* EventKit.framework */; };
 		16AE9C7A17FD27C200626F90 /* EventKitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16AE9C7917FD27C200626F90 /* EventKitController.m */; };
 		16C22F5E17FCF5DF00F0C5FE /* NSDate+GADate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16C22F5D17FCF5DF00F0C5FE /* NSDate+GADate.m */; };
-		6708178E19CA7DA200502DB6 /* strings_private.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6708178D19CA7DA200502DB6 /* strings_private.strings */; };
 		6708179019CA804200502DB6 /* strings_private.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6708178F19CA804200502DB6 /* strings_private.strings */; };
 		8B19A2081827711500F915D0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B19A2071827711500F915D0 /* Images.xcassets */; };
 		8B20D8561826D555006E7683 /* CalendarsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B20D8551826D555006E7683 /* CalendarsViewController.m */; };
@@ -251,7 +250,7 @@
 		8B58DD4A17DCFE360041EBD3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "Grinnell AppDev";
 				TargetAttributes = {
 					8B58DD5117DCFE360041EBD3 = {
@@ -290,7 +289,6 @@
 				8B19A2081827711500F915D0 /* Images.xcassets in Resources */,
 				8B58DD6F17DCFE360041EBD3 /* MainStoryboard_iPhone.storyboard in Resources */,
 				6708179019CA804200502DB6 /* strings_private.strings in Resources */,
-				6708178E19CA7DA200502DB6 /* strings_private.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
