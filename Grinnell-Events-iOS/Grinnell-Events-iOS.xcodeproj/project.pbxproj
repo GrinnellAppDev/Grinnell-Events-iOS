@@ -338,7 +338,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/CrashlyticsFramework/Crashlytics.framework/run 45894d9e8a6bc3b8513651d6de36159e2c836e51 e63db966a2704d736a61d448865ca84d08aaaa601dce5b22725702038b26a699";
+			shellScript = "${PODS_ROOT}/CrashlyticsFramework/Crashlytics.framework/run 45894d9e8a6bc3b8513651d6de36159e2c836e51 e63db966a2704d736a61d448865ca84d08aaaa601dce5b22725702038b26a699\n\nbN=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbN=$((0x$bN))\nbN=$(($bN + 1))\nbN=$(printf \"%X\" $bN)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bN\" \"$INFOPLIST_FILE\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 

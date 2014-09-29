@@ -96,19 +96,6 @@
             // Using this boolean to fix above. Assuming that the datePicker wouldn't need to reset all the time under viewWillAppear.
             // First, find today's date's subscript in the sortedDateKeys array, which is equal to the section index in the tableViewController.
             if (!self.datePickerSet) {
-            NSCalendar *cal = [NSCalendar currentCalendar];
-            NSDateComponents *comps1 = [cal components:(NSCalendarUnitMonth| NSCalendarUnitYear | NSCalendarUnitDay) fromDate:[NSDate date]];
-            
-            for (int i = 0 ; i < self.sortedDateKeys.count; i++){
-                NSDateComponents *comps2 = [cal components:(NSCalendarUnitMonth| NSCalendarUnitYear | NSCalendarUnitDay) fromDate:[NSDate dateFromString:self.sortedDateKeys[i]]];
-                if (comps1.day == comps2.day && comps1.month == comps2.month && comps1.year == comps2.year){
-                    //
-                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection: i] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-                    break;
-                }
-            }
-            
-            
                 NSDate *firstDate = [NSDate dateFromString: self.sortedDateKeys.firstObject ];
                 NSDate *lastDate = [NSDate dateFromString:self.sortedDateKeys.lastObject];
                 
@@ -123,9 +110,8 @@
                 NSInteger lastMonth = [lastComponents month];
                 NSInteger lastDay = [lastComponents day];
                 
-                //Set up initial DatePicker values
                 [self.dayPicker setStartDate:[NSDate dateFromDay:firstDay month:firstMonth year:firstYear] endDate:[NSDate dateFromDay:lastDay month:lastMonth year:lastYear]];
-                [self.dayPicker setCurrentDate:[NSDate date] animated:NO];
+                [self goToTodayAnimated:NO];
                 self.datePickerSet = YES;
             }
         } else {
@@ -133,6 +119,23 @@
         }
     }];
 }
+
+-(void)goToTodayAnimated:(BOOL)animated{
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *comps1 = [cal components:(NSCalendarUnitMonth| NSCalendarUnitYear | NSCalendarUnitDay) fromDate:[NSDate date]];
+    
+    for (int i = 0 ; i < self.sortedDateKeys.count; i++){
+        NSDateComponents *comps2 = [cal components:(NSCalendarUnitMonth| NSCalendarUnitYear | NSCalendarUnitDay) fromDate:[NSDate dateFromString:self.sortedDateKeys[i]]];
+        if (comps1.day == comps2.day && comps1.month == comps2.month && comps1.year == comps2.year){
+            //
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection: i] atScrollPosition:UITableViewScrollPositionTop animated:animated];
+            break;
+        }
+    }
+   
+    [self.dayPicker setCurrentDate:[NSDate date] animated:animated];
+}
+
 
 #pragma mark - MZDayPickerDelegate methods
 - (NSString *)dayPicker:(MZDayPicker *)dayPicker titleForCellDayNameLabelInDay:(MZDay *)day
@@ -345,4 +348,6 @@ BOOL _dayPickerIsAnimating = NO;
 }
 
 
+- (IBAction)didTapDays:(id)sender {
+}
 @end
