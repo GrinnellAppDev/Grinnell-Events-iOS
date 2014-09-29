@@ -26,6 +26,9 @@
 @end
 
 @implementation ViewController
+- (IBAction)didDoubleTapDays:(id)sender {
+    [self goToTodayAnimated:YES];
+}
 
 - (void)viewDidLoad
 {
