@@ -19,20 +19,7 @@
     NSDictionary *keysDict = [NSDictionary dictionaryWithContentsOfFile:strings_private];
     // Override point for customization after application launch.
     
-    
-    // Set up Parse Grinnell Events credentials.
-    [Parse setApplicationId:[keysDict objectForKey:@"ParseAppID"]
-                  clientKey:[keysDict objectForKey:@"ParseClientKey"]];
-    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-    
-    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
-                                                    UIUserNotificationTypeBadge |
-                                                    UIUserNotificationTypeSound);
-    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
-                                                                             categories:nil];
-    [application registerUserNotificationSettings:settings];
-    [application registerForRemoteNotifications];
-    
+    [Parse setApplicationId:[keysDict objectForKey:@"ParseAppID"] clientKey:[keysDict objectForKey:@"ParseClientKey"]];
     [GAEvent registerSubclass];
     
     [Flurry setCrashReportingEnabled:NO];
@@ -43,17 +30,7 @@
     return YES;
 }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    // Store the deviceToken in the current installation and save it to Parse.
-    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-    [currentInstallation setDeviceTokenFromData:deviceToken];
-    currentInstallation.channels = @[ @"global" ];
-    [currentInstallation saveInBackground];
-}
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    [PFPush handlePush:userInfo];
-}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
