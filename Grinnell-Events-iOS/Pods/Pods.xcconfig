@@ -1,7 +1,0 @@
-FRAMEWORK_SEARCH_PATHS = $(inherited) "$(PODS_ROOT)/CrashlyticsFramework" "$(PODS_ROOT)/Parse"
-GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/Bolts" "${PODS_ROOT}/Headers/CrashlyticsFramework" "${PODS_ROOT}/Headers/FlurrySDK" "${PODS_ROOT}/Headers/MZDayPicker" "${PODS_ROOT}/Headers/Parse"
-LIBRARY_SEARCH_PATHS = "$(PODS_ROOT)/FlurrySDK/Flurry"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers" -isystem "${PODS_ROOT}/Headers/Bolts" -isystem "${PODS_ROOT}/Headers/CrashlyticsFramework" -isystem "${PODS_ROOT}/Headers/FlurrySDK" -isystem "${PODS_ROOT}/Headers/MZDayPicker" -isystem "${PODS_ROOT}/Headers/Parse"
-OTHER_LDFLAGS = -ObjC -lFlurry_5.3.0 -lsqlite3 -lz -framework AudioToolbox -framework CFNetwork -framework CoreGraphics -framework CoreLocation -framework Crashlytics -framework Foundation -framework MediaPlayer -framework MobileCoreServices -framework Parse -framework QuartzCore -framework Security -framework StoreKit -framework SystemConfiguration -framework UIKit -weak_framework Accounts -weak_framework AdSupport -weak_framework Social -weak_framework StoreKit
-PODS_ROOT = ${SRCROOT}/Pods
