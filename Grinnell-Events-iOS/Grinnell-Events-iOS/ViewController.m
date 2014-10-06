@@ -33,35 +33,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    
-    self.dayPicker.activeDayColor = [UIColor redColor];
-    self.dayPicker.bottomBorderColor = [UIColor colorWithRed:0.693 green:0.008 blue:0.207 alpha:1.000];
-    self.dayPicker.inactiveDayColor = [UIColor grayColor];
-    
-    self.dayPicker.delegate = self;
-    self.dayPicker.dataSource = self;
-    
-    self.dayPicker.dayNameLabelFontSize = 12.0f;
-    self.dayPicker.dayLabelFontSize = 18.0f;
-    
-    self.dayPickerdateFormatter = [[NSDateFormatter alloc] init];
-    [self.dayPickerdateFormatter setDateFormat:@"EE"];
-    
-   // NSDate *tomorr = [NSDate dateWithTimeIntervalSinceNow:60 * 60 * 24];
-   // NSLog(@"date: %@", tomorr);
-    
-    
-    // Initialize the filteredEventsArray with a capacity equal to the event's capacity
-    self.filteredEventsArray = [NSMutableArray arrayWithCapacity:self.flatEventsData.count];
-
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    
     [GAEvent findAllEventsInBackground:^(NSArray *events, NSError *error) {
         if (!error) {
             
@@ -70,7 +41,7 @@
             
             for (GAEvent *event in events) {
                 NSString *eventDate = event.date;
-            
+                
                 if ( theEvents[eventDate] ) {
                     /* It has an array with this date. Add to event to existing array. */
                     [theEvents[eventDate] addObject:event];
@@ -91,8 +62,8 @@
             }];
             
             [self.tableView reloadData];
-
-
+            
+            
             // Scroll the tableview to today's events
             /* Set the DatePicker with first and last event values */
             // TODO (DrJid): Might need to do this elsewhere since the picker is reset when back button is pressed in event Detail view
@@ -121,7 +92,31 @@
             NSLog(@"Error: %@ %@ ", error, error.userInfo);
         }
     }];
+
+	// Do any additional setup after loading the view, typically from a nib.
+    
+    self.dayPicker.activeDayColor = [UIColor redColor];
+    self.dayPicker.bottomBorderColor = [UIColor colorWithRed:0.693 green:0.008 blue:0.207 alpha:1.000];
+    self.dayPicker.inactiveDayColor = [UIColor grayColor];
+    
+    self.dayPicker.delegate = self;
+    self.dayPicker.dataSource = self;
+    
+    self.dayPicker.dayNameLabelFontSize = 12.0f;
+    self.dayPicker.dayLabelFontSize = 18.0f;
+    
+    self.dayPickerdateFormatter = [[NSDateFormatter alloc] init];
+    [self.dayPickerdateFormatter setDateFormat:@"EE"];
+    
+   // NSDate *tomorr = [NSDate dateWithTimeIntervalSinceNow:60 * 60 * 24];
+   // NSLog(@"date: %@", tomorr);
+    
+    
+    // Initialize the filteredEventsArray with a capacity equal to the event's capacity
+    self.filteredEventsArray = [NSMutableArray arrayWithCapacity:self.flatEventsData.count];
+
 }
+
 
 -(void)goToTodayAnimated:(BOOL)animated{
     NSCalendar *cal = [NSCalendar currentCalendar];
