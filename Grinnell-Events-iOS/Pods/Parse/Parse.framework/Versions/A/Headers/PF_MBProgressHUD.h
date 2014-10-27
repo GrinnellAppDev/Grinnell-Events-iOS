@@ -28,7 +28,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "PFConstants.h"
+#import <Parse/PFConstants.h>
 
 @protocol PF_MBProgressHUDDelegate;
 

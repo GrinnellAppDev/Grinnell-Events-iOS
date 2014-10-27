@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "GAEvent.h"
 #import <Crashlytics/Crashlytics.h>
-#import <FlurrySDK/Flurry.h>
 
 @implementation AppDelegate
 
@@ -21,10 +20,6 @@
     
     [Parse setApplicationId:[keysDict objectForKey:@"ParseAppID"] clientKey:[keysDict objectForKey:@"ParseClientKey"]];
     [GAEvent registerSubclass];
-    
-    [Flurry setCrashReportingEnabled:NO];
-    [Flurry startSession:[keysDict objectForKey:@"FlurrySession"]];
-    
     
     [Crashlytics startWithAPIKey:[keysDict objectForKey:@"CrashlyticsAPIKey"]];
     return YES;

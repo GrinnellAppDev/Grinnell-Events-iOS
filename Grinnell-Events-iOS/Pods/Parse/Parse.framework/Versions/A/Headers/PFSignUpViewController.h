@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PFSignUpView.h"
-#import "PFUser.h"
+
+#import <Parse/PFSignUpView.h>
+#import <Parse/PFUser.h>
 
 @protocol PFSignUpViewControllerDelegate;
 

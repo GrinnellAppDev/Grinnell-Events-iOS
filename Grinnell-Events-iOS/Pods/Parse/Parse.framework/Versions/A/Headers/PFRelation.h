@@ -1,43 +1,54 @@
 //
 //  PFRelation.h
-//  Parse
 //
-//  Created by Shyam Jayaraman on 5/11/12.
-//  Copyright (c) 2012 Parse Inc. All rights reserved.
+//  Copyright 2011-present Parse Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "PFObject.h"
-#import "PFQuery.h"
+
+#if TARGET_OS_IPHONE
+#import <Parse/PFObject.h>
+#import <Parse/PFQuery.h>
+#else
+#import <ParseOSX/PFObject.h>
+#import <ParseOSX/PFQuery.h>
+#endif
 
 /*!
- A class that is used to access all of the children of a many-to-many relationship.  Each instance
- of PFRelation is associated with a particular parent object and key.
+ The `PFRelation` class that is used to access all of the children of a many-to-many relationship.
+ Each instance of `PFRelation` is associated with a particular parent object and key.
  */
 @interface PFRelation : NSObject
 
+/*!
+ @abstract The name of the class of the target child objects.
+ */
 @property (nonatomic, strong) NSString *targetClass;
 
-#pragma mark -
-#pragma mark Accessing objects
+///--------------------------------------
+/// @name Accessing Objects
+///--------------------------------------
 
 /*!
- @return A ParseQuery that can be used to get objects in this relation.
+ @abstract Returns a <PFQuery> object that can be used to get objects in this relation.
  */
 - (PFQuery *)query;
 
-#pragma mark -
-#pragma mark Modifying relations
+///--------------------------------------
+/// @name Modifying Relations
+///--------------------------------------
 
 /*!
- Adds a relation to the passed in object.
- @param object ParseObject to add relation to.
+ @abstract Adds a relation to the passed in object.
+
+ @param object A <PFObject> object to add relation to.
  */
 - (void)addObject:(PFObject *)object;
 
 /*!
- Removes a relation to the passed in object.
- @param object ParseObject to add relation to.
+ @abstract Removes a relation to the passed in object.
+
+ @param object A <PFObject> object to add relation to.
  */
 - (void)removeObject:(PFObject *)object;
 

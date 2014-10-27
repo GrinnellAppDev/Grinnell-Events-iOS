@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "PFLogInView.h"
-#import "PFSignUpViewController.h"
-#import "PFUser.h"
+#import <Parse/PFLogInView.h>
+#import <Parse/PFSignUpViewController.h>
+#import <Parse/PFUser.h>
 
 @protocol PFLogInViewControllerDelegate;
 

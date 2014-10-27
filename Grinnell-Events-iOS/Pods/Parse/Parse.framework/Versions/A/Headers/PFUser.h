@@ -1,154 +1,240 @@
-// PFUser.h
-// Copyright 2011 Parse, Inc. All rights reserved.
+//
+//  PFUser.h
+//
+//  Copyright 2011-present Parse Inc. All rights reserved.
+//
 
 #import <Foundation/Foundation.h>
-#import "PFConstants.h"
-#import "PFObject.h"
-#import "PFSubclassing.h"
+
+#if TARGET_OS_IPHONE
+#import <Parse/PFConstants.h>
+#import <Parse/PFObject.h>
+#import <Parse/PFSubclassing.h>
+#else
+#import <ParseOSX/PFConstants.h>
+#import <ParseOSX/PFObject.h>
+#import <ParseOSX/PFSubclassing.h>
+#endif
 
 @class PFQuery;
 
 /*!
-A Parse Framework User Object that is a local representation of a user persisted to the Parse cloud. This class
- is a subclass of a PFObject, and retains the same functionality of a PFObject, but also extends it with various
- user specific methods, like authentication, signing up, and validation uniqueness.
+ The `PFUser` class is a local representation of a user persisted to the Parse Data.
+ This class is a subclass of a <PFObject>, and retains the same functionality of a <PFObject>,
+ but also extends it with various user specific methods, like authentication, signing up, and validation uniqueness.
  
- Many APIs responsible for linking a PFUser with Facebook or Twitter have been deprecated in favor of dedicated
- utilities for each social network. See PFFacebookUtils and PFTwitterUtils for more information.
+ Many APIs responsible for linking a `PFUser` with Facebook or Twitter have been deprecated in favor of dedicated
+ utilities for each social network. See <PFFacebookUtils>, <PFTwitterUtils> and <PFAnonymousUtils> for more information.
  */
 
 @interface PFUser : PFObject<PFSubclassing>
 
-/*! The name of the PFUser class in the REST API. This is a required
- *  PFSubclassing method */
+/*!
+ @abstract The name of the `PFUser` class in the REST API.
+
+ @discussion This is a required <PFSubclassing> method.
+ */
 + (NSString *)parseClassName;
 
-/** @name Accessing the Current User */
+///--------------------------------------
+/// @name Accessing the Current User
+///--------------------------------------
 
 /*!
- Gets the currently logged in user from disk and returns an instance of it.
- @result Returns a PFUser that is the currently logged in user. If there is none, returns nil.
+ @abstract Gets the currently logged in user from disk and returns an instance of it.
+
+ @returns Returns a `PFUser` that is the currently logged in user. If there is none, returns `nil`.
  */
 + (instancetype)currentUser;
 
-/// The session token for the PFUser. This is set by the server upon successful authentication.
+/*!
+ @abstract The session token for the `PFUser`.
+
+ @discussion This is set by the server upon successful authentication.
+ */
 @property (nonatomic, strong) NSString *sessionToken;
 
-/// Whether the PFUser was just created from a request. This is only set after a Facebook or Twitter login.
+/*!
+ @abstract Whether the `PFUser` was just created from a request.
+
+ @discussion This is only set after a Facebook or Twitter login.
+ */
 @property (assign, readonly) BOOL isNew;
 
 /*!
- Whether the user is an authenticated object for the device. An authenticated PFUser is one that is obtained via
- a signUp or logIn method. An authenticated object is required in order to save (with altered values) or delete it.
- @result Returns whether the user is authenticated.
+ @abstract Whether the user is an authenticated object for the device.
+
+ @discussion An authenticated `PFUser` is one that is obtained via a <signUp> or <logIn> method.
+ An authenticated object is required in order to save (with altered values) or delete it.
+
+ @returns Returns whether the user is authenticated.
  */
 - (BOOL)isAuthenticated;
 
-/** @name Creating a New User */
+///--------------------------------------
+/// @name Creating a New User
+///--------------------------------------
 
 /*!
- Creates a new PFUser object.
- @result Returns a new PFUser object.
+ @abstract Creates a new `PFUser` object.
+
+ @returns Returns a new `PFUser` object.
  */
 + (PFUser *)user;
 
 /*!
- Enables automatic creation of anonymous users.  After calling this method, [PFUser currentUser] will always have a value.
- The user will only be created on the server once the user has been saved, or once an object with a relation to that user or
- an ACL that refers to the user has been saved.
+ @abstract Enables automatic creation of anonymous users.
  
- Note: saveEventually will not work if an item being saved has a relation to an automatic user that has never been saved.
+ @discussion After calling this method, <currentUser> will always have a value.
+ The user will only be created on the server once the user has been saved,
+ or once an object with a relation to that user or an ACL that refers to the user has been saved.
+
+ @warning <[PFObject saveEventually]> will not work on if an item being saved has a relation
+ to an automatic user that has never been saved.
  */
 + (void)enableAutomaticUser;
 
-/// The username for the PFUser.
+/*!
+ @abstract The username for the `PFUser`.
+ */
 @property (nonatomic, strong) NSString *username;
 
-/** 
- The password for the PFUser. This will not be filled in from the server with
- the password. It is only meant to be set.
+/**!
+ @abstract The password for the `PFUser`.
+
+ @discussion This will not be filled in from the server with the password.
+ It is only meant to be set.
  */
 @property (nonatomic, strong) NSString *password;
 
-/// The email for the PFUser.
+/*!
+ @abstract The email for the `PFUser`.
+ */
 @property (nonatomic, strong) NSString *email;
 
 /*!
- Signs up the user. Make sure that password and username are set. This will also enforce that the username isn't already taken. 
- @result Returns true if the sign up was successful.
+ @abstract Signs up the user *synchronously*.
+
+ @discussion This will also enforce that the username isn't already taken.
+
+ @warning Make sure that password and username are set before calling this method.
+
+ @returns Returns `YES` if the sign up was successful, otherwise `NO`.
  */
 - (BOOL)signUp;
 
 /*!
- Signs up the user. Make sure that password and username are set. This will also enforce that the username isn't already taken.
+ @abstract Signs up the user *synchronously*.
+
+ @discussion This will also enforce that the username isn't already taken.
+
+ @warning Make sure that password and username are set before calling this method.
+
  @param error Error object to set on error. 
- @result Returns whether the sign up was successful.
+
+ @returns Returns whether the sign up was successful.
  */
 - (BOOL)signUp:(NSError **)error;
 
 /*!
- Signs up the user asynchronously. Make sure that password and username are set. This will also enforce that the username isn't already taken.
+ @abstract Signs up the user *asynchronously*.
+
+ @discussion This will also enforce that the username isn't already taken.
+
+ @warning Make sure that password and username are set before calling this method.
+
+ @returns The task, that encapsulates the work being done.
  */
-- (void)signUpInBackground;
+- (BFTask *)signUpInBackground;
 
 /*!
- Signs up the user asynchronously. Make sure that password and username are set. This will also enforce that the username isn't already taken.
- @param block The block to execute. The block should have the following argument signature: (BOOL succeeded, NSError *error) 
+ @abstract Signs up the user *asynchronously*.
+
+ @discussion This will also enforce that the username isn't already taken.
+
+ @warning Make sure that password and username are set before calling this method.
+
+ @param block The block to execute.
+ It should have the following argument signature: `^(BOOL succeeded, NSError *error)`.
  */
 - (void)signUpInBackgroundWithBlock:(PFBooleanResultBlock)block;
 
 /*!
- Signs up the user asynchronously. Make sure that password and username are set. This will also enforce that the username isn't already taken.
+ @abstract Signs up the user *asynchronously*.
+
+ @discussion This will also enforce that the username isn't already taken.
+
+ @warning Make sure that password and username are set before calling this method.
+
  @param target Target object for the selector.
- @param selector The selector that will be called when the asynchrounous request is complete. It should have the following signature: (void)callbackWithResult:(NSNumber *)result error:(NSError **)error. error will be nil on success and set if there was an error. [result boolValue] will tell you whether the call succeeded or not.
+ @param selector The selector that will be called when the asynchrounous request is complete.
+ It should have the following signature: `(void)callbackWithResult:(NSNumber *)result error:(NSError *)error`.
+ `error` will be `nil` on success and set if there was an error.
+ `[result boolValue]` will tell you whether the call succeeded or not.
  */
 - (void)signUpInBackgroundWithTarget:(id)target selector:(SEL)selector;
 
-/** @name Logging in */
+///--------------------------------------
+/// @name Logging In
+///--------------------------------------
 
 /*!
- Makes a request to login a user with specified credentials. Returns an instance
- of the successfully logged in PFUser. This will also cache the user locally so 
- that calls to currentUser will use the latest logged in user.
+ @abstract Makes a *synchronous* request to login a user with specified credentials.
+
+ @discussion Returns an instance of the successfully logged in `PFUser`.
+ This also caches the user locally so that calls to <currentUser> will use the latest logged in user.
+
  @param username The username of the user.
  @param password The password of the user.
- @result Returns an instance of the PFUser on success. If login failed for either wrong password or wrong username, returns nil.
+
+ @returns Returns an instance of the `PFUser` on success.
+ If login failed for either wrong password or wrong username, returns `nil`.
  */
 + (instancetype)logInWithUsername:(NSString *)username
                          password:(NSString *)password;
 
 /*!
- Makes a request to login a user with specified credentials. Returns an
- instance of the successfully logged in PFUser. This will also cache the user 
- locally so that calls to currentUser will use the latest logged in user.
+ @abstract Makes a *synchronous* request to login a user with specified credentials.
+
+ @discussion Returns an instance of the successfully logged in `PFUser`.
+ This also caches the user locally so that calls to <currentUser> will use the latest logged in user.
+
  @param username The username of the user.
  @param password The password of the user.
  @param error The error object to set on error.
- @result Returns an instance of the PFUser on success. If login failed for either wrong password or wrong username, returns nil.
+
+ @returns Returns an instance of the `PFUser` on success.
+ If login failed for either wrong password or wrong username, returns `nil`.
  */
 + (instancetype)logInWithUsername:(NSString *)username
                          password:(NSString *)password
                             error:(NSError **)error;
 
 /*!
- Makes an asynchronous request to login a user with specified credentials.
- Returns an instance of the successfully logged in PFUser. This will also cache 
- the user locally so that calls to currentUser will use the latest logged in user.
+ @abstract Makes an *asynchronous* request to login a user with specified credentials.
+
+ @discussion Returns an instance of the successfully logged in `PFUser`.
+ This also caches the user locally so that calls to <currentUser> will use the latest logged in user.
+
  @param username The username of the user.
  @param password The password of the user.
+
+ @returns The task, that encapsulates the work being done.
  */
-+ (void)logInWithUsernameInBackground:(NSString *)username
-                             password:(NSString *)password;
++ (BFTask *)logInWithUsernameInBackground:(NSString *)username
+                                 password:(NSString *)password;
 
 /*!
- Makes an asynchronous request to login a user with specified credentials.
- Returns an instance of the successfully logged in PFUser. This will also cache 
- the user locally so that calls to currentUser will use the latest logged in user. 
- The selector for the callback should look like: myCallback:(PFUser *)user error:(NSError **)error
+ @abstract Makes an *asynchronous* request to login a user with specified credentials.
+
+ @discussion Returns an instance of the successfully logged in `PFUser`.
+ This also caches the user locally so that calls to <currentUser> will use the latest logged in user.
+
  @param username The username of the user.
  @param password The password of the user.
  @param target Target object for the selector.
  @param selector The selector that will be called when the asynchrounous request is complete.
+ It should have the following signature: `(void)callbackWithUser:(PFUser *)user error:(NSError *)error`.
  */
 + (void)logInWithUsernameInBackground:(NSString *)username
                              password:(NSString *)password
@@ -156,135 +242,175 @@ A Parse Framework User Object that is a local representation of a user persisted
                              selector:(SEL)selector;
 
 /*!
- Makes an asynchronous request to log in a user with specified credentials.
- Returns an instance of the successfully logged in PFUser. This will also cache 
- the user locally so that calls to currentUser will use the latest logged in user. 
+ @abstract Makes an *asynchronous* request to log in a user with specified credentials.
+
+ @discussion Returns an instance of the successfully logged in `PFUser`.
+ This also caches the user locally so that calls to <currentUser> will use the latest logged in user.
+
  @param username The username of the user.
  @param password The password of the user.
- @param block The block to execute. The block should have the following argument signature: (PFUser *user, NSError *error) 
+ @param block The block to execute.
+ It should have the following argument signature: `^(PFUser *user, NSError *error)`.
  */
 + (void)logInWithUsernameInBackground:(NSString *)username
                              password:(NSString *)password
                                 block:(PFUserResultBlock)block;
 
-/** @name Becoming a user */
+///--------------------------------------
+/// @name Becoming a User
+///--------------------------------------
 
 /*!
- Makes a request to become a user with the given session token. Returns an
- instance of the successfully logged in PFUser. This also caches the user locally
- so that calls to currentUser will use the latest logged in user.
+ @abstract Makes a *synchronous* request to become a user with the given session token.
+
+ @discussion Returns an instance of the successfully logged in `PFUser`.
+ This also caches the user locally so that calls to <currentUser> will use the latest logged in user.
+
  @param sessionToken The session token for the user.
- @result Returns an instance of the PFUser on success. If becoming a user fails due to incorrect token, it returns nil.
+
+ @returns Returns an instance of the `PFUser` on success.
+ If becoming a user fails due to incorrect token, it returns `nil`.
  */
 + (instancetype)become:(NSString *)sessionToken;
 
 /*!
- Makes a request to become a user with the given session token. Returns an
- instance of the successfully logged in PFUser. This will also cache the user
- locally so that calls to currentUser will use the latest logged in user.
+ @abstract Makes a *synchronous* request to become a user with the given session token.
+
+ @discussion Returns an instance of the successfully logged in `PFUser`.
+ This will also cache the user locally so that calls to <currentUser> will use the latest logged in user.
+
  @param sessionToken The session token for the user.
  @param error The error object to set on error.
- @result Returns an instance of the PFUser on success. If becoming a user fails due to incorrect token, it returns nil.
+
+ @returns Returns an instance of the `PFUser` on success.
+ If becoming a user fails due to incorrect token, it returns `nil`.
  */
 + (instancetype)become:(NSString *)sessionToken
                  error:(NSError **)error;
 
 /*!
- Makes an asynchronous request to become a user with the given session token. Returns an
- instance of the successfully logged in PFUser. This also caches the user locally
- so that calls to currentUser will use the latest logged in user.
+ @abstract Makes an *asynchronous* request to become a user with the given session token.
+
+ @discussion Returns an instance of the successfully logged in `PFUser`.
+ This also caches the user locally so that calls to <currentUser> will use the latest logged in user.
+
  @param sessionToken The session token for the user.
+
+ @returns The task, that encapsulates the work being done.
  */
-+ (void)becomeInBackground:(NSString *)sessionToken;
++ (BFTask *)becomeInBackground:(NSString *)sessionToken;
 
 /*!
- Makes an asynchronous request to become a user with the given session token. Returns an
- instance of the successfully logged in PFUser. This also caches the user locally
- so that calls to currentUser will use the latest logged in user.
- The selector for the callback should look like: myCallback:(PFUser *)user error:(NSError **)error
+ @abstract Makes an *asynchronous* request to become a user with the given session token.
+
+ @discussion Returns an instance of the successfully logged in `PFUser`. This also caches the user locally
+ so that calls to <currentUser> will use the latest logged in user.
+
  @param sessionToken The session token for the user.
  @param target Target object for the selector.
  @param selector The selector that will be called when the asynchrounous request is complete.
+ It should have the following signature: `(void)callbackWithUser:(PFUser *)user error:(NSError *)error`.
  */
 + (void)becomeInBackground:(NSString *)sessionToken
                     target:(id)target
                   selector:(SEL)selector;
 
 /*!
- Makes an asynchronous request to become a user with the given session token. Returns an
- instance of the successfully logged in PFUser. This also caches the user locally
- so that calls to currentUser will use the latest logged in user.
- The selector for the callback should look like: myCallback:(PFUser *)user error:(NSError **)error
+ @abstract Makes an *asynchronous* request to become a user with the given session token.
+
+ @discussion Returns an instance of the successfully logged in `PFUser`. This also caches the user locally
+ so that calls to <currentUser> will use the latest logged in user.
+
  @param sessionToken The session token for the user.
  @param block The block to execute. The block should have the following argument signature: (PFUser *user, NSError *error)
  */
 + (void)becomeInBackground:(NSString *)sessionToken
                      block:(PFUserResultBlock)block;
 
-/** @name Logging Out */
+///--------------------------------------
+/// @name Logging Out
+///--------------------------------------
 
 /*!
- Logs out the currently logged in user on disk.
+ @abstract *Synchronously* logs out the currently logged in user on disk.
  */
 + (void)logOut;
 
-/** @name Requesting a Password Reset */
+///--------------------------------------
+/// @name Requesting a Password Reset
+///--------------------------------------
 
 /*!
- Send a password reset request for a specified email. If a user account exists with that email,
- an email will be sent to that address with instructions on how to reset their password.
+ @abstract *Synchronously* Send a password reset request for a specified email.
+
+ @discussion If a user account exists with that email, an email will be sent to that address
+ with instructions on how to reset their password.
+
  @param email Email of the account to send a reset password request.
- @result Returns true if the reset email request is successful. False if no account was found for the email address.
+
+ @returns Returns `YES` if the reset email request is successful. `NO` - if no account was found for the email address.
  */
 + (BOOL)requestPasswordResetForEmail:(NSString *)email;
 
 /*!
- Send a password reset request for a specified email and sets an error object. If a user
- account exists with that email, an email will be sent to that address with instructions 
- on how to reset their password.
+ @abstract *Synchronously* send a password reset request for a specified email and sets an error object.
+
+ @discussion If a user account exists with that email, an email will be sent to that address
+ with instructions on how to reset their password.
+
  @param email Email of the account to send a reset password request.
  @param error Error object to set on error.
- @result Returns true if the reset email request is successful. False if no account was found for the email address.
+ @returns Returns `YES` if the reset email request is successful. `NO` - if no account was found for the email address.
  */
 + (BOOL)requestPasswordResetForEmail:(NSString *)email
                                error:(NSError **)error;
 
 /*!
- Send a password reset request asynchronously for a specified email and sets an
+ @abstract Send a password reset request asynchronously for a specified email and sets an
  error object. If a user account exists with that email, an email will be sent to 
  that address with instructions on how to reset their password.
  @param email Email of the account to send a reset password request.
+ @returns The task, that encapsulates the work being done.
  */
-+ (void)requestPasswordResetForEmailInBackground:(NSString *)email;
++ (BFTask *)requestPasswordResetForEmailInBackground:(NSString *)email;
 
 /*!
- Send a password reset request asynchronously for a specified email and sets an error object.
- If a user account exists with that email, an email will be sent to that address with instructions
- on how to reset their password.
+ @abstract Send a password reset request *asynchronously* for a specified email and sets an error object.
+
+ @discussion If a user account exists with that email, an email will be sent to that address
+ with instructions on how to reset their password.
+
  @param email Email of the account to send a reset password request.
  @param target Target object for the selector.
- @param selector The selector that will be called when the asynchronous request is complete. It should have the following signature: (void)callbackWithResult:(NSNumber *)result error:(NSError **)error. error will be nil on success and set if there was an error. [result boolValue] will tell you whether the call succeeded or not.
+ @param selector The selector that will be called when the asynchronous request is complete.
+ It should have the following signature: `(void)callbackWithResult:(NSNumber *)result error:(NSError *)error`.
+ `error` will be `nil` on success and set if there was an error.
+ `[result boolValue]` will tell you whether the call succeeded or not.
  */
 + (void)requestPasswordResetForEmailInBackground:(NSString *)email
                                           target:(id)target
                                         selector:(SEL)selector;
 
 /*!
- Send a password reset request asynchronously for a specified email.
- If a user account exists with that email, an email will be sent to that address with instructions
- on how to reset their password.
+ @abstract Send a password reset request *asynchronously* for a specified email.
+
+ @discussion If a user account exists with that email, an email will be sent to that address
+ with instructions on how to reset their password.
+
  @param email Email of the account to send a reset password request.
- @param block The block to execute. The block should have the following argument signature: (BOOL succeeded, NSError *error) 
+ @param block The block to execute.
+ It should have the following argument signature: `^(BOOL succeeded, NSError *error)`.
  */
 + (void)requestPasswordResetForEmailInBackground:(NSString *)email
                                            block:(PFBooleanResultBlock)block;
 
-/** @name Querying for Users */
+///--------------------------------------
+/// @name Querying for Users
+///--------------------------------------
 
 /*!
- Creates a query for PFUser objects.
+ @abstract Creates a <PFQuery> for `PFUser` objects.
  */
 + (PFQuery *)query;
-
 
 @end

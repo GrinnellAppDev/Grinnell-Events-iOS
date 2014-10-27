@@ -21,6 +21,7 @@
 @property (nonatomic, strong) NSArray *allEvents;
 @property (nonatomic, strong) NSDictionary *eventsDictionary;
 @property (nonatomic, strong) NSArray *sortedDateKeys;
+- (IBAction)goToToday:(id)sender;
 
 @property (nonatomic, assign) BOOL datePickerSet;
 @end
@@ -114,7 +115,6 @@
     
     // Initialize the filteredEventsArray with a capacity equal to the event's capacity
     self.filteredEventsArray = [NSMutableArray arrayWithCapacity:self.flatEventsData.count];
-
 }
 
 
@@ -347,5 +347,8 @@ BOOL _dayPickerIsAnimating = NO;
 
 
 - (IBAction)didTapDays:(id)sender {
+}
+- (IBAction)goToToday:(id)sender {
+    [self goToTodayAnimated:YES];
 }
 @end

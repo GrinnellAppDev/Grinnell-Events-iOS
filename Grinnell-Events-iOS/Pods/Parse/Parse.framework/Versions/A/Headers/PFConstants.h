@@ -2,11 +2,12 @@
 // Copyright 2011 Parse, Inc. All rights reserved.
 
 #import <Foundation/Foundation.h>
+
 @class PFObject;
 @class PFUser;
 
 // Version
-#define PARSE_VERSION @"1.4.1"
+#define PARSE_VERSION @"1.4.2"
 
 extern NSInteger const PARSE_API_VERSION;
 
@@ -117,7 +118,8 @@ extern NSInteger const kPFErrorInvalidImageData;
 extern NSInteger const kPFErrorUnsavedFile;
 /*! @abstract 153: Fail to delete file. */
 extern NSInteger const kPFErrorFileDeleteFailure;
-
+/*! @abstract 160: Invalid event name. */
+extern NSInteger const kPFErrorInvalidEventName;
 /*! @abstract 200: Username is missing or empty */
 extern NSInteger const kPFErrorUsernameMissing;
 /*! @abstract 201: Password is missing or empty */

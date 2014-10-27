@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "PFTableViewCell.h"
+#import <Parse/PFTableViewCell.h>
 
 /*!
  An enum that represents states of the PFPurchaseTableViewCell.

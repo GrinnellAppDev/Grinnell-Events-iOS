@@ -1,73 +1,112 @@
 //
 //  Parse.h
-//  Parse
 //
-//  Created by Ilya Sukhar on 9/29/11.
-//  Copyright 2011 Parse, Inc. All rights reserved.
+//  Copyright 2011-present Parse Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "PFACL.h"
-#import "PFAnalytics.h"
-#import "PFAnonymousUtils.h"
-#import "PFCloud.h"
-#import "PFConstants.h"
-#import "PFConfig.h"
-#import "PFFile.h"
-#import "PFGeoPoint.h"
-#import "PFObject.h"
-#import "PFQuery.h"
-#import "PFRelation.h"
-#import "PFRole.h"
-#import "PFSubclassing.h"
-#import "PFUser.h"
 
-#if PARSE_IOS_ONLY
-#import "PFImageView.h"
-#import "PFInstallation.h"
-#import "PFLogInViewController.h"
-#import "PFProduct.h"
-#import "PFProductTableViewController.h"
-#import "PFPurchase.h"
-#import "PFPush.h"
-#import "PFQueryTableViewController.h"
-#import "PFSignUpViewController.h"
-#import "PFTableViewCell.h"
-#import "PFTwitterUtils.h"
+#if TARGET_OS_IPHONE
+
+#import <Parse/PFACL.h>
+#import <Parse/PFAnalytics.h>
+#import <Parse/PFAnonymousUtils.h>
+#import <Parse/PFCloud.h>
+#import <Parse/PFConfig.h>
+#import <Parse/PFConstants.h>
+#import <Parse/PFFile.h>
+#import <Parse/PFGeoPoint.h>
+#import <Parse/PFObject+Subclass.h>
+#import <Parse/PFObject.h>
+#import <Parse/PFQuery.h>
+#import <Parse/PFRelation.h>
+#import <Parse/PFRole.h>
+#import <Parse/PFSubclassing.h>
+#import <Parse/PFUser.h>
+#import <Parse/PFImageView.h>
+#import <Parse/PFInstallation.h>
+#import <Parse/PFLogInViewController.h>
+#import <Parse/PFNetworkActivityIndicatorManager.h>
+#import <Parse/PFProduct.h>
+#import <Parse/PFProductTableViewController.h>
+#import <Parse/PFPurchase.h>
+#import <Parse/PFPurchaseTableViewCell.h>
+#import <Parse/PFPush.h>
+#import <Parse/PFQueryTableViewController.h>
+#import <Parse/PFSignUpViewController.h>
+#import <Parse/PFTableViewCell.h>
+#import <Parse/PFTwitterUtils.h>
+#import <Parse/PF_MBProgressHUD.h>
+
+#else
+
+#import <ParseOSX/PFACL.h>
+#import <ParseOSX/PFAnalytics.h>
+#import <ParseOSX/PFAnonymousUtils.h>
+#import <ParseOSX/PFCloud.h>
+#import <ParseOSX/PFConfig.h>
+#import <ParseOSX/PFConstants.h>
+#import <ParseOSX/PFFile.h>
+#import <ParseOSX/PFGeoPoint.h>
+#import <ParseOSX/PFObject+Subclass.h>
+#import <ParseOSX/PFObject.h>
+#import <ParseOSX/PFQuery.h>
+#import <ParseOSX/PFRelation.h>
+#import <ParseOSX/PFRole.h>
+#import <ParseOSX/PFSubclassing.h>
+#import <ParseOSX/PFUser.h>
+
 #endif
 
 /*!
- The Parse class contains static functions that handle global configuration for the Parse framework.
+ The `Parse` class contains static functions that handle global configuration for the Parse framework.
  */
 @interface Parse : NSObject
 
-/** @name Connecting to Parse */
+///--------------------------------------
+/// @name Connecting to Parse
+///--------------------------------------
 
 /*!
- Sets the applicationId and clientKey of your application.
- @param applicationId The application id for your Parse application.
- @param clientKey The client key for your Parse application.
+ @abstract Sets the applicationId and clientKey of your application.
+
+ @param applicationId The application id of your Parse application.
+ @param clientKey The client key of your Parse application.
  */
 + (void)setApplicationId:(NSString *)applicationId clientKey:(NSString *)clientKey;
+
+/*!
+ @abstract The current application id that was used to configure Parse framework.
+ */
 + (NSString *)getApplicationId;
+
+/*!
+ @abstract The current client key that was used to configure Parse framework.
+ */
 + (NSString *)getClientKey;
 
 #if PARSE_IOS_ONLY
-/** @name Configuring UI Settings */
+
+///--------------------------------------
+/// @name Configuring UI Settings
+///--------------------------------------
 
 /*!
- Set whether to show offline messages when using a Parse view or view controller related classes.
- @param enabled Whether a UIAlertView should be shown when the device is offline and network access is required
-                from a view or view controller.
+ @abstract Set whether to show offline messages when using a Parse view or view controller related classes.
+
+ @param enabled Whether a `UIAlertView` should be shown when the device is offline
+ and network access is required from a view or view controller.
  */
 + (void)offlineMessagesEnabled:(BOOL)enabled;
 
 /*!
- Set whether to show an error message when using a Parse view or view controller related classes
+ @abstract Set whether to show an error message when using a Parse view or view controller related classes
  and a Parse error was generated via a query.
- @param enabled Whether a UIAlertView should be shown when a Parse error occurs.
+
+ @param enabled Whether a `UIAlertView` should be shown when an error occurs.
  */
 + (void)errorMessagesEnabled:(BOOL)enabled;
+
 #endif
 
 @end

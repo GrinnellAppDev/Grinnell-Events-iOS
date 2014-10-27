@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PFImageView.h"
+
+#import <Parse/PFImageView.h>
 
 /*!
  The PFTableViewCell is a table view cell which can download and display remote images stored on Parse.

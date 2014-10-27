@@ -1,19 +1,27 @@
-// PFObject.h
-// Copyright 2011 Parse, Inc. All rights reserved.
+//
+//  PFObject.h
+//
+//  Copyright 2011-present Parse Inc. All rights reserved.
+//
 
 #import <Foundation/Foundation.h>
 
-#import "PFACL.h"
-#import "PFConstants.h"
+#if TARGET_OS_IPHONE
+#import <Parse/PFACL.h>
+#import <Parse/PFConstants.h>
+#else
+#import <ParseOSX/PFACL.h>
+#import <ParseOSX/PFConstants.h>
+#endif
 
 @protocol PFSubclassing;
-
-/*!
- A Parse Framework Object that is a local representation of data persisted to the Parse cloud.
- This is the main class that is used to interact with objects in your app.
-*/
+@class BFTask;
 @class PFRelation;
 
+/*!
+ The `PFObject` class is a local representation of data persisted to the Parse cloud.
+ This is the main class that is used to interact with objects in your app.
+*/
 NS_REQUIRES_PROPERTY_DEFINITIONS
 @interface PFObject : NSObject {
     BOOL dirty;
@@ -24,7 +32,7 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
     // There is always at least one dictionary of pending operations.
     // Every time a save is started, a new dictionary is added to the end.
     // Whenever a save completes, the new data is put into fetchedData, and
-    //     a dictionary is removed from the start.
+    // a dictionary is removed from the start.
     NSMutableArray *operationSetQueue;
 
     // Our best estimate as to what the current data is, based on
@@ -32,558 +40,735 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
     NSMutableDictionary *estimatedData;
 }
 
-#pragma mark Constructors
-
-/*! @name Creating a PFObject */
+///--------------------------------------
+/// @name Creating a PFObject
+///--------------------------------------
 
 /*!
- Creates a new PFObject with a class name.
- @param className A class name can be any alphanumeric string that begins with a letter. It represents an object in your app, like a User of a Document.
- @result Returns the object that is instantiated with the given class name.
+ @abstract Creates a new PFObject with a class name.
+
+ @param className A class name can be any alphanumeric string that begins with a letter.
+ It represents an object in your app, like a 'User' or a 'Document'.
+
+ @returns Returns the object that is instantiated with the given class name.
  */
 + (instancetype)objectWithClassName:(NSString *)className;
 
 /*!
- Creates a reference to an existing PFObject for use in creating associations between PFObjects.  Calling isDataAvailable on this
- object will return NO until fetchIfNeeded or refresh has been called.  No network request will be made.
+ @abstract Creates a reference to an existing PFObject for use in creating associations between PFObjects.
+
+ @discussion Calling <isDataAvailable> on this object will return `NO` until <fetchIfNeeded> has been called.
+ No network request will be made.
 
  @param className The object's class.
  @param objectId The object id for the referenced object.
- @result A PFObject without data.
+
+ @returns A `PFObject` instance without data.
  */
 + (instancetype)objectWithoutDataWithClassName:(NSString *)className
                                       objectId:(NSString *)objectId;
 
 /*!
- Creates a new PFObject with a class name, initialized with data constructed from the specified set of objects and keys.
+ @abstract Creates a new `PFObject` with a class name, initialized with data
+ constructed from the specified set of objects and keys.
+
  @param className The object's class.
- @param dictionary An NSDictionary of keys and objects to set on the new PFObject.
- @result A PFObject with the given class name and set with the given data.
+ @param dictionary An `NSDictionary` of keys and objects to set on the new `PFObject`.
+
+ @returns A PFObject with the given class name and set with the given data.
  */
 + (PFObject *)objectWithClassName:(NSString *)className dictionary:(NSDictionary *)dictionary;
 
 /*!
- Initializes a new PFObject with a class name.
- @param newClassName A class name can be any alphanumeric string that begins with a letter. It represents an object in your app, like a User or a Document.
- @result Returns the object that is instantiated with the given class name.
+ @abstract Initializes a new empty `PFObject` instance with a class name.
+
+ @param newClassName A class name can be any alphanumeric string that begins with a letter.
+ It represents an object in your app, like a 'User' or a 'Document'.
+
+ @returns Returns the object that is instantiated with the given class name.
  */
 - (instancetype)initWithClassName:(NSString *)newClassName;
 
-#pragma mark -
-#pragma mark Properties
-
-/*! @name Managing Object Properties */
+///--------------------------------------
+/// @name Managing Object Properties
+///--------------------------------------
 
 /*!
- The class name of the object.
+ @abstract The class name of the object.
  */
 @property (strong, readonly) NSString *parseClassName;
 
 /*!
- The id of the object.
+ @abstract The id of the object.
  */
 @property (nonatomic, strong) NSString *objectId;
 
 /*!
- When the object was last updated.
+ @abstract When the object was last updated.
  */
 @property (nonatomic, strong, readonly) NSDate *updatedAt;
 
 /*!
- When the object was created.
+ @abstract When the object was created.
  */
 @property (nonatomic, strong, readonly) NSDate *createdAt;
 
 /*!
- The ACL for this object.
+ @abstract The ACL for this object.
  */
 @property (nonatomic, strong) PFACL *ACL;
 
 /*!
- Returns an array of the keys contained in this object. This does not include
- createdAt, updatedAt, authData, or objectId. It does include things like username
- and ACL.
+ @abstract Returns an array of the keys contained in this object.
+
+ @discussion This does not include `createdAt`, `updatedAt`, `authData`, or `objectId`.
+ It does include things like username and ACL.
  */
 - (NSArray *)allKeys;
 
-#pragma mark -
-#pragma mark Get and set
+///--------------------------------------
+/// @name Accessors
+///--------------------------------------
 
 /*!
- Returns the object associated with a given key.
- @param key The key that the object is associated with.
- @result The value associated with the given key, or nil if no value is associated with key.
+ @abstract Returns the value associated with a given key.
+
+ @param key The key for which to return the corresponding value.
  */
 - (id)objectForKey:(NSString *)key;
 
 /*!
- Sets the object associated with a given key.
+ @abstract Sets the object associated with a given key.
+
  @param object The object.
  @param key The key.
  */
 - (void)setObject:(id)object forKey:(NSString *)key;
 
 /*!
- Unsets a key on the object.
+ @abstract Unsets a key on the object.
+
  @param key The key.
  */
 - (void)removeObjectForKey:(NSString *)key;
 
 /*!
- * In LLVM 4.0 (XCode 4.5) or higher allows myPFObject[key].
- @param key The key.
+ @abstract Returns the value associated with a given key.
+
+ @discussion This method enables usage of literal syntax on `PFObject`.
+ E.g. `NSString *value = object[@"key"];`
+
+ @see objectForKey:
+
+ @param key The key for which to return the corresponding value.
  */
 - (id)objectForKeyedSubscript:(NSString *)key;
 
 /*!
- * In LLVM 4.0 (XCode 4.5) or higher allows myObject[key] = value
+ @abstract Returns the value associated with a given key.
+
+ @discussion This method enables usage of literal syntax on `PFObject`.
+ E.g. `object[@"key"] = @"value";`
+
+ @see setObject:forKey:
+
  @param object The object.
  @param key The key.
  */
 - (void)setObject:(id)object forKeyedSubscript:(NSString *)key;
 
 /*!
- Returns the relation object associated with the given key.
+ @abstract Returns the relation object associated with the given key.
+
  @param key The key that the relation is associated with.
  */
 - (PFRelation *)relationForKey:(NSString *)key;
 
 /*!
- Returns the relation object associated with the given key.
+ @abstract Returns the relation object associated with the given key.
+
  @param key The key that the relation is associated with.
- @deprecated Please use relationForKey: instead.
+
+ @deprecated Please use `[PFObject relationForKey:]` instead.
  */
 - (PFRelation *)relationforKey:(NSString *)key PARSE_DEPRECATED("Please use -relationForKey: instead.");
 
-#pragma mark -
-#pragma mark Array add and remove
+///--------------------------------------
+/// @name Array Accessors
+///--------------------------------------
 
 /*!
- Adds an object to the end of the array associated with a given key.
+ @abstract Adds an object to the end of the array associated with a given key.
+
  @param object The object to add.
  @param key The key.
  */
 - (void)addObject:(id)object forKey:(NSString *)key;
 
 /*!
- Adds the objects contained in another array to the end of the array associated
- with a given key.
+ @abstract Adds the objects contained in another array to the end of the array associated with a given key.
+
  @param objects The array of objects to add.
  @param key The key.
  */
 - (void)addObjectsFromArray:(NSArray *)objects forKey:(NSString *)key;
 
 /*!
- Adds an object to the array associated with a given key, only if it is not
- already present in the array. The position of the insert is not guaranteed.
+ @abstract Adds an object to the array associated with a given key, only if it is not already present in the array.
+
+ @discussion The position of the insert is not guaranteed.
+
  @param object The object to add.
  @param key The key.
  */
 - (void)addUniqueObject:(id)object forKey:(NSString *)key;
 
 /*!
- Adds the objects contained in another array to the array associated with
- a given key, only adding elements which are not already present in the array.
- The position of the insert is not guaranteed.
+ @abstract Adds the objects contained in another array to the array associated with a given key,
+ only adding elements which are not already present in the array.
+
+ @dicsussion The position of the insert is not guaranteed.
+
  @param objects The array of objects to add.
  @param key The key.
  */
 - (void)addUniqueObjectsFromArray:(NSArray *)objects forKey:(NSString *)key;
 
 /*!
- Removes all occurrences of an object from the array associated with a given
- key.
+ @abstract Removes all occurrences of an object from the array associated with a given key.
+
  @param object The object to remove.
  @param key The key.
  */
 - (void)removeObject:(id)object forKey:(NSString *)key;
 
 /*!
- Removes all occurrences of the objects contained in another array from the
- array associated with a given key.
+ @abstract Removes all occurrences of the objects contained in another array from the array associated with a given key.
+
  @param objects The array of objects to remove.
  @param key The key.
  */
 - (void)removeObjectsInArray:(NSArray *)objects forKey:(NSString *)key;
 
-#pragma mark -
-#pragma mark Increment
+///--------------------------------------
+/// @name Increment
+///--------------------------------------
 
 /*!
- Increments the given key by 1.
+ @abstract Increments the given key by `1`.
+
  @param key The key.
  */
 - (void)incrementKey:(NSString *)key;
 
 /*!
- Increments the given key by a number.
+ @abstract Increments the given key by a number.
+
  @param key The key.
  @param amount The amount to increment.
  */
 - (void)incrementKey:(NSString *)key byAmount:(NSNumber *)amount;
 
-#pragma mark -
-#pragma mark Save
-
-/*! @name Saving an Object to Parse */
+///--------------------------------------
+/// @name Saving Objects
+///--------------------------------------
 
 /*!
- Saves the PFObject.
- @result Returns whether the save succeeded.
+ @abstract *Synchronously* saves the `PFObject`.
+
+ @returns Returns whether the save succeeded.
  */
 - (BOOL)save;
 
 /*!
- Saves the PFObject and sets an error if it occurs.
+ @abstract *Synchronously* saves the `PFObject` and sets an error if it occurs.
+
  @param error Pointer to an NSError that will be set if necessary.
- @result Returns whether the save succeeded.
+
+ @returns Returns whether the save succeeded.
  */
 - (BOOL)save:(NSError **)error;
 
 /*!
- Saves the PFObject asynchronously.
+ @abstract Saves the `PFObject` *asynchronously*.
+
+ @returns The task, that encapsulates the work being done.
  */
-- (void)saveInBackground;
+- (BFTask *)saveInBackground;
 
 /*!
- Saves the PFObject asynchronously and executes the given callback block.
- @param block The block to execute. The block should have the following argument signature: (BOOL succeeded, NSError *error)
+ @abstract Saves the `PFObject` *asynchronously* and executes the given callback block.
+
+ @param block The block to execute.
+ It should have the following argument signature: `^(BOOL succeeded, NSError *error)`.
  */
 - (void)saveInBackgroundWithBlock:(PFBooleanResultBlock)block;
 
 /*!
- Saves the PFObject asynchronously and calls the given callback.
+ @abstract Saves the `PFObject` asynchronously and calls the given callback.
+
  @param target The object to call selector on.
- @param selector The selector to call. It should have the following signature: (void)callbackWithResult:(NSNumber *)result error:(NSError *)error. error will be nil on success and set if there was an error. [result boolValue] will tell you whether the call succeeded or not.
+ @param selector The selector to call.
+ It should have the following signature: `(void)callbackWithResult:(NSNumber *)result error:(NSError *)error`.
+ `error` will be `nil` on success and set if there was an error.
+ `[result boolValue]` will tell you whether the call succeeded or not.
  */
 - (void)saveInBackgroundWithTarget:(id)target selector:(SEL)selector;
 
 /*!
-  @see saveEventually:
+ @see saveEventually:
  */
 - (void)saveEventually;
 
 /*!
- Saves this object to the server at some unspecified time in the future, even if Parse is currently inaccessible.
- Use this when you may not have a solid network connection, and don't need to know when the save completes.
- If there is some problem with the object such that it can't be saved, it will be silently discarded.  If the save
+ @abstract Saves this object to the server at some unspecified time in the future,
+ even if Parse is currently inaccessible.
+
+ @discussion Use this when you may not have a solid network connection, and don't need to know when the save completes.
+ If there is some problem with the object such that it can't be saved, it will be silently discarded. If the save
  completes successfully while the object is still in memory, then callback will be called.
 
  Objects saved with this method will be stored locally in an on-disk cache until they can be delivered to Parse.
- They will be sent immediately if possible.  Otherwise, they will be sent the next time a network connection is
- available.  Objects saved this way will persist even after the app is closed, in which case they will be sent the
- next time the app is opened.  If more than 10MB of data is waiting to be sent, subsequent calls to saveEventually
+ They will be sent immediately if possible. Otherwise, they will be sent the next time a network connection is
+ available. Objects saved this way will persist even after the app is closed, in which case they will be sent the
+ next time the app is opened. If more than 10MB of data is waiting to be sent, subsequent calls to <saveEventually>
  will cause old saves to be silently discarded until the connection can be re-established, and the queued objects
  can be saved.
 
- @param callback The block to execute. It should have the following argument signature: (BOOL succeeded, NSError *error)
+ @param callback The block to execute.
+ It should have the following argument signature: `^(BOOL succeeded, NSError *error)`.
  */
 - (void)saveEventually:(PFBooleanResultBlock)callback;
 
-#pragma mark -
-#pragma mark Save All
-
-/*! @name Saving Many Objects to Parse */
+///--------------------------------------
+/// @name Saving Many Objects
+///--------------------------------------
 
 /*!
- Saves a collection of objects all at once.
+ @abstract Saves a collection of objects *synchronously all at once.
+
  @param objects The array of objects to save.
- @result Returns whether the save succeeded.
+
+ @returns Returns whether the save succeeded.
  */
 + (BOOL)saveAll:(NSArray *)objects;
 
 /*!
- Saves a collection of objects all at once and sets an error if necessary.
+ @abstract Saves a collection of objects *synchronously* all at once and sets an error if necessary.
+
  @param objects The array of objects to save.
- @param error Pointer to an NSError that will be set if necessary.
- @result Returns whether the save succeeded.
+ @param error Pointer to an `NSError` that will be set if necessary.
+
+ @returns Returns whether the save succeeded.
  */
 + (BOOL)saveAll:(NSArray *)objects error:(NSError **)error;
 
 /*!
- Saves a collection of objects all at once asynchronously.
+ @abstract Saves a collection of objects all at once *asynchronously*.
+
  @param objects The array of objects to save.
+
+ @returns The task, that encapsulates the work being done.
  */
-+ (void)saveAllInBackground:(NSArray *)objects;
++ (BFTask *)saveAllInBackground:(NSArray *)objects;
 
 /*!
- Saves a collection of objects all at once asynchronously and the block when done.
+ @abstract Saves a collection of objects all at once `asynchronously` and executes the block when done.
+
  @param objects The array of objects to save.
- @param block The block to execute. The block should have the following argument signature: (BOOL succeeded, NSError *error)
+ @param block The block to execute.
+ It should have the following argument signature: `^(BOOL succeeded, NSError *error)`.
  */
 + (void)saveAllInBackground:(NSArray *)objects
                       block:(PFBooleanResultBlock)block;
 
 /*!
- Saves a collection of objects all at once asynchronously and calls a callback when done.
+ @abstract Saves a collection of objects all at once *asynchronously* and calls a callback when done.
+
  @param objects The array of objects to save.
  @param target The object to call selector on.
- @param selector The selector to call. It should have the following signature: (void)callbackWithError:(NSError *)error. error will be nil on success and set if there was an error.
+ @param selector The selector to call.
+ It should have the following signature: `(void)callbackWithResult:(NSNumber *)number error:(NSError *)error`.
+ `error` will be `nil` on success and set if there was an error.
+ `[result boolValue]` will tell you whether the call succeeded or not.
  */
 + (void)saveAllInBackground:(NSArray *)objects
                      target:(id)target
                    selector:(SEL)selector;
 
-#pragma mark -
-#pragma mark Delete All
-
-/*! @name Delete Many Objects from Parse */
+///--------------------------------------
+/// @name Deleting Many Objects
+///--------------------------------------
 
 /*!
- Deletes a collection of objects all at once.
+ @abstract *Synchronously* deletes a collection of objects all at once.
+
  @param objects The array of objects to delete.
- @result Returns whether the delete succeeded.
+
+ @returns Returns whether the delete succeeded.
  */
 + (BOOL)deleteAll:(NSArray *)objects;
 
 /*!
- Deletes a collection of objects all at once and sets an error if necessary.
+ @abstract *Synchronously* deletes a collection of objects all at once and sets an error if necessary.
+
  @param objects The array of objects to delete.
- @param error Pointer to an NSError that will be set if necessary.
- @result Returns whether the delete succeeded.
+ @param error Pointer to an `NSError` that will be set if necessary.
+
+ @returns Returns whether the delete succeeded.
  */
 + (BOOL)deleteAll:(NSArray *)objects error:(NSError **)error;
 
 /*!
- Deletes a collection of objects all at once asynchronously.
+ @abstract Deletes a collection of objects all at once asynchronously.
  @param objects The array of objects to delete.
+ @returns The task, that encapsulates the work being done.
  */
-+ (void)deleteAllInBackground:(NSArray *)objects;
++ (BFTask *)deleteAllInBackground:(NSArray *)objects;
 
 /*!
- Deletes a collection of objects all at once asynchronously and the block when done.
+ @abstract Deletes a collection of objects all at once *asynchronously* and executes the block when done.
+
  @param objects The array of objects to delete.
- @param block The block to execute. The block should have the following argument signature: (BOOL succeeded, NSError *error)
+ @param block The block to execute.
+ It should have the following argument signature: `^(BOOL succeeded, NSError *error)`.
  */
 + (void)deleteAllInBackground:(NSArray *)objects
                         block:(PFBooleanResultBlock)block;
 
 /*!
- Deletes a collection of objects all at once asynchronously and calls a callback when done.
+ @abstract Deletes a collection of objects all at once *asynchronously* and calls a callback when done.
+
  @param objects The array of objects to delete.
  @param target The object to call selector on.
- @param selector The selector to call. It should have the following signature: (void)callbackWithError:(NSError *)error. error will be nil on success and set if there was an error.
+ @param selector The selector to call.
+ It should have the following signature: `(void)callbackWithResult:(NSNumber *)number error:(NSError *)error`.
+ `error` will be `nil` on success and set if there was an error.
+ `[result boolValue]` will tell you whether the call succeeded or not.
  */
 + (void)deleteAllInBackground:(NSArray *)objects
                        target:(id)target
                      selector:(SEL)selector;
 
-#pragma mark -
-#pragma mark Refresh
-
-/*! @name Getting an Object from Parse */
+///--------------------------------------
+/// @name Getting an Object
+///--------------------------------------
 
 /*!
- Gets whether the PFObject has been fetched.
- @result YES if the PFObject is new or has been fetched or refreshed.  NO otherwise.
+ @abstract Gets whether the `PFObject` has been fetched.
+
+ @returns `YES` if the PFObject is new or has been fetched or refreshed, otherwise `NO`.
  */
 - (BOOL)isDataAvailable;
 
 #if PARSE_IOS_ONLY
-// Deprecated and intentionally not available on the new OS X SDK
 
 /*!
- Refreshes the PFObject with the current data from the server.
+ @abstract Refreshes the PFObject with the current data from the server.
+
+ @deprecated Please use `-fetch` instead.
  */
-- (void)refresh;
+- (void)refresh PARSE_DEPRECATED("Please use `-fetch` instead.");
 
 /*!
- Refreshes the PFObject with the current data from the server and sets an error if it occurs.
+ @abstract *Synchronously* refreshes the PFObject with the current data from the server and sets an error if it occurs.
+
  @param error Pointer to an NSError that will be set if necessary.
+
+ @deprecated Please use `-fetch:` instead.
  */
-- (void)refresh:(NSError **)error;
+- (void)refresh:(NSError **)error PARSE_DEPRECATED("Please use `-fetch:` instead.");
 
 /*!
- Refreshes the PFObject asynchronously and executes the given callback block.
- @param block The block to execute. The block should have the following argument signature: (PFObject *object, NSError *error)
+ @abstract *Synchronously* refreshes the PFObject *asynchronously* and executes the given callback block.
+
+ @param block The block to execute.
+ The block should have the following argument signature: `^(PFObject *object, NSError *error)`
+
+ @deprecated Please use `-fetchInBackgroundWithBlock:` instead.
  */
-- (void)refreshInBackgroundWithBlock:(PFObjectResultBlock)block;
+- (void)refreshInBackgroundWithBlock:(PFObjectResultBlock)block PARSE_DEPRECATED("Please use `-fetchInBackgroundWithBlock:` instead.");
 
 /*!
- Refreshes the PFObject asynchronously and calls the given callback.
+ @abstract *Synchronously* refreshes the PFObject asynchronously and calls the given callback.
+
  @param target The target on which the selector will be called.
- @param selector The selector to call. It should have the following signature: (void)callbackWithResult:(PFObject *)refreshedObject error:(NSError *)error. error will be nil on success and set if there was an error. refreshedObject will be the PFObject with the refreshed data.
+ @param selector The selector to call.
+ It should have the following signature: `(void)callbackWithResult:(PFObject *)refreshedObject error:(NSError *)error`.
+ `error` will be `nil` on success and set if there was an error.
+ `refreshedObject` will be the `PFObject` with the refreshed data.
+
+ @deprecated Please use `fetchInBackgroundWithTarget:selector:` instead.
  */
-- (void)refreshInBackgroundWithTarget:(id)target selector:(SEL)selector;
+- (void)refreshInBackgroundWithTarget:(id)target
+                             selector:(SEL)selector PARSE_DEPRECATED("Please use `fetchInBackgroundWithTarget:selector:` instead.");
+
 #endif
 
 /*!
- Fetches the PFObject with the current data from the server.
+ @abstract *Synchronously* fetches the PFObject with the current data from the server.
  */
 - (void)fetch;
 /*!
- Fetches the PFObject with the current data from the server and sets an error if it occurs.
- @param error Pointer to an NSError that will be set if necessary.
+ @abstract *Synchronously* fetches the PFObject with the current data from the server and sets an error if it occurs.
+
+ @param error Pointer to an `NSError` that will be set if necessary.
  */
 - (void)fetch:(NSError **)error;
 
 /*!
- Fetches the PFObject's data from the server if isDataAvailable is false.
+ @abstract *Synchronously* fetches the `PFObject` data from the server if <isDataAvailable> is `NO`.
  */
 - (PFObject *)fetchIfNeeded;
 
 /*!
- Fetches the PFObject's data from the server if isDataAvailable is false.
- @param error Pointer to an NSError that will be set if necessary.
+ @abstract *Synchronously* fetches the `PFObject` data from the server if <isDataAvailable> is `NO`.
+
+ @param error Pointer to an `NSError` that will be set if necessary.
  */
 - (PFObject *)fetchIfNeeded:(NSError **)error;
 
 /*!
- Fetches the PFObject asynchronously and executes the given callback block.
- @param block The block to execute. The block should have the following argument signature: (PFObject *object, NSError *error)
+ @abstract Fetches the `PFObject` *asynchronously* and sets it as a result for the task.
+
+ @returns The task, that encapsulates the work being done.
+ */
+- (BFTask *)fetchInBackground;
+
+/*!
+ @abstract Fetches the PFObject *asynchronously* and executes the given callback block.
+
+ @param block The block to execute.
+ It should have the following argument signature: `^(PFObject *object, NSError *error)`.
  */
 - (void)fetchInBackgroundWithBlock:(PFObjectResultBlock)block;
 
 /*!
- Fetches the PFObject asynchronously and calls the given callback.
+ @abstract Fetches the `PFObject *asynchronously* and calls the given callback.
+
  @param target The target on which the selector will be called.
- @param selector The selector to call. It should have the following signature: (void)callbackWithResult:(PFObject *)refreshedObject error:(NSError *)error. error will be nil on success and set if there was an error. refreshedObject will be the PFObject with the refreshed data.
+ @param selector The selector to call.
+ It should have the following signature: `(void)callbackWithResult:(PFObject *)refreshedObject error:(NSError *)error`.
+ `error` will be `nil` on success and set if there was an error.
+ `refreshedObject` will be the `PFObject` with the refreshed data.
  */
 - (void)fetchInBackgroundWithTarget:(id)target selector:(SEL)selector;
 
 /*!
- Fetches the PFObject's data asynchronously if isDataAvailable is false, then calls the callback block.
- @param block The block to execute.  The block should have the following argument signature: (PFObject *object, NSError *error)
+ @abstract Fetches the `PFObject` data *asynchronously* if isDataAvailable is `NO`,
+ then sets it as a result for the task.
+
+ @returns The task, that encapsulates the work being done.
+ */
+- (BFTask *)fetchIfNeededInBackground;
+
+/*!
+ @abstract Fetches the `PFObject` data *asynchronously* if <isDataAvailable> is `NO`, then calls the callback block.
+
+ @param block The block to execute.
+ It should have the following argument signature: `^(PFObject *object, NSError *error)`.
  */
 - (void)fetchIfNeededInBackgroundWithBlock:(PFObjectResultBlock)block;
 
 /*!
- Fetches the PFObject's data asynchronously if isDataAvailable is false, then calls the callback.
+ @abstract Fetches the PFObject's data asynchronously if isDataAvailable is false, then calls the callback.
+
  @param target The target on which the selector will be called.
- @param selector The selector to call.  It should have the following signature: (void)callbackWithResult:(PFObject *)fetchedObject error:(NSError *)error. error will be nil on success and set if there was an error.
+ @param selector The selector to call.
+ It should have the following signature: `(void)callbackWithResult:(PFObject *)fetchedObject error:(NSError *)error`.
+ `error` will be `nil` on success and set if there was an error.
+ `refreshedObject` will be the `PFObject` with the refreshed data.
  */
 - (void)fetchIfNeededInBackgroundWithTarget:(id)target
                                    selector:(SEL)selector;
 
-/*! @name Getting Many Objects from Parse */
+///--------------------------------------
+/// @name Getting Many Objects
+///--------------------------------------
 
 /*!
- Fetches all of the PFObjects with the current data from the server
+ @abstract *Synchronously* fetches all of the `PFObject` objects with the current data from the server.
+
  @param objects The list of objects to fetch.
  */
 + (void)fetchAll:(NSArray *)objects;
 
 /*!
- Fetches all of the PFObjects with the current data from the server and sets an error if it occurs.
+ @abstract *Synchronously* fetches all of the `PFObject` objects with the current data from the server
+ and sets an error if it occurs.
+
  @param objects The list of objects to fetch.
- @param error Pointer to an NSError that will be set  if necessary
+ @param error Pointer to an `NSError` that will be set if necessary.
  */
 + (void)fetchAll:(NSArray *)objects error:(NSError **)error;
 
 /*!
- Fetches all of the PFObjects with the current data from the server
+ @abstract *Synchronously* fetches all of the `PFObject` objects with the current data from the server.
  @param objects The list of objects to fetch.
  */
 + (void)fetchAllIfNeeded:(NSArray *)objects;
 
 /*!
- Fetches all of the PFObjects with the current data from the server and sets an error if it occurs.
+ @abstract *Synchronously* fetches all of the `PFObject` objects with the current data from the server
+ and sets an error if it occurs.
+
  @param objects The list of objects to fetch.
- @param error Pointer to an NSError that will be set  if necessary
+ @param error Pointer to an `NSError` that will be set if necessary.
  */
 + (void)fetchAllIfNeeded:(NSArray *)objects error:(NSError **)error;
 
 /*!
- Fetches all of the PFObjects with the current data from the server asynchronously and calls the given block.
+ @abstract Fetches all of the `PFObject` objects with the current data from the server *asynchronously*.
+
  @param objects The list of objects to fetch.
- @param block The block to execute. The block should have the following argument signature: (NSArray *objects, NSError *error)
+
+ @returns The task, that encapsulates the work being done.
+ */
++ (BFTask *)fetchAllInBackground:(NSArray *)objects;
+
+/*!
+ @abstract Fetches all of the `PFObject` objects with the current data from the server *asynchronously*
+ and calls the given block.
+
+ @param objects The list of objects to fetch.
+ @param block The block to execute.
+ It should have the following argument signature: `^(NSArray *objects, NSError *error)`.
  */
 + (void)fetchAllInBackground:(NSArray *)objects
                        block:(PFArrayResultBlock)block;
 
 /*!
- Fetches all of the PFObjects with the current data from the server asynchronously and calls the given callback.
+ @abstract Fetches all of the `PFObject` objects with the current data from the server *asynchronously*
+ and calls the given callback.
+
  @param objects The list of objects to fetch.
  @param target The target on which the selector will be called.
- @param selector The selector to call. It should have the following signature: (void)callbackWithResult:(NSArray *)fetchedObjects error:(NSError *)error. error will be nil on success and set if there was an error. fetchedObjects will the array of PFObjects that were fetched.
+ @param selector The selector to call.
+ It should have the following signature: `(void)callbackWithResult:(NSArray *)fetchedObjects error:(NSError *)error`.
+ `error` will be `nil` on success and set if there was an error.
+ `fetchedObjects` will the array of `PFObject` objects that were fetched.
  */
 + (void)fetchAllInBackground:(NSArray *)objects
                       target:(id)target
                     selector:(SEL)selector;
 
 /*!
- Fetches all of the PFObjects with the current data from the server asynchronously and calls the given block.
+ @abstract Fetches all of the `PFObject` objects with the current data from the server *asynchronously*.
+
  @param objects The list of objects to fetch.
- @param block The block to execute. The block should have the following argument signature: (NSArray *objects, NSError *error)
+
+ @returns The task, that encapsulates the work being done.
+ */
++ (BFTask *)fetchAllIfNeededInBackground:(NSArray *)objects;
+
+/*!
+ @abstract Fetches all of the PFObjects with the current data from the server *asynchronously*
+ and calls the given block.
+
+ @param objects The list of objects to fetch.
+ @param block The block to execute.
+ It should have the following argument signature: `^(NSArray *objects, NSError *error)`.
  */
 + (void)fetchAllIfNeededInBackground:(NSArray *)objects
                                block:(PFArrayResultBlock)block;
 
 /*!
- Fetches all of the PFObjects with the current data from the server asynchronously and calls the given callback.
+ @abstract Fetches all of the PFObjects with the current data from the server *asynchronously*
+ and calls the given callback.
+
  @param objects The list of objects to fetch.
  @param target The target on which the selector will be called.
- @param selector The selector to call. It should have the following signature: (void)callbackWithResult:(NSArray *)fetchedObjects error:(NSError *)error. error will be nil on success and set if there was an error. fetchedObjects will the array of PFObjects
- that were fetched.
+ @param selector The selector to call.
+ It should have the following signature: `(void)callbackWithResult:(NSArray *)fetchedObjects error:(NSError *)error`.
+ `error` will be `nil` on success and set if there was an error.
+ `fetchedObjects` will the array of `PFObject` objects that were fetched.
  */
 + (void)fetchAllIfNeededInBackground:(NSArray *)objects
                               target:(id)target
                             selector:(SEL)selector;
 
-#pragma mark -
-#pragma mark Delete
-
-/*! @name Removing an Object from Parse */
+///--------------------------------------
+/// @name Deleting an Object
+///--------------------------------------
 
 /*!
- Deletes the PFObject.
- @result Returns whether the delete succeeded.
+ @abstract *Synchronously* deletes the `PFObject`.
+
+ @returns Returns whether the delete succeeded.
  */
 - (BOOL)delete;
 
 /*!
- Deletes the PFObject and sets an error if it occurs.
- @param error Pointer to an NSError that will be set if necessary.
- @result Returns whether the delete succeeded.
+ @abstract *Synchronously* deletes the `PFObject` and sets an error if it occurs.
+
+ @param error Pointer to an `NSError` that will be set if necessary.
+
+ @returns Returns whether the delete succeeded.
  */
 - (BOOL)delete:(NSError **)error;
 
 /*!
- Deletes the PFObject asynchronously.
+ @abstract Deletes the `PFObject` *asynchronously*.
+
+ @returns The task, that encapsulates the work being done.
  */
-- (void)deleteInBackground;
+- (BFTask *)deleteInBackground;
 
 /*!
- Deletes the PFObject asynchronously and executes the given callback block.
- @param block The block to execute. The block should have the following argument signature: (BOOL succeeded, NSError *error)
+ @abstract Deletes the `PFObject` *asynchronously* and executes the given callback block.
+
+ @param block The block to execute.
+ It should have the following argument signature: `^(BOOL succeeded, NSError *error)`.
  */
 - (void)deleteInBackgroundWithBlock:(PFBooleanResultBlock)block;
 
 /*!
- Deletes the PFObject asynchronously and calls the given callback.
+ @abstract Deletes the `PFObject` *asynchronously* and calls the given callback.
+
  @param target The object to call selector on.
- @param selector The selector to call. It should have the following signature: (void)callbackWithResult:(NSNumber *)result error:(NSError *)error. error will be nil on success and set if there was an error. [result boolValue] will tell you whether the call succeeded or not.
+ @param selector The selector to call.
+ It should have the following signature: `(void)callbackWithResult:(NSNumber *)result error:(NSError *)error`.
+ `error` will be `nil` on success and set if there was an error.
+ `[result boolValue]` will tell you whether the call succeeded or not.
  */
 - (void)deleteInBackgroundWithTarget:(id)target
                             selector:(SEL)selector;
 
 /*!
- Deletes this object from the server at some unspecified time in the future, even if Parse is currently inaccessible.
- Use this when you may not have a solid network connection, and don't need to know when the delete completes.
- If there is some problem with the object such that it can't be deleted, the request will be silently discarded.
+ @abstract Deletes this object from the server at some unspecified time in the future,
+ even if Parse is currently inaccessible.
+
+ @discussion Use this when you may not have a solid network connection,
+ and don't need to know when the delete completes. If there is some problem with the object
+ such that it can't be deleted, the request will be silently discarded.
 
  Delete instructions made with this method will be stored locally in an on-disk cache until they can be transmitted
- to Parse. They will be sent immediately if possible.  Otherwise, they will be sent the next time a network connection
+ to Parse. They will be sent immediately if possible. Otherwise, they will be sent the next time a network connection
  is available. Delete requests will persist even after the app is closed, in which case they will be sent the
- next time the app is opened.  If more than 10MB of saveEventually or deleteEventually commands are waiting to be sent,
- subsequent calls to saveEventually or deleteEventually will cause old requests to be silently discarded until the
- connection can be re-established, and the queued requests can go through.
+ next time the app is opened. If more than 10MB of <saveEventually> or <deleteEventually> commands are waiting
+ to be sent, subsequent calls to <saveEventually> or <deleteEventually> will cause old requests to be silently discarded
+ until the connection can be re-established, and the queued requests can go through.
  */
 - (void)deleteEventually;
 
-#pragma mark -
-#pragma mark Dirtiness
+///--------------------------------------
+/// @name Dirtiness
+///--------------------------------------
 
 /*!
- Gets whether any key-value pair in this object (or its children) has been added/updated/removed and not saved yet.
- @result Returns whether this object has been altered and not saved yet.
+ @abstract Gets whether any key-value pair in this object (or its children)
+ has been added/updated/removed and not saved yet.
+
+ @returns Returns whether this object has been altered and not saved yet.
  */
 - (BOOL)isDirty;
 
 /*!
- Get whether a value associated with a key has been added/updated/removed and not saved yet.
+ @abstract Get whether a value associated with a key has been added/updated/removed and not saved yet.
+
  @param key The key to check for
- @result Returns whether this key has been altered and not saved yet.
+
+ @returns Returns whether this key has been altered and not saved yet.
  */
 - (BOOL)isDirtyForKey:(NSString *)key;
 

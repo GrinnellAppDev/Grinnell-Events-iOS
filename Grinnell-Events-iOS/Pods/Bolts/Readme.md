@@ -515,7 +515,7 @@ For example, you can use the `BFURL` utility class to parse an incoming URL in y
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
-    BFURL *parsedUrl = [BFURL URLWithURL:url];
+    BFURL *parsedUrl = [BFURL URLWithInboundURL:url sourceApplication:sourceApplication];
     
     // Use the target URL from the App Link to locate content.
     if ([parsedUrl.targetURL.pathComponents[1] isEqualToString:@"profiles"]) {
@@ -598,7 +598,7 @@ Alternatively, a you can swap out the default resolver to be used by the built-i
 
 ## App Link Return-to-Referer View
 
-When an application is opened via an App Link, a banner allowing the user to "Touch to return to <calling app>" should be displayed. The `BFAppLinkReturnToRefererView` provides this functionality. It will take an incoming App Link and parse the referer information to display the appropriate calling app name. You may initialize the view either by loading it from a NIB or programmatically:
+When an application is opened via an App Link, a banner allowing the user to "Touch to return to <calling app>" should be displayed. The `BFAppLinkReturnToRefererView` provides this functionality. It will take an incoming App Link and parse the referer information to display the appropriate calling app name.
 
 ```objective-c
 - (void)viewDidLoad {
@@ -606,26 +606,71 @@ When an application is opened via an App Link, a banner allowing the user to "To
 
   // Perform other view initialization.
 
-  self.returnToRefererView = [[BFAppLinkReturnToRefererView alloc] initWithFrame:CGRectZero];
-  self.returnToRefererController = [[BFAppLinkReturnToRefererController] alloc] init];
+  self.returnToRefererController = [[BFAppLinkReturnToRefererController alloc] init];
 
-  // We could also have left .view unassigned and the controller will automatically
-  //  create a BFAppLinkReturnToRefererView when it needs one.
+  // self.returnToRefererView is a BFAppLinkReturnToRefererView.
+  // You may initialize the view either by loading it from a NIB or programmatically.
   self.returnToRefererController.view = self.returnToRefererView;
+  
+  // If you have a UINavigationController in the view, then the bar must be shown above it.
+  [self.returnToRefererController]
 }
 ```
 
-Note that we initialize the view with a zero size, because we will determine whether or not to display a banner based on the referer data in the incoming App Link using the associated `BFAppLinkReturnToRefererController`, typically in a view controller's `viewWillAppear` or similar method, depending on a particular app's view hierarchy, etc. The following code assumes that the view controller has an `openedAppLinkURL` `NSURL` property that has already been populated with the URL used to open the app:
+The following code assumes that the view controller has an `openedAppLinkURL` `NSURL` property that has already been populated with the URL used to open the app. You can then do something like this to show the view:
 
 ```objective-c
 - (void)viewWillAppear {
   [super viewWillAppear];
 
+  // Show only if you have a back AppLink.
   [self.returnToRefererController showViewForRefererURL:self.openedAppLinkURL];
 }
 ```
 
 In a navigaton-controller view hierarchy, the banner should be displayed above the navigation bar, and `BFAppLinkReturnToRefererController` provides an `initForDisplayAboveNavController` method to assist with this.
+
+## Analytics
+
+Bolts introduces Measurement Event. App Links posts three different Measurement Event notifications to the application, which can be caught and integrated with existing analytics components in your application.
+
+*  `al_nav_out` — Raised when your app switches out to an App Links URL.
+*  `al_nav_in` — Raised when your app opens an incoming App Links URL.
+*  `al_ref_back_out` — Raised when your app returns back the referrer app using the built-in top navigation back bar view.
+
+### Listen for App Links Measurement Events
+
+There are other analytics tools that are integrated with Bolts' App Links events, but you can also listen for these events yourself:
+
+```objective-c
+[[NSNotificationCenter defaultCenter] addObserverForName:BFMeasurementEventNotificationName object:nil queue:nil usingBlock:^(NSNotification *note) {
+    NSDictionary *event = note.userInfo;
+    NSDictionary *eventData = event[BFMeasurementEventArgsKey];
+    // Integrate to your logging/analytics component.
+}];
+```
+
+### App Links Event Fields
+
+App Links Measurement Events sends additional information from App Links Intents in flattened string key value pairs. Here are some of the useful fields for the three events.
+
+* `al_nav_in`
+  * `inputURL`: the URL that opens the app.
+  * `inputURLScheme`: the scheme of `inputURL`.
+  * `refererURL`: the URL that the referrer app added into `al_applink_data`: `referer_app_link`.
+  * `refererAppName`: the app name that the referrer app added to `al_applink_data`: `referer_app_link`.
+  * `sourceApplication`: the bundle of referrer application.
+  * `targetURL`: the `target_url` field in `al_applink_data`.
+  * `version`: App Links API  version.
+
+* `al_nav_out` / `al_ref_back_out`
+  * `outputURL`: the URL used to open the other app (or browser). If there is an eligible app to open, this will be the custom scheme url/intent in `al_applink_data`.
+  * `outputURLScheme`: the scheme of `outputURL`.
+  * `sourceURL`: the URL of the page hosting App Links meta tags.
+  * `sourceURLHost`: the hostname of `sourceURL`.
+  * `success`: `“1”` to indicate success in opening the App Link in another app or browser; `“0”` to indicate failure to open the App Link.
+  * `type`: `“app”` for open in app, `“web”` for open in browser; `“fail”` when the success field is `“0”`.
+  * `version`: App Links API version.
 
 # Installation
 

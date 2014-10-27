@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A379a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="CKB-Ui-aIa">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A388b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="CKB-Ui-aIa">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
@@ -127,6 +128,11 @@
                             <color key="tintColor" red="0.63089923469999998" green="0.0090904594779999993" blue="0.13360678910000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <segue destination="vQ5-Jz-Xs9" kind="modal" id="ZLd-uT-1jA"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Today" id="2kX-3R-9Gm">
+                            <connections>
+                                <action selector="goToToday:" destination="2" id="jop-FU-5zD"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

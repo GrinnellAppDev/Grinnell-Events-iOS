@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "PFQuery.h"
-#import "PFTableViewCell.h"
+#import <Parse/PFQuery.h>
+#import <Parse/PFTableViewCell.h>
 
 /*!
  This class allows you to think about a one-to-one mapping between a PFObject and a UITableViewCell,
