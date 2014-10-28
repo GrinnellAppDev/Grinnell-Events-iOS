@@ -46,9 +46,7 @@
     [query orderByAscending:@"startTime"]; 
     query.limit = 300;
     query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-    [query findObjectsInBackgroundWithBlock:^(NSArray *events, NSError *error) {
-        resultBlock(events, error);
-    }];
+    [query findObjectsInBackgroundWithBlock:resultBlock];
 }
 
 /*

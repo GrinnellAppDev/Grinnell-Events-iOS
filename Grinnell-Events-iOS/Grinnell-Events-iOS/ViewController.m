@@ -23,7 +23,6 @@
 @property (nonatomic, strong) NSArray *sortedDateKeys;
 - (IBAction)goToToday:(id)sender;
 
-@property (nonatomic, assign) BOOL datePickerSet;
 @end
 
 @implementation ViewController
@@ -65,36 +64,36 @@
             [self.tableView reloadData];
             
             
-            // Scroll the tableview to today's events
-            /* Set the DatePicker with first and last event values */
-            // TODO (DrJid): Might need to do this elsewhere since the picker is reset when back button is pressed in event Detail view
-            // Using this boolean to fix above. Assuming that the datePicker wouldn't need to reset all the time under viewWillAppear.
-            // First, find today's date's subscript in the sortedDateKeys array, which is equal to the section index in the tableViewController.
-            if (!self.datePickerSet) {
-                NSDate *firstDate = [NSDate dateFromString: self.sortedDateKeys.firstObject ];
-                NSDate *lastDate = [NSDate dateFromString:self.sortedDateKeys.lastObject];
-                
-                NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:firstDate];
-                
-                NSInteger firstYear = [firstComponents year];
-                NSInteger firstMonth = [firstComponents month];
-                NSInteger firstDay = [firstComponents day];
-                
-                NSDateComponents *lastComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:lastDate];
-                NSInteger lastYear = [lastComponents year];
-                NSInteger lastMonth = [lastComponents month];
-                NSInteger lastDay = [lastComponents day];
-                
-                [self.dayPicker setStartDate:[NSDate dateFromDay:firstDay month:firstMonth year:firstYear] endDate:[NSDate dateFromDay:lastDay month:lastMonth year:lastYear]];
-                [self goToTodayAnimated:NO];
-                self.datePickerSet = YES;
-            }
+            // Set start and end dates in dayPicker
+            NSDate *firstDate = [NSDate dateFromString: self.sortedDateKeys.firstObject ];
+            NSDate *lastDate = [NSDate dateFromString:self.sortedDateKeys.lastObject];
+            
+            NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:firstDate];
+            
+            NSInteger firstYear = [firstComponents year];
+            NSInteger firstMonth = [firstComponents month];
+            NSInteger firstDay = [firstComponents day];
+            
+            NSDateComponents *lastComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:lastDate];
+            NSInteger lastYear = [lastComponents year];
+            NSInteger lastMonth = [lastComponents month];
+            NSInteger lastDay = [lastComponents day];
+            
+            [self.dayPicker setStartDate:[NSDate dateFromDay:firstDay month:firstMonth year:firstYear] endDate:[NSDate dateFromDay:lastDay month:lastMonth year:lastYear]];
+            
+            // Then display today in the picker and tableView
+            [self goToTodayAnimated:NO];
         } else {
             NSLog(@"Error: %@ %@ ", error, error.userInfo);
+            [[[UIAlertView alloc] initWithTitle:@"Sorry about this..."
+                                        message:@"There has been an error. Try relaunching the app."
+                                       delegate:nil
+                              cancelButtonTitle:@"No hard feelings"
+                              otherButtonTitles:nil, nil] show];
         }
     }];
-
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    // Do any additional setup after loading the view, typically from a nib.
     
     self.dayPicker.activeDayColor = [UIColor redColor];
     self.dayPicker.bottomBorderColor = [UIColor colorWithRed:0.693 green:0.008 blue:0.207 alpha:1.000];
@@ -108,12 +107,6 @@
     
     self.dayPickerdateFormatter = [[NSDateFormatter alloc] init];
     [self.dayPickerdateFormatter setDateFormat:@"EE"];
-    
-   // NSDate *tomorr = [NSDate dateWithTimeIntervalSinceNow:60 * 60 * 24];
-   // NSLog(@"date: %@", tomorr);
-    
-    
-    // Initialize the filteredEventsArray with a capacity equal to the event's capacity
     self.filteredEventsArray = [NSMutableArray arrayWithCapacity:self.flatEventsData.count];
 }
 
@@ -130,7 +123,7 @@
             break;
         }
     }
-   
+    
     [self.dayPicker setCurrentDate:[NSDate date] animated:animated];
 }
 
@@ -224,7 +217,7 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return 1;
     } else {
-       // NSLog(@"self.eventsDictcount: %d", [[self.eventsDictionary allKeys] count]);
+        // NSLog(@"self.eventsDictcount: %d", [[self.eventsDictionary allKeys] count]);
         return [[self.eventsDictionary allKeys] count];
     }
 }
@@ -289,7 +282,7 @@ BOOL _dayPickerIsAnimating = NO;
     NSInteger year = [firstComponents year];
     NSInteger month = [firstComponents month];
     NSInteger day = [firstComponents day];
-
+    
     [self.dayPicker setCurrentDate:[NSDate dateFromDay:day+1 month:month year:year] animated:YES];
 }
 
@@ -315,8 +308,8 @@ BOOL _dayPickerIsAnimating = NO;
     }
     
     // Filter the array using NSPredicate
-
-   NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(SELF.title LIKE[cd] %@)", searchWithWildcards];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(SELF.title LIKE[cd] %@)", searchWithWildcards];
     
     self.filteredEventsArray = [NSMutableArray arrayWithArray:[self.allEvents filteredArrayUsingPredicate:predicate]];
     NSLog(@"fileteredArr: %@" , self.filteredEventsArray);
