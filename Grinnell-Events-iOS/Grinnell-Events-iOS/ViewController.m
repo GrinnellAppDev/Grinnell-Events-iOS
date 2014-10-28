@@ -34,8 +34,23 @@
 {
     [super viewDidLoad];
     [GAEvent findAllEventsInBackground:^(NSArray *events, NSError *error) {
-        if (!error) {
-            
+        if (error) {
+            NSLog(@"Error: %@ %@ ", error, error.userInfo);
+            [[[UIAlertView alloc] initWithTitle:@"Sorry about this..."
+                                        message:@"There has been an error. Try relaunching the app."
+                                       delegate:nil
+                              cancelButtonTitle:@"No hard feelings"
+                              otherButtonTitles:nil, nil] show];
+        }
+        else if (events.count == 0){
+            [[[UIAlertView alloc] initWithTitle:@"Sorry about this..."
+                                        message:@"We're doing some server maintenence. Try relaunching the app in a few minutes."
+                                       delegate:nil
+                              cancelButtonTitle:@"No hard feelings"
+                              otherButtonTitles:nil, nil] show];
+        }
+        else {
+            //events = @[];
             self.allEvents = events;
             NSMutableDictionary *theEvents = [[NSMutableDictionary alloc] init];
             
@@ -83,13 +98,6 @@
             
             // Then display today in the picker and tableView
             [self goToTodayAnimated:NO];
-        } else {
-            NSLog(@"Error: %@ %@ ", error, error.userInfo);
-            [[[UIAlertView alloc] initWithTitle:@"Sorry about this..."
-                                        message:@"There has been an error. Try relaunching the app."
-                                       delegate:nil
-                              cancelButtonTitle:@"No hard feelings"
-                              otherButtonTitles:nil, nil] show];
         }
     }];
     
@@ -195,23 +203,6 @@
     }
 }
 
-/*
- - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
- {
- UIView *scarletView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
- scarletView.backgroundColor = [UIColor colorWithRed:0.693 green:0.008 blue:0.207 alpha:1.000];
- 
- UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 20)];
- 
- // textLabel.textColor = [UIColor whiteColor];
- textLabel.backgroundColor = [UIColor clearColor];
- textLabel.text = self.sortedDateKeys[section];
- [scarletView addSubview:textLabel];
- 
- return scarletView;
- }
- */
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if (tableView == self.searchDisplayController.searchResultsTableView) {
@@ -238,10 +229,6 @@
     static NSString* reuseIdentifier = @"EventCell";
     
     GAEventCell *cell = [self.tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-    
-    if (!cell) {
-        cell = [[GAEventCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
-    }
     
     GAEvent *event;
     
