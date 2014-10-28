@@ -19,15 +19,6 @@
 @dynamic detailDescription;
 @dynamic eventid;
 
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        //
-    }
-    return self;
-}
-
 + (NSString *)parseClassName
 {
     return @"Event2";
@@ -45,7 +36,7 @@
     [query whereKey:@"startTime" greaterThanOrEqualTo:pastDate];
     [query orderByAscending:@"startTime"]; 
     query.limit = 300;
-    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    query.cachePolicy = kPFCachePolicyNetworkElseCache;
     [query findObjectsInBackgroundWithBlock:resultBlock];
 }
 
