@@ -32,6 +32,7 @@
 
 - (void)viewDidLoad
 {
+    self.tableView.scrollEnabled = NO;
     [super viewDidLoad];
     [GAEvent findAllEventsInBackground:^(NSArray *events, NSError *error) {
         if (error) {
@@ -50,7 +51,6 @@
                               otherButtonTitles:nil, nil] show];
         }
         else {
-            //events = @[];
             self.allEvents = events;
             NSMutableDictionary *theEvents = [[NSMutableDictionary alloc] init];
             
@@ -75,9 +75,7 @@
                 NSDate *date2 = [NSDate dateFromString:d2];
                 return [date1 compare:date2];
             }];
-            
             [self.tableView reloadData];
-            
             
             // Set start and end dates in dayPicker
             NSDate *firstDate = [NSDate dateFromString: self.sortedDateKeys.firstObject ];
@@ -98,6 +96,7 @@
             
             // Then display today in the picker and tableView
             [self goToTodayAnimated:NO];
+            self.tableView.scrollEnabled = YES;
         }
     }];
     
