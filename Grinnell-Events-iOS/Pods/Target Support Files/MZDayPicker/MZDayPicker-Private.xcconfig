@@ -1,0 +1,6 @@
+#include "MZDayPicker.xcconfig"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/MZDayPicker" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Bolts" "${PODS_ROOT}/Headers/Public/CrashlyticsFramework" "${PODS_ROOT}/Headers/Public/CrashlyticsFramework/Crashlytics" "${PODS_ROOT}/Headers/Public/FlurrySDK" "${PODS_ROOT}/Headers/Public/MZDayPicker" "${PODS_ROOT}/Headers/Public/Parse" "${PODS_ROOT}/Headers/Public/Parse/Parse"
+OTHER_LDFLAGS = ${MZDAYPICKER_OTHER_LDFLAGS}
+PODS_ROOT = ${SRCROOT}
+SKIP_INSTALL = YES
