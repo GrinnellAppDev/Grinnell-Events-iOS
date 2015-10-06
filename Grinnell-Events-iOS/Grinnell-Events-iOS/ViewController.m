@@ -20,7 +20,9 @@
 @property (nonatomic, strong) NSString *searchText;
 @property (nonatomic, strong) NSArray *allEvents;
 @property (nonatomic, strong) NSDictionary *eventsDictionary;
+@property (nonatomic, strong) NSDictionary *filteredEventsDictionary;
 @property (nonatomic, strong) NSArray *sortedDateKeys;
+@property (nonatomic, strong) NSArray *filteredSortedDateKeys;
 - (IBAction)goToToday:(id)sender;
 
 @end
@@ -145,7 +147,7 @@
 {
     //We scroll to that section. Sections are labeled by the date (sortedKeys)
     NSString *selectedDateString = [NSDate formattedStringFromDate:day.date];
-    NSLog(@"sd: %@", selectedDateString);
+    //NSLog(@"sd: %@", selectedDateString);
     NSInteger index = [self.sortedDateKeys indexOfObject:selectedDateString];
     
     //This way we make sure it doesn't crash if things get glitchy and index isn't found.
@@ -178,7 +180,8 @@
         // In order to manipulate the destination view controller, another check on which table (search or normal) is displayed is needed
         if(sender == self.searchDisplayController.searchResultsTableView) {
             NSIndexPath *indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
-            event = self.filteredEventsArray[indexPath.row];
+            NSString *key = self.filteredSortedDateKeys[indexPath.section];
+            event = self.filteredEventsDictionary[key][indexPath.row];
         }
         else {
             NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
@@ -195,7 +198,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        return  [NSString stringWithFormat:@"Search Results for \"%@\"", self.searchText];
+        return self.filteredSortedDateKeys[section];
     } else {
         // Return the apt section title.
         return self.sortedDateKeys[section];
@@ -205,7 +208,8 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        return 1;
+        NSLog(@"number of sections: %lu", [[self.filteredEventsDictionary allKeys] count]);
+        return [[self.filteredEventsDictionary allKeys] count];
     } else {
         // NSLog(@"self.eventsDictcount: %d", [[self.eventsDictionary allKeys] count]);
         return [[self.eventsDictionary allKeys] count];
@@ -216,7 +220,9 @@
 {
     // Check to see whether the normal table or search results table is being displayed and return the count from the appropriate array
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        return [self.filteredEventsArray count];
+        NSLog(@"number of rows: %lu", [self.filteredEventsDictionary[self.filteredSortedDateKeys[section]] count]);
+        NSLog(@"Section contents: %@", self.filteredEventsDictionary[self.filteredSortedDateKeys[section]]);
+        return [self.filteredEventsDictionary[self.filteredSortedDateKeys[section]] count];
     } else {
         //NSLog(@"numrows: %d" , [self.eventsDictionary[self.sortedDateKeys[section]] count]);
         return [self.eventsDictionary[self.sortedDateKeys[section]] count];
@@ -232,8 +238,11 @@
     GAEvent *event;
     
     // Check to see whether the normal table or search results table is being displayed and set the Event object from the appropriate array
+    //NSLog(@"Test");
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        event = self.filteredEventsArray[indexPath.row];
+        NSString *key = self.filteredSortedDateKeys[indexPath.section];
+        event = self.filteredEventsDictionary[key][indexPath.row];
+        NSLog(@"Event: %@", event);
     } else {
         NSString *dateKey =  self.sortedDateKeys[indexPath.section];
         event = self.eventsDictionary[dateKey][indexPath.row];
@@ -298,7 +307,38 @@ BOOL _dayPickerIsAnimating = NO;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(SELF.title LIKE[cd] %@)", searchWithWildcards];
     
     self.filteredEventsArray = [NSMutableArray arrayWithArray:[self.allEvents filteredArrayUsingPredicate:predicate]];
-    NSLog(@"fileteredArr: %@" , self.filteredEventsArray);
+    //NSLog(@"filteredArr: %@" , self.filteredEventsArray);
+    
+    
+    NSMutableDictionary *searchEvents = [[NSMutableDictionary alloc] init];
+    for (GAEvent *event in self.filteredEventsArray) {
+        NSString *eventDate = event.date;
+     
+        if ( searchEvents[eventDate] ) {
+            [searchEvents[eventDate] addObject:event];
+        } else {
+            searchEvents[eventDate] = [[NSMutableArray alloc] init];
+            [searchEvents[eventDate] addObject:event];
+        }
+    }
+    
+    self.filteredEventsDictionary = searchEvents;
+     
+     NSArray *newKeys = [searchEvents allKeys];
+     self.filteredSortedDateKeys =  [newKeys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
+         NSDate *date1 = [NSDate dateFromString:d1];
+         NSDate *date2 = [NSDate dateFromString:d2];
+         return [date1 compare:date2];
+     }];
+    
+    for (NSString *date in self.filteredEventsDictionary.allKeys) {
+        NSLog(@"Key: %@", date);
+        NSLog(@"Value: %@", self.filteredEventsDictionary[date]);
+    }
+    
+    NSLog(@"Keys are as follows: %@", self.filteredSortedDateKeys);
+    
+    //[self.searchDisplayController.searchResultsTableView reloadData];
 }
 
 #pragma mark - UISearchDisplayController Delegate Methods
@@ -307,6 +347,8 @@ BOOL _dayPickerIsAnimating = NO;
     [self filterContentForSearchText:searchString scope:
      [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
     // Return YES to cause the search result table view to be reloaded.
+    //NSLog(@"%@", self.filteredEventsArray);
+    //NSLog(@"%@", self.filteredEventsDictionary);
     return YES;
 }
 
