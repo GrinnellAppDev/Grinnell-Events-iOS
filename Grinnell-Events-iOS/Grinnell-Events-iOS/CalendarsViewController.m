@@ -194,7 +194,7 @@
     UILabel *label = (UILabel *) [cell viewWithTag:13];
     selectedCalendarString = label.text;
     
-    NSLog(@"Selected cal is: %@", selectedCalendarString);
+    //NSLog(@"Selected cal is: %@", selectedCalendarString);
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
