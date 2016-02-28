@@ -258,7 +258,7 @@
 		8B58DD4A17DCFE360041EBD3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Grinnell AppDev";
 				TargetAttributes = {
 					8B58DD5117DCFE360041EBD3 = {
@@ -402,6 +402,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -461,6 +462,7 @@
 				INFOPLIST_FILE = "Grinnell-Events-iOS/Grinnell-Events-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.GrinnellAppDev.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "Grinnell-Events";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -483,6 +485,7 @@
 				INFOPLIST_FILE = "Grinnell-Events-iOS/Grinnell-Events-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.GrinnellAppDev.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "Grinnell-Events";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
