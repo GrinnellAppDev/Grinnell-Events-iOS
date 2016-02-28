@@ -1,1 +1,0 @@
-MZDAYPICKER_OTHER_LDFLAGS = -framework "QuartzCore"
