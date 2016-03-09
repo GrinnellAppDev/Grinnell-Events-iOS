@@ -19,15 +19,16 @@
 @property (nonatomic,strong) NSDateFormatter *dayPickerdateFormatter;
 @property (nonatomic, strong) NSString *searchText;
 @property (nonatomic, strong) NSArray *allEvents;
-@property (nonatomic, strong) NSDictionary *eventsDictionary;
 @property (nonatomic, strong) NSDictionary *filteredEventsDictionary;
 @property (nonatomic, strong) NSArray *sortedDateKeys;
 @property (nonatomic, strong) NSArray *filteredSortedDateKeys;
+
 - (IBAction)goToToday:(id)sender;
 
 @end
 
 @implementation ViewController
+
 - (IBAction)didDoubleTapDays:(id)sender {
     [self goToTodayAnimated:YES];
 }
@@ -123,8 +124,17 @@
     self.filteredEventsArray = [NSMutableArray arrayWithCapacity:self.flatEventsData.count];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    
+    [self filterContentForSearchText:@"" scope:
+     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar
+                                                                                selectedScopeButtonIndex]]];
+    [self.tableView reloadData];
+    
+}
 
--(void)goToTodayAnimated:(BOOL)animated{
+
+-(void)goToTodayAnimated:(BOOL)animated {
     NSCalendar *cal = [NSCalendar currentCalendar];
     NSDateComponents *comps1 = [cal components:(NSCalendarUnitMonth| NSCalendarUnitYear | NSCalendarUnitDay) fromDate:[NSDate date]];
     
@@ -178,10 +188,20 @@
         
         EventDetailViewController *eventDetailViewController = [segue destinationViewController];
         GAEvent *event;
+        NSIndexPath *indexPath;
         
-            NSIndexPath *indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
-            NSString *key = self.filteredSortedDateKeys[indexPath.section];
-            event = self.filteredEventsDictionary[key][indexPath.row];
+        if (sender == self.searchDisplayController.searchResultsTableView) {
+            
+            indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
+        
+        } else if (sender == self.tableView) {
+            
+            indexPath = [self.tableView indexPathForSelectedRow];
+        
+        }
+        
+        NSString *key = self.filteredSortedDateKeys[indexPath.section];
+        event = self.filteredEventsDictionary[key][indexPath.row];
         
         eventDetailViewController.theEvent = event;
     }
@@ -190,17 +210,17 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-        return self.filteredSortedDateKeys[section];
+    return self.filteredSortedDateKeys[section];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-        return [[self.filteredEventsDictionary allKeys] count];
+    return [[self.filteredEventsDictionary allKeys] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-        return [self.filteredEventsDictionary[self.filteredSortedDateKeys[section]] count];
+    return [self.filteredEventsDictionary[self.filteredSortedDateKeys[section]] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -318,7 +338,6 @@ BOOL _dayPickerIsAnimating = NO;
     //Search Results Table View has a different Row height - Fix it to use the height of our prototype cell
     tableView.rowHeight = 72;
 }
-
 
 - (IBAction)didTapDays:(id)sender {
 }
