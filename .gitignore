@@ -21,4 +21,4 @@ DerivedData
 *.xcuserstate
 
 # Ignore CocoaPods binaries and headers
-**/Pods/
+Grinnell-Events-iOS/Pods
