@@ -126,7 +126,6 @@
     for (int i = 0 ; i < self.sortedDateKeys.count; i++){
         NSDateComponents *comps2 = [cal components:(NSCalendarUnitMonth| NSCalendarUnitYear | NSCalendarUnitDay) fromDate:[NSDate dateFromString:self.sortedDateKeys[i]]];
         if (comps1.day == comps2.day && comps1.month == comps2.month && comps1.year == comps2.year){
-            //
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection: i] atScrollPosition:UITableViewScrollPositionTop animated:animated];
             break;
         }
@@ -146,7 +145,6 @@
 {
     //We scroll to that section. Sections are labeled by the date (sortedKeys)
     NSString *selectedDateString = [NSDate formattedStringFromDate:day.date];
-    //NSLog(@"sd: %@", selectedDateString);
     NSInteger index = [self.sortedDateKeys indexOfObject:selectedDateString];
     
     //This way we make sure it doesn't crash if things get glitchy and index isn't found.
@@ -157,7 +155,6 @@
 
 - (void)dayPicker:(MZDayPicker *)dayPicker willSelectDay:(MZDay *)day
 {
-    //NSLog(@"Will select day %@",day.day);
 }
 
 #pragma mark - UITableView Delegate Methods
@@ -188,7 +185,6 @@
         }
         
         eventDetailViewController.theEvent = event;
-        //eventDetailViewController.title = event.title;
     }
 }
 
@@ -208,7 +204,6 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return 1;
     } else {
-        // NSLog(@"self.eventsDictcount: %d", [[self.eventsDictionary allKeys] count]);
         return [[self.eventsDictionary allKeys] count];
     }
 }
@@ -219,7 +214,6 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return [self.filteredEventsArray count];
     } else {
-        //NSLog(@"numrows: %d" , [self.eventsDictionary[self.sortedDateKeys[section]] count]);
         return [self.eventsDictionary[self.sortedDateKeys[section]] count];
     }
 }
@@ -255,16 +249,9 @@ BOOL _dayPickerIsAnimating = NO;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    //NSLog(@"This was called");
-    
     NSArray *visibleRows = [self.tableView visibleCells];
     UITableViewCell *firstVisibleCell = [visibleRows objectAtIndex:0];
     NSIndexPath *path = [self.tableView indexPathForCell:firstVisibleCell];
-    
-    //As I understand it right now, sVDS is being called constantly whenever view is scrolling.
-    //So, visibleRows, path, toDate and everything else are being constantly updated.
-    //Would be helpful to store current firstVisibleCell's date and compare to see if date changes, to make
-    //dayPicker run more smoothly.  --AFrench
     
     //Scroll to the selected date.
     NSDate *toDate = [NSDate dateFromString:self.sortedDateKeys[path.section] ];
@@ -309,7 +296,6 @@ BOOL _dayPickerIsAnimating = NO;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(SELF.title LIKE[cd] %@)", searchWithWildcards];
     
     self.filteredEventsArray = [NSMutableArray arrayWithArray:[self.allEvents filteredArrayUsingPredicate:predicate]];
-    //NSLog(@"fileteredArr: %@" , self.filteredEventsArray);
 }
 
 #pragma mark - UISearchDisplayController Delegate Methods
