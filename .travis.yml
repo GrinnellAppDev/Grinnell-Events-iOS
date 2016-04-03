@@ -1,7 +1,17 @@
-
 language: objective-c
 osx_image: xcode7.3
 
+xcode_workspace: Grinnell-Events-iOS/Grinnell-Events-iOS.xcworkspace
+xcode_scheme: Grinnell-Events
 
-script:
-  - xctool -workspace Grinnell-Events-iOS/Grinnell-Events-iOS.xcworkspace -scheme Grinnell-Events -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+xcode_sdk:
+    - iphonesimulator9.3
+    - iphonesimulator9.2
+    - iphonesimulator9.1
+    - iphonesimulator9.0
+    - iphonesimulator8.4
+    - iphonesimulator8.3
+    - iphonesimulator8.2
+    - iphonesimulator8.1
+#script:
+#  - xctool -workspace  -scheme Grinnell-Events -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
