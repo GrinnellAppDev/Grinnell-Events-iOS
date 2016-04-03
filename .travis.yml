@@ -4,4 +4,4 @@ osx_image: xcode7.3
 
 
 script:
-  - xctool -workspace Grinnell-Events-iOS/Grinnell-Events-iOS.xcworkspace -scheme Grinnell-Events-iOS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+  - xctool -workspace Grinnell-Events-iOS/Grinnell-Events-iOS.xcworkspace -scheme Grinnell-Events -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
