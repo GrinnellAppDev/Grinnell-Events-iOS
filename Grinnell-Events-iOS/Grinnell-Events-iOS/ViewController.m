@@ -21,7 +21,7 @@
 @property (nonatomic, strong) NSArray *allEvents;
 @property (nonatomic, strong) NSDictionary *eventsDictionary;
 @property (nonatomic, strong) NSArray *sortedDateKeys;
-@property (nonatomic, strong) NSDate *currentDateViewed;
+@property (nonatomic, strong) NSDate *focusedDate;
 - (IBAction)goToToday:(id)sender;
 
 @end
@@ -153,10 +153,6 @@
     }
 }
 
-- (void)dayPicker:(MZDayPicker *)dayPicker willSelectDay:(MZDay *)day
-{
-}
-
 #pragma mark - UITableView Delegate Methods
 
 #pragma mark - TableView Delegate
@@ -185,6 +181,7 @@
         }
         
         eventDetailViewController.theEvent = event;
+        
     }
 }
 
@@ -257,15 +254,18 @@ BOOL _dayPickerIsAnimating = NO;
     NSDate *toDate = [NSDate dateFromString:self.sortedDateKeys[path.section] ];
     
     
-    if (![toDate isEqualToDate:self.currentDateViewed]){
-        self.currentDateViewed = toDate;
-        NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:self.currentDateViewed];
+    BOOL selectedDateIsCurrentlyViewed = [toDate isEqualToDate:self.focusedDate];
+    
+    if (!selectedDateIsCurrentlyViewed){
+        self.focusedDate = toDate;
+        NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:self.focusedDate];
     
         NSInteger year = [firstComponents year];
         NSInteger month = [firstComponents month];
         NSInteger day = [firstComponents day];
     
-        [self.dayPicker setCurrentDate:[NSDate dateFromDay:day+1 month:month year:year] animated:YES];
+        NSDate *followingDay = [NSDate dateFromDay:day+1 month:month year:year];
+        [self.dayPicker setCurrentDate:followingDay animated:YES];
     }
     
 }
