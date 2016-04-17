@@ -175,8 +175,6 @@
         
         float height = [self findHeightForText:self.theEvent.detailDescription havingWidth:300.0 andFont:[UIFont fontWithName:@"AvenirNext-Regular" size:13.0]];
         
-        //NSLog(@"HEIGHT: %f and STRING: %@", height, self.theEvent.detailDescription);
-        
         if (height > 120) {
             return 120;
         }
