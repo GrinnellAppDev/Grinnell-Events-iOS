@@ -20,4 +20,5 @@ DerivedData
 .idea/
 *.xcuserstate
 
-Pods/*
+# Ignore CocoaPods binaries and headers
+Grinnell-Events-iOS/Pods
