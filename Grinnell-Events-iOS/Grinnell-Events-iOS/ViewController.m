@@ -70,7 +70,7 @@
                 }
             }
             
-            self.filteredEventsDictionary = theEvents; //Changed to filteredEventsDictionary
+            self.filteredEventsDictionary = theEvents;
             // Sort the keys by date
             NSArray *keys = [theEvents allKeys];
             self.sortedDateKeys =  [keys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
@@ -126,10 +126,6 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     
-    [self filterContentForSearchText:@"" scope:
-     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar
-                                                                                selectedScopeButtonIndex]]];
-    [self.tableView reloadData];
     
 }
 
@@ -337,6 +333,15 @@ BOOL _dayPickerIsAnimating = NO;
 {
     //Search Results Table View has a different Row height - Fix it to use the height of our prototype cell
     tableView.rowHeight = 72;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)SearchBar {
+
+    [self filterContentForSearchText:@"" scope:
+     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar
+                                                                                selectedScopeButtonIndex]]];
+    [self.tableView reloadData];
+    
 }
 
 - (IBAction)didTapDays:(id)sender {
