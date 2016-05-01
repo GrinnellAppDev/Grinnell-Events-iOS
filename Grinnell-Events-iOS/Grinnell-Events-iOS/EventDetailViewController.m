@@ -16,7 +16,6 @@
 @interface EventDetailViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *conflictLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *conflictImageView;
@@ -43,12 +42,12 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.title = self.theEvent.title;
     self.eventKitController = [[EventKitController alloc] init];
     
     self.timeLabel.text =  [NSString stringWithFormat:@"%@ - %@", [NSDate timeStringFormatFromDate:self.theEvent.startTime], [NSDate timeStringFormatFromDate:self.theEvent.endTime]];
     
     self.dateLabel.text = self.theEvent.date;
-    self.titleLabel.text = self.theEvent.title;
     self.locationLabel.text = self.theEvent.location;
     if (self.theEvent.detailDescription) {
         self.descriptionTextView.text = self.theEvent.detailDescription;
@@ -174,8 +173,6 @@
     if (indexPath.section == 1) {
         
         float height = [self findHeightForText:self.theEvent.detailDescription havingWidth:300.0 andFont:[UIFont fontWithName:@"AvenirNext-Regular" size:13.0]];
-        
-        NSLog(@"HEIGHT: %f and STRING: %@", height, self.theEvent.detailDescription);
         
         if (height > 120) {
             return 120;

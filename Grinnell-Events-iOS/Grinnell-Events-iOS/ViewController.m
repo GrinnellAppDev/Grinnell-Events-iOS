@@ -21,6 +21,7 @@
 @property (nonatomic, strong) NSArray *allEvents;
 @property (nonatomic, strong) NSDictionary *eventsDictionary;
 @property (nonatomic, strong) NSArray *sortedDateKeys;
+@property (nonatomic, strong) NSDate *focusedDate;
 - (IBAction)goToToday:(id)sender;
 
 @end
@@ -125,7 +126,6 @@
     for (int i = 0 ; i < self.sortedDateKeys.count; i++){
         NSDateComponents *comps2 = [cal components:(NSCalendarUnitMonth| NSCalendarUnitYear | NSCalendarUnitDay) fromDate:[NSDate dateFromString:self.sortedDateKeys[i]]];
         if (comps1.day == comps2.day && comps1.month == comps2.month && comps1.year == comps2.year){
-            //
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection: i] atScrollPosition:UITableViewScrollPositionTop animated:animated];
             break;
         }
@@ -145,18 +145,12 @@
 {
     //We scroll to that section. Sections are labeled by the date (sortedKeys)
     NSString *selectedDateString = [NSDate formattedStringFromDate:day.date];
-    NSLog(@"sd: %@", selectedDateString);
     NSInteger index = [self.sortedDateKeys indexOfObject:selectedDateString];
     
     //This way we make sure it doesn't crash if things get glitchy and index isn't found.
     if (index != NSNotFound) {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
-}
-
-- (void)dayPicker:(MZDayPicker *)dayPicker willSelectDay:(MZDay *)day
-{
-    //NSLog(@"Will select day %@",day.day);
 }
 
 #pragma mark - UITableView Delegate Methods
@@ -187,7 +181,6 @@
         }
         
         eventDetailViewController.theEvent = event;
-        //eventDetailViewController.title = event.title;
     }
 }
 
@@ -207,7 +200,6 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return 1;
     } else {
-        // NSLog(@"self.eventsDictcount: %d", [[self.eventsDictionary allKeys] count]);
         return [[self.eventsDictionary allKeys] count];
     }
 }
@@ -218,7 +210,6 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return [self.filteredEventsArray count];
     } else {
-        //NSLog(@"numrows: %d" , [self.eventsDictionary[self.sortedDateKeys[section]] count]);
         return [self.eventsDictionary[self.sortedDateKeys[section]] count];
     }
 }
@@ -254,22 +245,28 @@ BOOL _dayPickerIsAnimating = NO;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    
     NSArray *visibleRows = [self.tableView visibleCells];
     UITableViewCell *firstVisibleCell = [visibleRows objectAtIndex:0];
     NSIndexPath *path = [self.tableView indexPathForCell:firstVisibleCell];
     
-    
     //Scroll to the selected date.
     NSDate *toDate = [NSDate dateFromString:self.sortedDateKeys[path.section] ];
     
-    NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:toDate];
     
-    NSInteger year = [firstComponents year];
-    NSInteger month = [firstComponents month];
-    NSInteger day = [firstComponents day];
+    BOOL selectedDateIsCurrentlyViewed = [toDate isEqualToDate:self.focusedDate];
     
-    [self.dayPicker setCurrentDate:[NSDate dateFromDay:day+1 month:month year:year] animated:YES];
+    if (!selectedDateIsCurrentlyViewed){
+        self.focusedDate = toDate;
+        NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:self.focusedDate];
+    
+        NSInteger year = [firstComponents year];
+        NSInteger month = [firstComponents month];
+        NSInteger day = [firstComponents day];
+    
+        NSDate *followingDay = [NSDate dateFromDay:day+1 month:month year:year];
+        [self.dayPicker setCurrentDate:followingDay animated:YES];
+    }
+    
 }
 
 
@@ -298,7 +295,6 @@ BOOL _dayPickerIsAnimating = NO;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(SELF.title LIKE[cd] %@)", searchWithWildcards];
     
     self.filteredEventsArray = [NSMutableArray arrayWithArray:[self.allEvents filteredArrayUsingPredicate:predicate]];
-    NSLog(@"fileteredArr: %@" , self.filteredEventsArray);
 }
 
 #pragma mark - UISearchDisplayController Delegate Methods
