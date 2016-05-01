@@ -42,6 +42,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.title = self.theEvent.title;
     self.eventKitController = [[EventKitController alloc] init];
     
     self.timeLabel.text =  [NSString stringWithFormat:@"%@ - %@", [NSDate timeStringFormatFromDate:self.theEvent.startTime], [NSDate timeStringFormatFromDate:self.theEvent.endTime]];
