@@ -27,16 +27,6 @@
 
 @implementation EventDetailViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        NSLog(@"EK allocated");
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -62,13 +52,6 @@
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     [self updateConflictCell];
 }
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 
 - (IBAction)addEventToCalendar:(id)sender {
     
@@ -101,10 +84,6 @@
     NSArray *matches = [self.eventKitController.eventStore eventsMatchingPredicate:eventPredicate];
     NSMutableArray *matchingEvents = [NSMutableArray arrayWithArray:matches];
     
-    DLog(@"m: %@", matchingEvents);
-    DLog(@"m: %lu", (unsigned long)matchingEvents.count);
-
-    
     //Remove all "all-day" events;
     NSMutableArray *tmpArray = [NSMutableArray new];
     for (EKEvent *event in matchingEvents) {
@@ -115,15 +94,9 @@
     }
     [matchingEvents removeObjectsInArray:tmpArray];
     
-    DLog(@"me: %@", matchingEvents);
-
-    
-
-    
     if (matchingEvents.count > 0 ) {
         
         EKEvent *firstConflict = matchingEvents.firstObject;
-        DLog(@"even: %@", firstConflict);
         
         NSString *title = firstConflict.title;
         
@@ -134,10 +107,6 @@
         NSString *end = [NSDate timeStringFormatFromDate:firstConflict.endDate];
         NSString *conflictText = [NSString stringWithFormat:@"%@ (%@ - %@) conflicts with this event.", title, start, end];
        
-        
-       // DLog(@"%@", matchingEvents);
-        
-      //  NSString *firstConflicting = [matchingEvents.firstObject title];
         if ([title isEqualToString:self.theEvent.title]) {
             self.conflictLabel.text = @"Looks like you're going to this already!";
             self.conflictImageView.image = [UIImage imageNamed:@"checkmark"];
@@ -159,10 +128,6 @@
     if (buttonIndex == 1) {
          [self.eventKitController addEventToCalendar:self.theEvent];
     }
-}
-
-- (IBAction)doSpecialThings:(id)sender {
-
 }
 
 #pragma mark - Table View Methods

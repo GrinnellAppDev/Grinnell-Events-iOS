@@ -1,11 +1,3 @@
-//
-//  SettingsViewController.m
-//  Grinnell-Events-iOS
-//
-//  Created by Lea Marolt on 11/3/13.
-//  Copyright (c) 2013 Grinnell AppDev. All rights reserved.
-//
-
 #import "CalendarsViewController.h"
 
 @interface CalendarsViewController ()
@@ -75,31 +67,6 @@
     if (selectedCalendarString == nil) {
         selectedCalendarString = [eventStore defaultCalendarForNewEvents].title;
     }
-    
-    // check how many calendars each array in the dictionary has
-    
-//    for (NSString *key in calendarTable) {
-//        NSLog(@"%d cals in %@", [[calendarTable objectForKey:key] count], key);
-//    }
-//    
-//    int index = 0;
-//    
-//    for (NSString *str in calendarTable) {
-//        NSLog(@"Object at index %d: %@", index, [[calendarTable allKeys] objectAtIndex:index]);
-//        index++;
-//    }
-//    
-//        if (tedCalendar == nil) {
-//        selectedCalendarStringString = [eventStore defaultCalendarForNewEvents].title;
-//    }
-//    
-//    for (EKCalendar *cal in self.writableCalendars) {
-//        NSLog(@"Cals Writable: %@ From Source: %@", cal.title, cal.source.title);
-//    }
-//    
-//    for (EKCalendar *cal in self.allCalendars) {
-//        NSLog(@"Cals: %@ From Source: %@", cal.title, cal.source.title);
-//    }
 }
 
 - (void)didReceiveMemoryWarning

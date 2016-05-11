@@ -247,7 +247,6 @@ BOOL _dayPickerIsAnimating = NO;
     
     //Scroll to the selected date.
     NSDate *toDate = [NSDate dateFromString:self.filteredSortedDateKeys[path.section] ];
-    NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:toDate];   
     BOOL selectedDateIsCurrentlyViewed = [toDate isEqualToDate:self.focusedDate];
     
     if (!selectedDateIsCurrentlyViewed){
