@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSDictionary *filteredEventsDictionary;
 @property (nonatomic, strong) NSArray *sortedDateKeys;
 @property (nonatomic, strong) NSArray *filteredSortedDateKeys;
+@property (nonatomic, strong) NSDate *focusedDate;
 
 - (IBAction)goToToday:(id)sender;
 
@@ -137,7 +138,6 @@
     for (int i = 0 ; i < self.sortedDateKeys.count; i++){
         NSDateComponents *comps2 = [cal components:(NSCalendarUnitMonth| NSCalendarUnitYear | NSCalendarUnitDay) fromDate:[NSDate dateFromString:self.sortedDateKeys[i]]];
         if (comps1.day == comps2.day && comps1.month == comps2.month && comps1.year == comps2.year){
-            //
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection: i] atScrollPosition:UITableViewScrollPositionTop animated:animated];
             break;
         }
@@ -163,10 +163,6 @@
     if (index != NSNotFound) {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
-}
-
-- (void)dayPicker:(MZDayPicker *)dayPicker willSelectDay:(MZDay *)day
-{
 }
 
 #pragma mark - UITableView Delegate Methods
@@ -245,21 +241,27 @@ BOOL _dayPickerIsAnimating = NO;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    
     NSArray *visibleRows = [self.tableView visibleCells];
     UITableViewCell *firstVisibleCell = [visibleRows objectAtIndex:0];
     NSIndexPath *path = [self.tableView indexPathForCell:firstVisibleCell];
     
-    
     //Scroll to the selected date.
     NSDate *toDate = [NSDate dateFromString:self.filteredSortedDateKeys[path.section] ];
-    NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:toDate];
+    NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:toDate];   
+    BOOL selectedDateIsCurrentlyViewed = [toDate isEqualToDate:self.focusedDate];
     
-    NSInteger year = [firstComponents year];
-    NSInteger month = [firstComponents month];
-    NSInteger day = [firstComponents day];
+    if (!selectedDateIsCurrentlyViewed){
+        self.focusedDate = toDate;
+        NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:self.focusedDate];
     
-    [self.dayPicker setCurrentDate:[NSDate dateFromDay:day+1 month:month year:year] animated:YES];
+        NSInteger year = [firstComponents year];
+        NSInteger month = [firstComponents month];
+        NSInteger day = [firstComponents day];
+    
+        NSDate *followingDay = [NSDate dateFromDay:day+1 month:month year:year];
+        [self.dayPicker setCurrentDate:followingDay animated:YES];
+    }
+    
 }
 
 
@@ -309,7 +311,6 @@ BOOL _dayPickerIsAnimating = NO;
          NSDate *date2 = [NSDate dateFromString:d2];
          return [date1 compare:date2];
      }];
-    
 }
 
 #pragma mark - UISearchDisplayController Delegate Methods

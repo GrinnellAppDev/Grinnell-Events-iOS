@@ -16,7 +16,6 @@
 @interface EventDetailViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *conflictLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *conflictImageView;
@@ -43,12 +42,12 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.title = self.theEvent.title;
     self.eventKitController = [[EventKitController alloc] init];
     
     self.timeLabel.text =  [NSString stringWithFormat:@"%@ - %@", [NSDate timeStringFormatFromDate:self.theEvent.startTime], [NSDate timeStringFormatFromDate:self.theEvent.endTime]];
     
     self.dateLabel.text = self.theEvent.date;
-    self.titleLabel.text = self.theEvent.title;
     self.locationLabel.text = self.theEvent.location;
     if (self.theEvent.detailDescription) {
         self.descriptionTextView.text = self.theEvent.detailDescription;
