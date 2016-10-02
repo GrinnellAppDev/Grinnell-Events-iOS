@@ -56,6 +56,7 @@
         }
         else {
             self.allEvents = events;
+            NSLog(@"%lu", [self.allEvents count]);
             NSMutableDictionary *theEvents = [[NSMutableDictionary alloc] init];
             
             for (GAEvent *event in events) {

@@ -1,6 +1,9 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '6.0'
-pod 'MZDayPicker'
-pod 'Parse'
-pod 'CrashlyticsFramework'
-pod 'FlurrySDK'
+
+target 'Grinnell-Events-iOS' do
+	pod 'MZDayPicker'
+	pod 'Parse'
+	pod 'Crashlytics'
+	pod 'Flurry-iOS-SDK'
+end
