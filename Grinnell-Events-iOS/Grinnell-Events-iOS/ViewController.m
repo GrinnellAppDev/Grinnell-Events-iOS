@@ -39,68 +39,21 @@
     self.tableView.scrollEnabled = NO;
     [super viewDidLoad];
     [GAEvent findAllEventsInBackground:^(NSArray *events, NSError *error) {
-        if (error) {
-            NSLog(@"Error: %@ %@ ", error, error.userInfo);
-            [[[UIAlertView alloc] initWithTitle:@"Sorry about this..."
-                                        message:@"There has been an error. Try relaunching the app."
-                                       delegate:nil
-                              cancelButtonTitle:@"No hard feelings"
-                              otherButtonTitles:nil, nil] show];
-        }
-        else if (events.count == 0){
-            [[[UIAlertView alloc] initWithTitle:@"Sorry about this..."
-                                        message:@"We're doing some server maintenence. Try relaunching the app in a few minutes."
-                                       delegate:nil
-                              cancelButtonTitle:@"No hard feelings"
-                              otherButtonTitles:nil, nil] show];
+        if (error || (events.count == 0)) {
+            [self showErrorAlert:error];
         }
         else {
-            self.allEvents = events;
-            NSMutableDictionary *theEvents = [[NSMutableDictionary alloc] init];
+            NSMutableDictionary *unfilteredEvents = [self populateEventsDictionary:self.allEvents];
             
-            for (GAEvent *event in events) {
-                NSString *eventDate = event.date;
-                
-                if ( theEvents[eventDate] ) {
-                    /* It has an array with this date. Add to event to existing array. */
-                    [theEvents[eventDate] addObject:event];
-                } else {
-                    /* Create the array and add event */
-                    theEvents[eventDate] = [[NSMutableArray alloc] init];
-                    [theEvents[eventDate] addObject:event];
-                }
-            }
+            self.sortedDateKeys = [self sortDictionaryKeysByDate:unfilteredEvents];
             
-            self.filteredEventsDictionary = theEvents;
-            // Sort the keys by date
-            NSArray *keys = [theEvents allKeys];
-            self.sortedDateKeys =  [keys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
-                NSDate *date1 = [NSDate dateFromString:d1];
-                NSDate *date2 = [NSDate dateFromString:d2];
-                return [date1 compare:date2];
-            }];
-            
+            NSLog(@"Sorted keys 2: %@", self.sortedDateKeys);
             [self filterContentForSearchText:@"" scope:
              [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
             
             [self.tableView reloadData];
             
             // Set start and end dates in dayPicker
-            NSDate *firstDate = [NSDate dateFromString: self.sortedDateKeys.firstObject ];
-            NSDate *lastDate = [NSDate dateFromString:self.sortedDateKeys.lastObject];
-            
-            NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:firstDate];
-            
-            NSInteger firstYear = [firstComponents year];
-            NSInteger firstMonth = [firstComponents month];
-            NSInteger firstDay = [firstComponents day];
-            
-            NSDateComponents *lastComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:lastDate];
-            NSInteger lastYear = [lastComponents year];
-            NSInteger lastMonth = [lastComponents month];
-            NSInteger lastDay = [lastComponents day];
-            
-            [self.dayPicker setStartDate:[NSDate dateFromDay:firstDay month:firstMonth year:firstYear] endDate:[NSDate dateFromDay:lastDay month:lastMonth year:lastYear]];
             
             // Then display today in the picker and tableView
             [self goToTodayAnimated:NO];
@@ -122,14 +75,8 @@
     
     self.dayPickerdateFormatter = [[NSDateFormatter alloc] init];
     [self.dayPickerdateFormatter setDateFormat:@"EE"];
-    self.filteredEventsArray = [NSMutableArray arrayWithCapacity:self.flatEventsData.count];
+    //self.filteredEventsArray = [NSMutableArray arrayWithCapacity:self.flatEventsData.count];
 }
-
--(void)viewWillAppear:(BOOL)animated {
-    
-    
-}
-
 
 -(void)goToTodayAnimated:(BOOL)animated {
     NSCalendar *cal = [NSCalendar currentCalendar];
@@ -165,40 +112,16 @@
     }
 }
 
+
 #pragma mark - UITableView Delegate Methods
 
-#pragma mark - TableView Delegate
+
+#pragma mark - TableView Delegate Methods
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Perform segue to event detail
     [self performSegueWithIdentifier:@"showEventDetail" sender:tableView];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
-#pragma mark - Segue
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:@"showEventDetail"]) {
-        
-        EventDetailViewController *eventDetailViewController = [segue destinationViewController];
-        GAEvent *event;
-        NSIndexPath *indexPath;
-        
-        if (sender == self.searchDisplayController.searchResultsTableView) {
-            
-            indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
-        
-        } else if (sender == self.tableView) {
-            
-            indexPath = [self.tableView indexPathForSelectedRow];
-        
-        }
-        
-        NSString *key = self.filteredSortedDateKeys[indexPath.section];
-        event = self.filteredEventsDictionary[key][indexPath.row];
-        
-        eventDetailViewController.theEvent = event;
-    }
-}
-
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
@@ -234,6 +157,30 @@
 }
 
 
+#pragma mark - Segue Methods
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"showEventDetail"]) {
+        
+        EventDetailViewController *eventDetailViewController = [segue destinationViewController];
+        GAEvent *event;
+        NSIndexPath *indexPath;
+        
+        if (sender == self.searchDisplayController.searchResultsTableView) {
+            
+            indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
+            
+        } else if (sender == self.tableView) {
+            
+            indexPath = [self.tableView indexPathForSelectedRow];
+            
+        }
+        
+        NSString *key = self.filteredSortedDateKeys[indexPath.section];
+        event = self.filteredEventsDictionary[key][indexPath.row];
+        
+        eventDetailViewController.theEvent = event;
+    }
+}
 
 
 #pragma mark - Scrollview Delegate Methods
@@ -264,11 +211,10 @@ BOOL _dayPickerIsAnimating = NO;
 }
 
 
-
-#pragma mark Content Filtering
+#pragma mark - Content Filtering
 -(void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
     
-    // Remove all objects from the filtered search array
+    // Erase events from previous search
     [self.filteredEventsArray removeAllObjects];
     
     // Update the filtered array based on the search text and scope.
@@ -305,12 +251,13 @@ BOOL _dayPickerIsAnimating = NO;
     self.filteredEventsDictionary = searchEvents;
      
      NSArray *newKeys = [searchEvents allKeys];
-     self.filteredSortedDateKeys =  [newKeys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
+     self.filteredSortedDateKeys = [newKeys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
          NSDate *date1 = [NSDate dateFromString:d1];
          NSDate *date2 = [NSDate dateFromString:d2];
          return [date1 compare:date2];
      }];
 }
+
 
 #pragma mark - UISearchDisplayController Delegate Methods
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
@@ -346,7 +293,83 @@ BOOL _dayPickerIsAnimating = NO;
 
 - (IBAction)didTapDays:(id)sender {
 }
+
 - (IBAction)goToToday:(id)sender {
     [self goToTodayAnimated:YES];
 }
+
+#pragma mark - Utility Methods
+- (void)showErrorAlert:(NSError *)error {
+    if (error) {
+        [[[UIAlertView alloc] initWithTitle:@"Sorry about this..."
+                                    message:@"There has been an error. Try relaunching the app."
+                                   delegate:nil
+                          cancelButtonTitle:@"No hard feelings"
+                          otherButtonTitles:nil, nil] show];
+    }
+    else {
+        [[[UIAlertView alloc] initWithTitle:@"Sorry about this..."
+                                    message:@"We're doing some server maintenence. Try relaunching the app in a few minutes."
+                                   delegate:nil
+                          cancelButtonTitle:@"No hard feelings"
+                          otherButtonTitles:nil, nil] show];
+    }
+}
+
+- (NSMutableDictionary *)populateEventsDictionary:(NSArray *)events {
+    
+    self.allEvents = events;
+    NSMutableDictionary *eventsDictionary = [[NSMutableDictionary alloc] init];
+    
+    for (GAEvent *event in events) {
+        NSString *eventDate = event.date;
+        
+        if ( eventsDictionary[eventDate] ) {
+            /* It has an array with this date. Add to event to existing array. */
+            [eventsDictionary[eventDate] addObject:event];
+        } else {
+            /* Create the array and add event */
+            eventsDictionary[eventDate] = [[NSMutableArray alloc] init];
+            [eventsDictionary[eventDate] addObject:event];
+        }
+    }
+    
+    return eventsDictionary;
+
+}
+
+- (NSArray *)sortDictionaryKeysByDate:(NSMutableDictionary *)unfilteredEvents {
+    
+    NSArray *keys = [self.filteredEventsDictionary allKeys];
+    return [keys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
+        NSDate *date1 = [NSDate dateFromString:d1];
+        NSDate *date2 = [NSDate dateFromString:d2];
+        return [date1 compare:date2];
+    }];
+    
+}
+
+- (void)setDayPickerRange {
+    
+    NSDate *firstDate = [NSDate dateFromString: self.sortedDateKeys.firstObject ];
+    NSDate *lastDate = [NSDate dateFromString:self.sortedDateKeys.lastObject];
+    
+    NSInteger *initialDate = [self parseDateComponents:firstDate];
+    NSInteger *finalDate = [self parseDateComponents:lastDate];
+    
+    [self.dayPicker setStartDate:[NSDate dateFromDay:initialDate[0] month:initialDate[1] year:initialDate[2]] endDate:[NSDate dateFromDay:finalDate[0] month:finalDate[1] year:finalDate[2]]];
+    
+}
+
+- (NSInteger *)parseDateComponents:(NSDate *)date {
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
+    
+    static NSInteger dateNumbers[3];
+    dateNumbers[0] = [components year];
+    dateNumbers[1] = [components month];
+    dateNumbers[2] = [components day];
+    return dateNumbers;
+}
+
+
 @end
