@@ -7,8 +7,8 @@ PODS:
     - Flurry-iOS-SDK/FlurrySDK (= 7.6.6)
   - Flurry-iOS-SDK/FlurrySDK (7.6.6)
   - MZDayPicker (0.0.5)
-  - Parse (1.7.5.3):
-    - Bolts/Tasks (>= 1.2.0)
+  - Parse (1.14.2):
+    - Bolts/Tasks (~> 1.8)
 
 DEPENDENCIES:
   - Crashlytics
@@ -22,8 +22,8 @@ SPEC CHECKSUMS:
   Fabric: bc5bec42cef4bcf1ee3ce0e218fc518e4b44dfbb
   Flurry-iOS-SDK: 97bbeec09cca666c2f1772f6e161c4f8ccff611e
   MZDayPicker: 8cdcab1d8d3da920a57b1fd4fef5788d289234b2
-  Parse: 373adbb1ad2e34d383542c3b28f678c49ebe4881
+  Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
 
-PODFILE CHECKSUM: d46ac236c310af2208f8d108a90b68cd2f9f9c69
+PODFILE CHECKSUM: 3bdc38bb347fc8e23a52e59a195294bd30cc4b1c
 
 COCOAPODS: 1.0.1
