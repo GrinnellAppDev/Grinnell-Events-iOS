@@ -30,7 +30,9 @@
     PFQuery *query = [GAEvent query];
     
     //Test date
-    NSDate *pastDate = [NSDate dateWithTimeIntervalSince1970:60 * 60 * 24 * 365 * 30];
+    NSDate *now = [NSDate date];
+    int twoDaysAgo = -2*(60*60*24);
+    NSDate *pastDate = [now dateByAddingTimeInterval:twoDaysAgo];
     //Fet
    // [query whereKey:@"startTime" greaterThan:[NSDate date]];
     [query whereKey:@"startTime" greaterThanOrEqualTo:pastDate];

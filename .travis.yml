@@ -1,0 +1,8 @@
+language: objective-c
+osx_image: xcode8
+
+podfile: Grinnell-Events-iOS/Podfile
+
+xcode_workspace: Grinnell-Events-iOS/Grinnell-Events-iOS.xcworkspace
+xcode_scheme: Grinnell-Events
+xcode_sdk: iphonesimulator10.0 

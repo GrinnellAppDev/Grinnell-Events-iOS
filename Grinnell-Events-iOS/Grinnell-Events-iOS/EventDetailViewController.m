@@ -16,7 +16,6 @@
 @interface EventDetailViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *conflictLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *conflictImageView;
@@ -28,27 +27,17 @@
 
 @implementation EventDetailViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        NSLog(@"EK allocated");
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.title = self.theEvent.title;
     self.eventKitController = [[EventKitController alloc] init];
     
     self.timeLabel.text =  [NSString stringWithFormat:@"%@ - %@", [NSDate timeStringFormatFromDate:self.theEvent.startTime], [NSDate timeStringFormatFromDate:self.theEvent.endTime]];
     
     self.dateLabel.text = self.theEvent.date;
-    self.titleLabel.text = self.theEvent.title;
     self.locationLabel.text = self.theEvent.location;
     if (self.theEvent.detailDescription) {
         self.descriptionTextView.text = self.theEvent.detailDescription;
@@ -63,13 +52,6 @@
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     [self updateConflictCell];
 }
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 
 - (IBAction)addEventToCalendar:(id)sender {
     
@@ -102,10 +84,6 @@
     NSArray *matches = [self.eventKitController.eventStore eventsMatchingPredicate:eventPredicate];
     NSMutableArray *matchingEvents = [NSMutableArray arrayWithArray:matches];
     
-    DLog(@"m: %@", matchingEvents);
-    DLog(@"m: %lu", (unsigned long)matchingEvents.count);
-
-    
     //Remove all "all-day" events;
     NSMutableArray *tmpArray = [NSMutableArray new];
     for (EKEvent *event in matchingEvents) {
@@ -116,15 +94,9 @@
     }
     [matchingEvents removeObjectsInArray:tmpArray];
     
-    DLog(@"me: %@", matchingEvents);
-
-    
-
-    
     if (matchingEvents.count > 0 ) {
         
         EKEvent *firstConflict = matchingEvents.firstObject;
-        DLog(@"even: %@", firstConflict);
         
         NSString *title = firstConflict.title;
         
@@ -135,10 +107,6 @@
         NSString *end = [NSDate timeStringFormatFromDate:firstConflict.endDate];
         NSString *conflictText = [NSString stringWithFormat:@"%@ (%@ - %@) conflicts with this event.", title, start, end];
        
-        
-       // DLog(@"%@", matchingEvents);
-        
-      //  NSString *firstConflicting = [matchingEvents.firstObject title];
         if ([title isEqualToString:self.theEvent.title]) {
             self.conflictLabel.text = @"Looks like you're going to this already!";
             self.conflictImageView.image = [UIImage imageNamed:@"checkmark"];
@@ -162,10 +130,6 @@
     }
 }
 
-- (IBAction)doSpecialThings:(id)sender {
-
-}
-
 #pragma mark - Table View Methods
 
 
@@ -174,8 +138,6 @@
     if (indexPath.section == 1) {
         
         float height = [self findHeightForText:self.theEvent.detailDescription havingWidth:300.0 andFont:[UIFont fontWithName:@"AvenirNext-Regular" size:13.0]];
-        
-        NSLog(@"HEIGHT: %f and STRING: %@", height, self.theEvent.detailDescription);
         
         if (height > 120) {
             return 120;
