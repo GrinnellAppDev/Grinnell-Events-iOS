@@ -45,41 +45,23 @@
         else {
             NSMutableDictionary *unfilteredEvents = [self populateEventsDictionary:events];
             
-            [self sortDictionaryKeysByDate:unfilteredEvents callback:^(NSArray* sortedKeys){
-            
-                self.sortedDateKeys = sortedKeys;
+            self.sortedDateKeys = [self sortDictionaryKeysByDate:unfilteredEvents];
                 
-                [self filterContentForSearchText:@"" scope:
-                 [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+            [self filterContentForSearchText:@"" scope:
+                [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar
+                                                                                           selectedScopeButtonIndex]]];
                 
-                [self.tableView reloadData];
-                
-                // Set start and end dates in dayPicker
-                
-                // Then display today in the picker and tableView
-                [self goToTodayAnimated:NO];
-                self.tableView.scrollEnabled = YES;
-            
-            }];
-            
+            [self.tableView reloadData];
+            // Set start and end dates in dayPicker
+            [self setDayPickerRange];
+            // Then display today in the picker and tableView
+            [self goToTodayAnimated:NO];
+            self.tableView.scrollEnabled = YES;
         }
     }];
     
     // Do any additional setup after loading the view, typically from a nib.
-    
-    self.dayPicker.activeDayColor = [UIColor redColor];
-    self.dayPicker.bottomBorderColor = [UIColor colorWithRed:0.693 green:0.008 blue:0.207 alpha:1.000];
-    self.dayPicker.inactiveDayColor = [UIColor grayColor];
-    
-    self.dayPicker.delegate = self;
-    self.dayPicker.dataSource = self;
-    
-    self.dayPicker.dayNameLabelFontSize = 12.0f;
-    self.dayPicker.dayLabelFontSize = 18.0f;
-    
-    self.dayPickerdateFormatter = [[NSDateFormatter alloc] init];
-    [self.dayPickerdateFormatter setDateFormat:@"EE"];
-    //self.filteredEventsArray = [NSMutableArray arrayWithCapacity:self.flatEventsData.count];
+    [self setupAndFormatDayPicker];
 }
 
 -(void)goToTodayAnimated:(BOOL)animated {
@@ -342,37 +324,42 @@ BOOL _dayPickerIsAnimating = NO;
 
 }
 
-- (void)sortDictionaryKeysByDate:(NSMutableDictionary *)unfilteredEvents callback:(void(^)(NSArray*))callback {
+- (NSArray*)sortDictionaryKeysByDate:(NSMutableDictionary *)unfilteredEvents {
     
-    NSArray *keys = [self.filteredEventsDictionary allKeys];
-    callback([keys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
+    NSArray *keys = [unfilteredEvents allKeys];
+
+    return [keys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
         NSDate *date1 = [NSDate dateFromString:d1];
         NSDate *date2 = [NSDate dateFromString:d2];
         return [date1 compare:date2];
-    }]);
+    }];
     
 }
 
 - (void)setDayPickerRange {
-    
-    NSDate *firstDate = [NSDate dateFromString: self.sortedDateKeys.firstObject ];
+
+    NSDate *firstDate = [NSDate dateFromString:self.sortedDateKeys.firstObject ];
     NSDate *lastDate = [NSDate dateFromString:self.sortedDateKeys.lastObject];
     
-    NSInteger *initialDate = [self parseDateComponents:firstDate];
-    NSInteger *finalDate = [self parseDateComponents:lastDate];
-    
-    [self.dayPicker setStartDate:[NSDate dateFromDay:initialDate[0] month:initialDate[1] year:initialDate[2]] endDate:[NSDate dateFromDay:finalDate[0] month:finalDate[1] year:finalDate[2]]];
+    [self.dayPicker setStartDate:firstDate endDate:lastDate];
     
 }
 
-- (NSInteger *)parseDateComponents:(NSDate *)date {
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
+- (void)setupAndFormatDayPicker {
     
-    static NSInteger dateNumbers[3];
-    dateNumbers[0] = [components year];
-    dateNumbers[1] = [components month];
-    dateNumbers[2] = [components day];
-    return dateNumbers;
+    self.dayPicker.activeDayColor = [UIColor redColor];
+    self.dayPicker.bottomBorderColor = [UIColor colorWithRed:0.693 green:0.008 blue:0.207 alpha:1.000];
+    self.dayPicker.inactiveDayColor = [UIColor grayColor];
+    
+    self.dayPicker.delegate = self;
+    self.dayPicker.dataSource = self;
+    
+    self.dayPicker.dayNameLabelFontSize = 12.0f;
+    self.dayPicker.dayLabelFontSize = 18.0f;
+    
+    self.dayPickerdateFormatter = [[NSDateFormatter alloc] init];
+    [self.dayPickerdateFormatter setDateFormat:@"EE"];
+
 }
 
 
