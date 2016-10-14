@@ -43,21 +43,25 @@
             [self showErrorAlert:error];
         }
         else {
-            NSMutableDictionary *unfilteredEvents = [self populateEventsDictionary:self.allEvents];
+            NSMutableDictionary *unfilteredEvents = [self populateEventsDictionary:events];
             
-            self.sortedDateKeys = [self sortDictionaryKeysByDate:unfilteredEvents];
+            [self sortDictionaryKeysByDate:unfilteredEvents callback:^(NSArray* sortedKeys){
             
-            NSLog(@"Sorted keys 2: %@", self.sortedDateKeys);
-            [self filterContentForSearchText:@"" scope:
-             [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+                self.sortedDateKeys = sortedKeys;
+                
+                [self filterContentForSearchText:@"" scope:
+                 [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+                
+                [self.tableView reloadData];
+                
+                // Set start and end dates in dayPicker
+                
+                // Then display today in the picker and tableView
+                [self goToTodayAnimated:NO];
+                self.tableView.scrollEnabled = YES;
             
-            [self.tableView reloadData];
+            }];
             
-            // Set start and end dates in dayPicker
-            
-            // Then display today in the picker and tableView
-            [self goToTodayAnimated:NO];
-            self.tableView.scrollEnabled = YES;
         }
     }];
     
@@ -338,14 +342,14 @@ BOOL _dayPickerIsAnimating = NO;
 
 }
 
-- (NSArray *)sortDictionaryKeysByDate:(NSMutableDictionary *)unfilteredEvents {
+- (void)sortDictionaryKeysByDate:(NSMutableDictionary *)unfilteredEvents callback:(void(^)(NSArray*))callback {
     
     NSArray *keys = [self.filteredEventsDictionary allKeys];
-    return [keys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
+    callback([keys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
         NSDate *date1 = [NSDate dateFromString:d1];
         NSDate *date2 = [NSDate dateFromString:d2];
         return [date1 compare:date2];
-    }];
+    }]);
     
 }
 
