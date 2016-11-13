@@ -19,6 +19,6 @@ profile
 DerivedData
 .idea/
 *.xcuserstate
-
+strings_private.strings
 # Ignore CocoaPods binaries and headers
 Grinnell-Events-iOS/Pods
