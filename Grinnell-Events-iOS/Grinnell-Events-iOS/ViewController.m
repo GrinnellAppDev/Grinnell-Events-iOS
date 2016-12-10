@@ -99,9 +99,6 @@
 }
 
 
-#pragma mark - UITableView Delegate Methods
-
-
 #pragma mark - TableView Delegate Methods
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Perform segue to event detail
@@ -147,8 +144,6 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showEventDetail"]) {
         
-        EventDetailViewController *eventDetailViewController = [segue destinationViewController];
-        GAEvent *event;
         NSIndexPath *indexPath;
         
         if (sender == self.searchDisplayController.searchResultsTableView) {
@@ -162,8 +157,8 @@
         }
         
         NSString *key = self.filteredSortedDateKeys[indexPath.section];
-        event = self.filteredEventsDictionary[key][indexPath.row];
-        
+        GAEvent *event = self.filteredEventsDictionary[key][indexPath.row];
+        EventDetailViewController *eventDetailViewController = [segue destinationViewController];
         eventDetailViewController.theEvent = event;
     }
 }
