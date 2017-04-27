@@ -13,23 +13,47 @@
 @end
 
 @implementation ViewController {
-  NSMutableDictionary<NSDate*,NSMutableArray<GAEvent *> *> *_events;
+  NSMutableDictionary<NSDate*,NSMutableArray<GAEvent *> *> *_allEvents;
+  NSMutableDictionary<NSDate*,NSMutableArray<GAEvent *> *> *_filteredEvents;
   NSArray<NSDate*> *_sortedDays;
   NSDate *_displayedDate;
   NSDateFormatter *_dateFormatter;
+  UISearchController *_searchController;
+}
+
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+  NSString *searchString = searchController.searchBar.text;
+  _filteredEvents = [_allEvents mutableCopy];
+  if (![searchString isEqualToString:@""]) {
+    for (NSDate *keyDate in _sortedDays) {
+      _filteredEvents[keyDate] = [NSMutableArray array];
+      for (GAEvent *event in _allEvents[keyDate]) {
+        if ([event.detailDescription containsString:searchString] ||
+            [event.location containsString:searchString] ||
+            [event.title containsString:searchString]) {
+          [_filteredEvents[keyDate] addObject:event];
+        }
+        
+      }
+    }
+  }
+  [self.tableView reloadData];
 }
 
 - (void)setEvents:(NSArray<GAEvent *>*)events {
-  _events = [NSMutableDictionary dictionary];
+  _allEvents = [NSMutableDictionary dictionary];
   for (GAEvent *event in events) {
     NSDate *dateKey = [[self class] dateAtBeginningOfDayForDate:event.startTime];
-    if (!_events[dateKey]) {
-      _events[dateKey] = [NSMutableArray arrayWithObject:event];
+    if (!_allEvents[dateKey]) {
+      _allEvents[dateKey] = [NSMutableArray arrayWithObject:event];
     } else {
-      [_events[dateKey] addObject:event];
+      [_allEvents[dateKey] addObject:event];
     }
   }
-  _sortedDays = [[_events allKeys] sortedArrayUsingSelector:@selector(compare:)];
+  _sortedDays = [[_allEvents allKeys] sortedArrayUsingSelector:@selector(compare:)];
+  _filteredEvents = [_allEvents mutableCopy];
 }
 
 - (IBAction)didDoubleTapDays:(id)sender {
@@ -38,6 +62,11 @@
 
 - (void)viewDidLoad
 {
+  _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+  _searchController.searchResultsUpdater = self;
+  _searchController.dimsBackgroundDuringPresentation = NO;
+  _searchController.definesPresentationContext = YES;
+  _tableView.tableHeaderView = _searchController.searchBar;
   self.tableView.scrollEnabled = NO;
   [self setEvents: @[]];
   [super viewDidLoad];
@@ -115,7 +144,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
   NSDate *keyDate = _sortedDays[section];
-  return [_events[keyDate] count];
+  return [_filteredEvents[keyDate] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -124,7 +153,7 @@
   
   GAEventCell *cell = [self.tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
   NSDate *keyDate = _sortedDays[indexPath.section];
-  GAEvent *event = _events[keyDate][indexPath.row];
+  GAEvent *event = _filteredEvents[keyDate][indexPath.row];
   
   cell.title.text = event.title;
   cell.location.text = event.location;
@@ -143,8 +172,8 @@
     
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     NSDate *keyDate = _sortedDays[indexPath.section];
-    GAEvent *event = _events[keyDate][indexPath.row];
-
+    GAEvent *event = _filteredEvents[keyDate][indexPath.row];
+    
     EventDetailViewController *eventDetailViewController = [segue destinationViewController];
     eventDetailViewController.theEvent = event;
   }
