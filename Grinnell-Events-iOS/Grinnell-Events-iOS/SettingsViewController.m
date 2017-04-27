@@ -1,17 +1,8 @@
-//
-//  SettingsViewController.m
-//  Grinnell-Events-iOS
-//
-//  Created by Lea Marolt on 11/19/13.
-//  Copyright (c) 2013 Grinnell AppDev. All rights reserved.
-//
-
 #import "SettingsViewController.h"
 #import <MessageUI/MFMailComposeViewController.h>
 #import <MessageUI/MessageUI.h>
 
 @interface SettingsViewController () <MFMailComposeViewControllerDelegate>
-
 @end
 
 @implementation SettingsViewController

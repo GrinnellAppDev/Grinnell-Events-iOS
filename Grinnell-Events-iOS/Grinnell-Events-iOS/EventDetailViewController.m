@@ -35,17 +35,16 @@
     self.title = self.theEvent.title;
     self.eventKitController = [[EventKitController alloc] init];
     
-    self.timeLabel.text =  [NSString stringWithFormat:@"%@ - %@", [NSDate timeStringFormatFromDate:self.theEvent.startTime], [NSDate timeStringFormatFromDate:self.theEvent.endTime]];
+    //self.timeLabel.text =  [NSString stringWithFormat:@"%@ - %@", [NSDate timeStringFormatFromDate:self.theEvent.startTime], [NSDate timeStringFormatFromDate:self.theEvent.endTime]];
     
     self.dateLabel.text = self.theEvent.date;
-    self.locationLabel.text = self.theEvent.location;
-    if (self.theEvent.detailDescription) {
-        self.descriptionTextView.text = self.theEvent.detailDescription;
-    }
-    else {
+    //self.locationLabel.text = self.theEvent.location;
+    //if (self.theEvent.detailDescription) {
+    //    self.descriptionTextView.text = self.theEvent.detailDescription;
+    //}
+    //else {
         self.descriptionTextView.text = @"Sorry. No details were given for this event :(";
-    }
-
+    //}
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -57,17 +56,17 @@
     
     NSArray *allCalendars = [self.eventKitController.eventStore calendarsForEntityType: EKEntityTypeEvent];
     
-    NSPredicate *eventPredicate = [self.eventKitController.eventStore predicateForEventsWithStartDate:self.theEvent.startTime endDate:self.theEvent.endTime calendars:allCalendars];
-    NSArray *matchingEvents = [self.eventKitController.eventStore eventsMatchingPredicate:eventPredicate];
+   // NSPredicate *eventPredicate = [self.eventKitController.eventStore predicateForEventsWithStartDate:self.theEvent.startTime endDate:self.theEvent.endTime calendars:allCalendars];
+    //NSArray *matchingEvents = [self.eventKitController.eventStore eventsMatchingPredicate:eventPredicate];
     
-    if (matchingEvents) {
-        NSString *firstConflicting = [matchingEvents.firstObject title];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh-oh! You have conflicts with this event!" message: [NSString stringWithFormat:@"%@ conflicts", firstConflicting]  delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add Anyway", nil];
+   // if (matchingEvents) {
+   //     NSString *firstConflicting = [matchingEvents.firstObject title];
+   //     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh-oh! You have conflicts with this event!" message: [NSString stringWithFormat:@"%@ conflicts", firstConflicting]  delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add Anyway", nil];
         
-        [alert show];
-    } else {
+    //    [alert show];
+    //} else {
             [self.eventKitController addEventToCalendar:self.theEvent];
-    }
+    //}
     
     [self updateConflictCell];
 
@@ -78,12 +77,12 @@
     
     NSArray *allCalendars = [self.eventKitController.eventStore calendarsForEntityType: EKEntityTypeEvent];
     
-    NSPredicate *eventPredicate = [self.eventKitController.eventStore predicateForEventsWithStartDate:self.theEvent.startTime endDate:self.theEvent.endTime calendars:allCalendars];
+    //NSPredicate *eventPredicate = [self.eventKitController.eventStore predicateForEventsWithStartDate:self.theEvent.startTime endDate:self.theEvent.endTime calendars:allCalendars];
     
     
-    NSArray *matches = [self.eventKitController.eventStore eventsMatchingPredicate:eventPredicate];
-    NSMutableArray *matchingEvents = [NSMutableArray arrayWithArray:matches];
-    
+   // NSArray *matches = [self.eventKitController.eventStore eventsMatchingPredicate:eventPredicate];
+    //NSMutableArray *matchingEvents = [NSMutableArray arrayWithArray:matches];
+ /*
     //Remove all "all-day" events;
     NSMutableArray *tmpArray = [NSMutableArray new];
     for (EKEvent *event in matchingEvents) {
@@ -97,7 +96,7 @@
     if (matchingEvents.count > 0 ) {
         
         EKEvent *firstConflict = matchingEvents.firstObject;
-        
+  
         NSString *title = firstConflict.title;
         
         
@@ -118,7 +117,7 @@
         self.conflictLabel.text = @"You are free for this event!";
         self.conflictImageView.image = [UIImage imageNamed:@"checkmark"];
     }
-    
+    */
 }
 
 
@@ -136,8 +135,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     if (indexPath.section == 1) {
-        
-        float height = [self findHeightForText:self.theEvent.detailDescription havingWidth:300.0 andFont:[UIFont fontWithName:@"AvenirNext-Regular" size:13.0]];
+      float height = 100;
+       // float height = [self findHeightForText:self.theEvent.detailDescription havingWidth:300.0 andFont:[UIFont fontWithName:@"AvenirNext-Regular" size:13.0]];
         
         if (height > 120) {
             return 120;

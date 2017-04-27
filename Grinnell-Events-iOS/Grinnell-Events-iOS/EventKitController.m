@@ -43,12 +43,12 @@
     event.title = eventToSave.title;
     
     // Set the start and end date
-    event.startDate = eventToSave.startTime;
-    event.endDate =  eventToSave.endTime;
+    //event.startDate = eventToSave.startTime;
+    //event.endDate =  eventToSave.endTime;
     
     // Add details
-    event.notes = eventToSave.detailDescription;
-    event.location = eventToSave.location;
+    //event.notes = eventToSave.detailDescription;
+    //event.location = eventToSave.location;
     
     event.calendar = self.eventStore.defaultCalendarForNewEvents;
     

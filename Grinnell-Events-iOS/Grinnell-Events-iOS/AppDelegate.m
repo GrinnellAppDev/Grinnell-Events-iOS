@@ -1,11 +1,3 @@
-//
-//  AppDelegate.m
-//  Grinnell-Events-iOS
-//
-//  Created by Lea Marolt on 9/8/13.
-//  Copyright (c) 2013 Grinnell AppDev. All rights reserved.
-//
-
 #import "AppDelegate.h"
 #import "GAEvent.h"
 #import <Crashlytics/Crashlytics.h>
@@ -15,14 +7,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     NSString *strings_private = [[NSBundle mainBundle] pathForResource:@"strings_private" ofType:@"strings"];
-    NSDictionary *keysDict = [NSDictionary dictionaryWithContentsOfFile:strings_private];
+  NSDictionary *keysDict = [NSDictionary dictionaryWithContentsOfFile:strings_private];
+    [GAEvent registerSubclass];
     // Override point for customization after application launch.
     [Parse initializeWithConfiguration:[ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
         configuration.applicationId = [keysDict objectForKey:@"ParseAppID"];
         configuration.clientKey = [keysDict objectForKey:@"ParseClientKey"];
         configuration.server = [keysDict objectForKey:@"ParseServerUrl"];
     }]];
-    [GAEvent registerSubclass];
     [Crashlytics startWithAPIKey:[keysDict objectForKey:@"CrashlyticsAPIKey"]];
     return YES;
 }
