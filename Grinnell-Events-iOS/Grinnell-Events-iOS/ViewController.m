@@ -1,7 +1,6 @@
 #import "ViewController.h"
 #import "GAEvent.h"
 #import "GAEventCell.h"
-#import "NSDate+GADate.h"
 #import "EventDetailViewController.h"
 
 #import <Parse/Parse.h>
@@ -129,7 +128,10 @@
   
   cell.title.text = event.title;
   cell.location.text = event.location;
-  cell.date.text =  [NSString stringWithFormat:@"%@ - %@", [NSDate timeStringFormatFromDate:event.startTime], [NSDate timeStringFormatFromDate:event.endTime]];
+  NSDateIntervalFormatter* formatter = [[NSDateIntervalFormatter alloc] init];
+  formatter.dateStyle = NSDateIntervalFormatterNoStyle;
+  formatter.timeStyle = NSDateIntervalFormatterShortStyle;
+  cell.date.text =  [formatter stringFromDate:event.startTime toDate:event.endTime];
   
   return cell;
 }

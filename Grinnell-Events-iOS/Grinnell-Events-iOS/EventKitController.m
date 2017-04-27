@@ -1,28 +1,13 @@
-//
-//  EventKitController.m
-//  Grinnell-Events-iOS
-//
-//  Created by Maijid Moujaled on 10/2/13.
-//  Copyright (c) 2013 Grinnell AppDev. All rights reserved.
-//
-
 #import "EventKitController.h"
 
 @implementation EventKitController
 
-
 - (id)init
 {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         _eventStore = [[EKEventStore alloc] init];
         [_eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-            if (granted) {
-                _eventAccess = YES;
-                NSLog(@"YAY! Event access ON");
-            } else {
-                NSLog(@"Event access not granted: %@", error);
-            }
+          _eventAccess = granted;
         }];
         
     }
@@ -30,9 +15,6 @@
 }
 
 - (void) addEventToCalendar:(GAEvent*)eventToSave{
-    
-    NSLog(@"Adding event");
-    
     if (!_eventAccess) {
         NSLog(@"No event acccess!");
         return;
@@ -43,12 +25,12 @@
     event.title = eventToSave.title;
     
     // Set the start and end date
-    //event.startDate = eventToSave.startTime;
-    //event.endDate =  eventToSave.endTime;
+    event.startDate = eventToSave.startTime;
+    event.endDate =  eventToSave.endTime;
     
     // Add details
-    //event.notes = eventToSave.detailDescription;
-    //event.location = eventToSave.location;
+    event.notes = eventToSave.detailDescription;
+    event.location = eventToSave.location;
     
     event.calendar = self.eventStore.defaultCalendarForNewEvents;
     
@@ -64,7 +46,6 @@
     }
     
     NSError *err;
-    NSLog(@"OUR EVENT %@", event);
     
     BOOL success = [self.eventStore saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
     

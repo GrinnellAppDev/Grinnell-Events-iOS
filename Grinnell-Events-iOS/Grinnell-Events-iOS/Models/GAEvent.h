@@ -6,7 +6,6 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *detailDescription;
 @property (nonatomic, strong) NSString *location;
-@property (nonatomic, strong) NSString *date;
 @property (nonatomic, strong) NSDate *startTime;
 @property (nonatomic, strong) NSDate *endTime;
 @property (nonatomic, strong) NSString *eventid;

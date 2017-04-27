@@ -5,7 +5,6 @@
 
 @dynamic title;
 @dynamic location;
-@dynamic date;
 @dynamic startTime;
 @dynamic endTime;
 @dynamic detailDescription;
