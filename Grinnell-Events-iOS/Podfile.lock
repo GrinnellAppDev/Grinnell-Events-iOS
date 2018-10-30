@@ -16,6 +16,15 @@ DEPENDENCIES:
   - MZDayPicker
   - Parse
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Bolts
+    - Crashlytics
+    - Fabric
+    - Flurry-iOS-SDK
+    - MZDayPicker
+    - Parse
+
 SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Crashlytics: 27acca95a01b042a8294291dd6dff27f8f6af6d7
@@ -26,4 +35,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 3bdc38bb347fc8e23a52e59a195294bd30cc4b1c
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.5.3

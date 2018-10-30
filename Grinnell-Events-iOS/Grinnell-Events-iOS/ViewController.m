@@ -38,7 +38,7 @@
 {
     self.tableView.scrollEnabled = NO;
     [super viewDidLoad];
-    [GAEvent findAllEventsInBackground:^(NSArray *events, NSError *error) {
+    [GAEvent findAllEventsInBackground:^void (NSArray *events, NSError *error) {
         if (error) {
             NSLog(@"Error: %@ %@ ", error, error.userInfo);
             [[[UIAlertView alloc] initWithTitle:@"Sorry about this..."

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
+#import "GAQuery.h"
 
 @interface GAEvent : PFObject <PFSubclassing>
 
@@ -25,6 +26,6 @@
 
 
 + (NSString *)parseClassName;
-+ (void)findAllEventsInBackground:(PFArrayResultBlock)resultBlock;
++ (void)findAllEventsInBackground:(void (^)(NSArray *, NSError *))resultBlock;
 
 @end
