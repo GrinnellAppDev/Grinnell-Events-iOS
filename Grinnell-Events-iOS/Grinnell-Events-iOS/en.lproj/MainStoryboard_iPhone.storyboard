@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="CKB-Ui-aIa">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="CKB-Ui-aIa">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -45,7 +45,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u1j-aY-nm0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2200" y="-698"/>
+            <point key="canvasLocation" x="3520" y="-627.88605697151434"/>
         </scene>
         <!--Events-->
         <scene sceneID="5">
@@ -197,7 +197,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1058" y="-8"/>
+            <point key="canvasLocation" x="1692.8" y="-7.1964017991004505"/>
         </scene>
         <!--Settings-->
         <scene sceneID="DY5-YR-EM6">
@@ -263,7 +263,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s7u-QW-CUK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1735" y="-698"/>
+            <point key="canvasLocation" x="2776" y="-627.88605697151434"/>
         </scene>
         <!--Details-->
         <scene sceneID="kBY-pg-PIH">
@@ -337,7 +337,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="7VH-Wk-wwZ">
-                                                    <rect key="frame" x="11" y="9" width="352" height="101"/>
+                                                    <rect key="frame" x="11" y="9" width="353" height="101"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <string key="text">This is the desription. Of our event. Yay. I need to write more stuff here to fill it up. Oh my god, I'm running out of stuff to talk about. This is the desription. Of our event. Yay. I need to write more bullshit here to fill it up. Oh my god, I'm running out of bullshit to talk about.</string>
@@ -416,7 +416,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lnY-Te-Slq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1611" y="-8"/>
+            <point key="canvasLocation" x="2577.5999999999999" y="-7.1964017991004505"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="td6-Lx-UCc">
@@ -434,7 +434,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NdD-EP-Byu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="544" y="-8"/>
+            <point key="canvasLocation" x="870.39999999999998" y="-7.1964017991004505"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="LfW-OB-ZOo">
@@ -452,7 +452,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g4M-gQ-4kY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1269" y="-692"/>
+            <point key="canvasLocation" x="2030.4000000000001" y="-622.48875562218893"/>
         </scene>
     </scenes>
     <resources>

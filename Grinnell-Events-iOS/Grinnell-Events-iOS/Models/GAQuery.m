@@ -7,9 +7,12 @@
 //
 
 #import "GAQuery.h"
-#import "GAEvent.h"
 
 @implementation GAQuery
+
+@synthesize marrXMLData;
+@synthesize mstrXMLString;
+@synthesize mdictXMLPart;
 
 - (id)initWithTime
 {
@@ -24,22 +27,99 @@
 
 - (void)findObjectsInBackgroundWithBlock:(void (^)(NSArray *, NSError *))resultBlock
 {
-    GAEvent *event = [[GAEvent alloc] init];
-    event.title = @"GameDev General info session";
-    event.detailDescription = @"All the game devs have a fun general meeting";
-    event.location = @"CS Commons";
-    event.date = @"10/14/2018";
-    NSDateComponents* comps = [[NSDateComponents alloc]init];
-    comps.year = 2018;
-    comps.month = 10;
-    comps.day = 14;
-    comps.hour = 16;
-    NSCalendar* calendar = [NSCalendar currentCalendar];
-    NSDate* date = [calendar dateFromComponents:comps];
-    event.startTime = date;
-    event.endTime = [NSDate dateWithTimeInterval:3600 sinceDate:date];
-    event.eventid = @"123";
-    NSArray *arr = [NSArray arrayWithObjects:event, event, nil];
-    resultBlock(arr, nil);
+    [self startParsing];
+    
+    resultBlock([marrXMLData copy], nil);
 }
+
+- (void)startParsing
+{
+    NSURL *url = [[NSURL alloc] initWithString:@"https://25livepub.collegenet.com/calendars/web-calendar.xml"];
+    NSXMLParser *xmlparser = [[NSXMLParser alloc] initWithContentsOfURL:url];
+    
+    [xmlparser setDelegate:self];
+    
+    BOOL success = [xmlparser parse];
+    
+    if(success){
+        NSLog(@"No Errors");
+    }
+    else{
+        NSLog(@"Error Error Error!!!");
+    }
+    
+    NSLog(@"Heyyyyyyy I found %lu events in this database!!!", (unsigned long)marrXMLData.count);
+}
+
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict;
+{
+    if ([elementName isEqualToString:@"feed"]) {
+        marrXMLData = [[NSMutableArray alloc] init];
+    }
+    if ([elementName isEqualToString:@"entry"]) {
+        mdictXMLPart = [[GAEvent alloc] init];
+    }
+}
+
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string;
+{
+    if (!mstrXMLString) {
+        mstrXMLString = [[NSMutableString alloc] initWithString:string];
+    }
+    else {
+        [mstrXMLString appendString:string];
+    }
+}
+
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName;
+{
+    if ([elementName isEqualToString:@"title"]) {
+        NSString *title = [mstrXMLString copy];
+        mdictXMLPart.title = title;
+        NSLog(@"%@", mdictXMLPart.title);
+        //mdictXMLPart.title = @"Bucksbaum";
+        mdictXMLPart.eventid = @"123";
+    }
+    if([elementName isEqualToString:@"published"]) {
+        // Convert string to date object
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+        NSDate *date = [dateFormat dateFromString:mstrXMLString];
+        //mdictXMLPart.date = mstrXMLString;
+        mdictXMLPart.date = @"11/04/2018";
+        mdictXMLPart.startTime = date;
+        mdictXMLPart.endTime = [NSDate dateWithTimeInterval:3600 sinceDate:date];
+    }
+    if ([elementName isEqualToString:@"content"]) {
+        NSArray* contents = [mstrXMLString componentsSeparatedByString:@"<br/>"];
+        mdictXMLPart.location = contents[0];
+        mdictXMLPart.detailDescription = contents[2];
+        
+//        NSMutableString *time = contents[1];
+//        NSString *start = [time componentsSeparatedByString:@"&"][0];
+//        NSString *end = [time componentsSeparatedByString:@"&"][0];
+//        NSLog(@"%@", start);
+//
+//        // Convert string to date object
+//        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+//        [dateFormat setDateFormat:@"yyyy-MM-ddThh:mm:ssZ"];
+//        mdictXMLPart.startTime = [dateFormat dateFromString:start];
+//        mdictXMLPart.endTime = [dateFormat dateFromString:end];
+////
+        NSDateComponents* comps = [[NSDateComponents alloc]init];
+        comps.year = 2018;
+        comps.month = 10;
+        comps.day = 14;
+        comps.hour = 16;
+        NSCalendar* calendar = [NSCalendar currentCalendar];
+        NSDate* date = [calendar dateFromComponents:comps];
+        //mdictXMLPart.startTime = date;
+        //mdictXMLPart.endTime = [NSDate dateWithTimeInterval:3600 sinceDate:date];
+    }
+    if ([elementName isEqualToString:@"entry"]) {
+        [marrXMLData addObject:mdictXMLPart];
+    }
+    mstrXMLString = nil;
+}
+
 @end

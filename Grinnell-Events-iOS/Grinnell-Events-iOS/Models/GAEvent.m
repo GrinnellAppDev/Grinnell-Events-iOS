@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Grinnell AppDev. All rights reserved.
 //
 
-#import "GAEvent.h"
 #import <Parse/PFObject+Subclass.h>
+#import "GAEvent.h"
 #import "GAQuery.h"
 
 @implementation GAEvent

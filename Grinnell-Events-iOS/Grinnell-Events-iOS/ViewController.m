@@ -227,8 +227,9 @@
     NSString *key = self.filteredSortedDateKeys[indexPath.section];
     event = self.filteredEventsDictionary[key][indexPath.row];
     
-    cell.title.text = event.title;
-    cell.location.text = event.location;
+    cell.title.hidden = false;
+    cell.title.text = [event.title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    cell.location.text = [event.location stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     cell.date.text =  [NSString stringWithFormat:@"%@ - %@", [NSDate timeStringFormatFromDate:event.startTime], [NSDate timeStringFormatFromDate:event.endTime]];
     
     return cell;
