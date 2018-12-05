@@ -75,33 +75,65 @@
             self.filteredEventsDictionary = theEvents;
             // Sort the keys by date
             NSArray *keys = [theEvents allKeys];
+            NSLog(@"%@ is the first key", keys.firstObject);
             self.sortedDateKeys =  [keys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
                 NSDate *date1 = [NSDate dateFromString:d1];
                 NSDate *date2 = [NSDate dateFromString:d2];
                 return [date1 compare:date2];
             }];
+            NSLog(@"%@ is the first sorted key", self.sortedDateKeys.firstObject);
+            NSLog(@"%@ is the last sorted key", self.sortedDateKeys.lastObject);
             
             [self filterContentForSearchText:@"" scope:
              [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
             
             [self.tableView reloadData];
-            
+            //set dateformatter in order to convert string to date
+            NSString *dateString = self.sortedDateKeys.firstObject;
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            dateFormatter.dateFormat = @"MM/dd/yyyy";
+            NSDate *firstDate = [dateFormatter dateFromString:dateString];
             // Set start and end dates in dayPicker
-            NSDate *firstDate = [NSDate dateFromString: self.sortedDateKeys.firstObject ];
+            //commented out this line of code because the date format was not set correctly
+            //NSDate *firstDate = [NSDate dateFromString: self.sortedDateKeys.firstObject ];
+            NSLog(@"First date is %@", firstDate.description);
             NSDate *lastDate = [NSDate dateFromString:self.sortedDateKeys.lastObject];
-            
-            NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:firstDate];
-            
+            //right now last Date is same as first Date...
+            NSLog(@"Last date is %@", lastDate.description);
+            //sets calendar day to current date
+            NSCalendar *mycal = [NSCalendar currentCalendar];
+            NSDateComponents *firstComponents = [mycal components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
+            //sets first year/month/day to appear on calendar to day of first event
             NSInteger firstYear = [firstComponents year];
             NSInteger firstMonth = [firstComponents month];
             NSInteger firstDay = [firstComponents day];
+            NSLog(@"%d is the first year", firstYear);
+            NSLog(@"%d is the first month", firstMonth);
+            NSLog(@"%d is the first day", firstDay);
             
-            NSDateComponents *lastComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:lastDate];
-            NSInteger lastYear = [lastComponents year];
-            NSInteger lastMonth = [lastComponents month];
-            NSInteger lastDay = [lastComponents day];
+            //NSDateComponents *lastComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:lastDate];
             
-            [self.dayPicker setStartDate:[NSDate dateFromDay:firstDay month:firstMonth year:firstYear] endDate:[NSDate dateFromDay:lastDay month:lastMonth year:lastYear]];
+            //            NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+            //            NSDateComponents *dateComponents = [gregorian components:(NSHourCalendarUnit  | NSMinuteCalendarUnit | NSSecondCalendarUnit) fromDate:yourDateHere];
+            //            NSInteger lastYear = [dateComponents year];
+            //            NSInteger lastMonth = [dateComponents month];
+            //            NSInteger day = [dateComponents day];
+            
+            //            NSInteger lastYear = [lastComponents year];
+            //            NSLog(@"year %d", lastYear);
+            //            NSInteger lastMonth = [lastComponents month];
+            //            NSLog(@"month %d", lastYear);
+            //            NSInteger lastDay = [lastComponents day];
+            //            NSLog(@"day %d", lastYear);
+            //right now i've set the end date manually as current date + 7 because we the last date from the parsed events is the same as the initial start date
+            //initialize 7 day offset
+            NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
+            dayComponent.day = 7;
+            NSDate *weekFromCurrentDate = [mycal dateByAddingComponents:dayComponent toDate:[NSDate date] options:0];
+            [self.dayPicker setStartDate: firstDate endDate:weekFromCurrentDate];
+            [self.dayPicker setCurrentDate:[NSDate dateFromDay:03 month:12 year:2018] animated:NO];
+            //commented this line out similarly because last date is 11/04/2018
+            //[self.dayPicker setStartDate:[NSDate dateFromDay:firstDay month:firstMonth year:firstYear] endDate:[NSDate dateFromDay:lastDay month:lastMonth year:lastYear]];
             
             // Then display today in the picker and tableView
             [self goToTodayAnimated:NO];
@@ -127,7 +159,6 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    
     
 }
 
@@ -157,13 +188,27 @@
 - (void)dayPicker:(MZDayPicker *)dayPicker didSelectDay:(MZDay *)day
 {
     //We scroll to that section. Sections are labeled by the date (sortedKeys)
-    NSString *selectedDateString = [NSDate formattedStringFromDate:day.date];
-    NSInteger index = [self.sortedDateKeys indexOfObject:selectedDateString];
-    
+    //initialize dateFormatter and dateFormat
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //need to set date
+    // dateFormatter.dateFormat = @"ccc MMM dd yyyy";
+    //NSString *selectedDateString = [NSDate formattedStringFromDate:day.date];
+    //NSDate *dateFromString = [dateFormatter dateFromString: selectedDateString];
+    //get string back from NSDATE in correct format
+    dateFormatter.dateFormat = @"MM/dd/yyyy";
+    NSString *stringFromDate = [dateFormatter stringFromDate: day.date];
+    NSLog(@"%@ the selected date is", stringFromDate);
+    NSInteger index = [self.sortedDateKeys indexOfObject: stringFromDate];
+    NSLog(@"%d is the index", index);
     //This way we make sure it doesn't crash if things get glitchy and index isn't found.
     if (index != NSNotFound) {
+        NSLog(@"index found gg");
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
+}
+- (void)dayPicker:(MZDayPicker *)dayPicker willSelectDay:(MZDay *)day
+{
+    NSLog(@"Will select day %@",day.day);
 }
 
 #pragma mark - UITableView Delegate Methods
@@ -186,11 +231,11 @@
         if (sender == self.searchDisplayController.searchResultsTableView) {
             
             indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
-        
+            
         } else if (sender == self.tableView) {
             
             indexPath = [self.tableView indexPathForSelectedRow];
-        
+            
         }
         
         NSString *key = self.filteredSortedDateKeys[indexPath.section];
@@ -254,11 +299,11 @@ BOOL _dayPickerIsAnimating = NO;
     if (!selectedDateIsCurrentlyViewed){
         self.focusedDate = toDate;
         NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:self.focusedDate];
-    
+        
         NSInteger year = [firstComponents year];
         NSInteger month = [firstComponents month];
         NSInteger day = [firstComponents day];
-    
+        
         NSDate *followingDay = [NSDate dateFromDay:day+1 month:month year:year];
         [self.dayPicker setCurrentDate:followingDay animated:YES];
     }
@@ -291,11 +336,11 @@ BOOL _dayPickerIsAnimating = NO;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(SELF.title LIKE[cd] %@)", searchWithWildcards];
     
     self.filteredEventsArray = [NSMutableArray arrayWithArray:[self.allEvents filteredArrayUsingPredicate:predicate]];
-
+    
     NSMutableDictionary *searchEvents = [[NSMutableDictionary alloc] init];
     for (GAEvent *event in self.filteredEventsArray) {
         NSString *eventDate = event.date;
-     
+        
         if ( searchEvents[eventDate] ) {
             [searchEvents[eventDate] addObject:event];
         } else {
@@ -305,13 +350,13 @@ BOOL _dayPickerIsAnimating = NO;
     }
     
     self.filteredEventsDictionary = searchEvents;
-     
-     NSArray *newKeys = [searchEvents allKeys];
-     self.filteredSortedDateKeys =  [newKeys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
-         NSDate *date1 = [NSDate dateFromString:d1];
-         NSDate *date2 = [NSDate dateFromString:d2];
-         return [date1 compare:date2];
-     }];
+    
+    NSArray *newKeys = [searchEvents allKeys];
+    self.filteredSortedDateKeys =  [newKeys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
+        NSDate *date1 = [NSDate dateFromString:d1];
+        NSDate *date2 = [NSDate dateFromString:d2];
+        return [date1 compare:date2];
+    }];
 }
 
 #pragma mark - UISearchDisplayController Delegate Methods
@@ -338,7 +383,7 @@ BOOL _dayPickerIsAnimating = NO;
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)SearchBar {
-
+    
     [self filterContentForSearchText:@"" scope:
      [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar
                                                                                 selectedScopeButtonIndex]]];
@@ -352,3 +397,4 @@ BOOL _dayPickerIsAnimating = NO;
     [self goToTodayAnimated:YES];
 }
 @end
+
