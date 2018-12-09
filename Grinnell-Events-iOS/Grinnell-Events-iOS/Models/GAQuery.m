@@ -85,8 +85,8 @@
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
         [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
         NSDate *date = [dateFormat dateFromString:mstrXMLString];
-        mdictXMLPart.date = [[[mstrXMLString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] substringToIndex:13] stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
-        NSLog(@"HEEEEYEYEYEYEYE LOOK  %@", mdictXMLPart.date);
+        mdictXMLPart.date = [[[mstrXMLString substringToIndex:13] stringByReplacingOccurrencesOfString:@"-" withString:@"/"]  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSLog(@"HEEEEYEYEYEYEYE LOOK %@", mdictXMLPart.date);
         mdictXMLPart.startTime = date;
         mdictXMLPart.endTime = [NSDate dateWithTimeInterval:3600 sinceDate:date];
     }
