@@ -60,7 +60,7 @@
             NSMutableDictionary *theEvents = [[NSMutableDictionary alloc] init];
             
             for (GAEvent *event in events) {
-                NSString *eventDate = event.date;
+                NSString *eventDate = [event.date stringByTrimmingCharactersInSet:[NSCharacterSet  whitespaceAndNewlineCharacterSet]];
                 
                 if ( theEvents[eventDate] ) {
                     /* It has an array with this date. Add to event to existing array. */
@@ -75,10 +75,12 @@
             self.filteredEventsDictionary = theEvents;
             // Sort the keys by date
             NSArray *keys = [theEvents allKeys];
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            dateFormatter.dateFormat = @"yyyy/MM/dd";
             NSLog(@"%@ is the first key", keys.firstObject);
             self.sortedDateKeys =  [keys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
-                NSDate *date1 = [NSDate dateFromString:d1];
-                NSDate *date2 = [NSDate dateFromString:d2];
+                NSDate *date1 = [dateFormatter dateFromString:d1];
+                NSDate *date2 = [dateFormatter dateFromString:d2];
                 return [date1 compare:date2];
             }];
             NSLog(@"%@ is the first sorted key", self.sortedDateKeys.firstObject);
@@ -91,8 +93,7 @@
             //set dateformatter in order to convert string to date
             NSString *firstDateString = self.sortedDateKeys.firstObject;
             NSString *lastDateString = self.sortedDateKeys.lastObject;
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            dateFormatter.dateFormat = @"MM/dd/yyyy";
+            
             NSDate *firstDate = [dateFormatter dateFromString:firstDateString];
             NSDate *lastDate = [dateFormatter dateFromString:lastDateString];
             // Set start and end dates in dayPicker
@@ -190,11 +191,12 @@
     //NSString *selectedDateString = [NSDate formattedStringFromDate:day.date];
     //NSDate *dateFromString = [dateFormatter dateFromString: selectedDateString];
     //get string back from NSDATE in correct format
-    dateFormatter.dateFormat = @"MM/dd/yyyy";
+    dateFormatter.dateFormat = @"yyyy/MM/dd";
     NSString *stringFromDate = [dateFormatter stringFromDate: day.date];
-    NSLog(@"%@ the selected date is", stringFromDate);
+    NSLog(@"the selected date is %@", stringFromDate);
     NSInteger index = [self.sortedDateKeys indexOfObject: stringFromDate];
-    NSLog(@"%d is the index", index);
+    NSLog(@"the selected date is %@", self.sortedDateKeys.firstObject); //OH NO!
+    NSLog(@"%ld is the index", (long)index);
     //This way we make sure it doesn't crash if things get glitchy and index isn't found.
     if (index != NSNotFound) {
         NSLog(@"index found gg");
@@ -313,9 +315,12 @@ BOOL _dayPickerIsAnimating = NO;
     }
     self.filteredEventsDictionary = searchEvents;
     NSArray *newKeys = [searchEvents allKeys];
+    //initialize dateFormatter and dateFormat
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy/MM/dd";
     self.filteredSortedDateKeys =  [newKeys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
-        NSDate *date1 = [NSDate dateFromString:d1];
-        NSDate *date2 = [NSDate dateFromString:d2];
+        NSDate *date1 = [dateFormatter dateFromString:d1];
+        NSDate *date2 = [dateFormatter dateFromString:d2];
         return [date1 compare:date2];
     }];
 }
