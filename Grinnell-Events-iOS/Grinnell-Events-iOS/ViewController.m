@@ -205,6 +205,7 @@
 }
 - (void)dayPicker:(MZDayPicker *)dayPicker willSelectDay:(MZDay *)day
 {
+    
     NSLog(@"Will select day %@",day.day);
 }
 
@@ -358,6 +359,25 @@ BOOL _dayPickerIsAnimating = NO;
 }
 - (IBAction)goToToday:(id)sender {
     [self goToTodayAnimated:YES];
+    //We scroll to that section. Sections are labeled by the date (sortedKeys)
+    //initialize dateFormatter and dateFormat
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //need to set date
+    // dateFormatter.dateFormat = @"ccc MMM dd yyyy";
+    //NSString *selectedDateString = [NSDate formattedStringFromDate:day.date];
+    //NSDate *dateFromString = [dateFormatter dateFromString: selectedDateString];
+    //get string back from NSDATE in correct format
+    dateFormatter.dateFormat = @"yyyy/MM/dd";
+    NSString *stringFromDate = [dateFormatter stringFromDate:[NSDate date]];
+    NSLog(@"the selected date is %@", stringFromDate);
+    NSInteger index = [self.sortedDateKeys indexOfObject: stringFromDate];
+    NSLog(@"the selected date is %@", self.sortedDateKeys.firstObject); //OH NO!
+    NSLog(@"%ld is the index", (long)index);
+    //This way we make sure it doesn't crash if things get glitchy and index isn't found.
+    if (index != NSNotFound) {
+        NSLog(@"index found gg");
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
 }
 @end
 
