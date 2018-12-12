@@ -10,6 +10,9 @@
 #import "EventKitController.h"
 #import "NSDate+GADate.h"
 #import "GAEvent.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
@@ -19,8 +22,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *conflictLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *conflictImageView;
-
-
+@property (weak, nonatomic) IBOutlet FBSDKShareButton *customShareButton;
 @property (nonatomic, strong) EventKitController *eventKitController;
 
 @end
@@ -45,8 +47,18 @@
     else {
         self.descriptionTextView.text = @"Sorry. No details were given for this event :(";
     }
-
+    
 }
+- (IBAction)shareButtonClicked:(id)sender {
+    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+    content.contentURL = [NSURL URLWithString:@"http://developers.facebook.com"];
+    [FBSDKShareDialog showFromViewController:self
+                                 withContent:content
+                                    delegate:nil];
+}
+
+
+
 
 - (void) viewWillAppear:(BOOL)animated {
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];

@@ -11,7 +11,8 @@
 #import "GAEventCell.h"
 #import "NSDate+GADate.h"
 #import "EventDetailViewController.h"
-
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <Parse/Parse.h>
 
 
