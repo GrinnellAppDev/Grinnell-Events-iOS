@@ -58,12 +58,35 @@
     
     return image;
 }
+
+- (void)imagePickerController:(UIImagePickerController *)picker
+didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    
+    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+    photo.image = image;
+    photo.userGenerated = YES;
+    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+    content.photos = @[photo];
+}
+
 - (IBAction)shareButtonClicked:(id)sender {
-    NSString *shareInfo = @"hey, come to this cool event!";
+    
+    NSString *shareInfo = @"hey everyone i'm going to this cool event";
     NSDictionary *attributes = @{NSFontAttributeName            : [UIFont systemFontOfSize:20],
                                  NSForegroundColorAttributeName : [UIColor blueColor],
                                  NSBackgroundColorAttributeName : [UIColor clearColor]};
     UIImage *eventdetails = [self imageFromString:shareInfo attributes:attributes size: CGSizeMake(10, 10)];
+//    this part is commented out right now because photo doesn't work with simulator. if testing, uncomment this part and comment out the part from sharelink down
+//    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+//    photo.image = eventdetails;
+//    photo.userGenerated = NO;
+//    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+//    content.photos = @[photo];
+//    [FBSDKShareDialog showFromViewController:self
+//                                 withContent:content
+//                                    delegate:nil];
     FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
     content.contentURL = [NSURL URLWithString:@"http://developers.facebook.com"];
     [FBSDKShareDialog showFromViewController:self
@@ -71,7 +94,7 @@
                                     delegate:nil];
 }
 
-//got this code from stackoverflow; https://stackoverflow.com/questions/23556269/how-to-convert-text-to-image
+//got this code from stackoverflow; https://stackoverflow.com/questions/23556269/how-to-convert-text-to-image, 
 
 
 
