@@ -73,12 +73,14 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 
 - (IBAction)shareButtonClicked:(id)sender {
     
-    NSString *shareInfo = @"hey everyone i'm going to this cool event";
+    NSString *shareInfo = [NSString stringWithFormat:@"Hey everyone! Join me at %@ on %@ , %@ at %@", self.title,self.dateLabel.text, self.timeLabel.text, self.locationLabel.text];
+    NSLog(@"%@", shareInfo);
     NSDictionary *attributes = @{NSFontAttributeName            : [UIFont systemFontOfSize:20],
                                  NSForegroundColorAttributeName : [UIColor blueColor],
                                  NSBackgroundColorAttributeName : [UIColor clearColor]};
-    UIImage *eventdetails = [self imageFromString:shareInfo attributes:attributes size: CGSizeMake(10, 10)];
+  
 //    this part is commented out right now because photo doesn't work with simulator. if testing, uncomment this part and comment out the part from sharelink down
+// UIImage *eventdetails = [self imageFromString:shareInfo attributes:attributes size: CGSizeMake(10, 10)];
 //    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
 //    photo.image = eventdetails;
 //    photo.userGenerated = NO;
