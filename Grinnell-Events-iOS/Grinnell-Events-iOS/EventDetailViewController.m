@@ -49,7 +49,21 @@
     }
     
 }
+- (UIImage*)imageFromString:(NSString *)string attributes:(NSDictionary *)attributes size:(CGSize)size
+{
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    [string drawInRect:CGRectMake(0, 0, size.width, size.height) withAttributes:attributes];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
 - (IBAction)shareButtonClicked:(id)sender {
+    NSString *shareInfo = @"hey, come to this cool event!";
+    NSDictionary *attributes = @{NSFontAttributeName            : [UIFont systemFontOfSize:20],
+                                 NSForegroundColorAttributeName : [UIColor blueColor],
+                                 NSBackgroundColorAttributeName : [UIColor clearColor]};
+    UIImage *eventdetails = [self imageFromString:shareInfo attributes:attributes size: CGSizeMake(10, 10)];
     FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
     content.contentURL = [NSURL URLWithString:@"http://developers.facebook.com"];
     [FBSDKShareDialog showFromViewController:self
@@ -57,6 +71,7 @@
                                     delegate:nil];
 }
 
+//got this code from stackoverflow; https://stackoverflow.com/questions/23556269/how-to-convert-text-to-image
 
 
 

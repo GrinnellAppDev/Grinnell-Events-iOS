@@ -277,8 +277,9 @@
                             <rect key="frame" x="0.0" y="405" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
                             <state key="normal" title="Share to Facebook">
-                                <color key="titleColor" red="0.42035689898253004" green="0.61462080796263185" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="titleColor" red="0.25882352941176467" green="0.40392156862745099" blue="0.69803921568627447" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <connections>
                                 <action selector="shareButtonClicked:" destination="1Fx-fm-IMF" eventType="touchUpInside" id="Eua-So-yHf"/>
