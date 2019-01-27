@@ -80,20 +80,20 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
                                  NSBackgroundColorAttributeName : [UIColor clearColor]};
   
 //    this part is commented out right now because photo doesn't work with simulator. if testing, uncomment this part and comment out the part from sharelink down
-// UIImage *eventdetails = [self imageFromString:shareInfo attributes:attributes size: CGSizeMake(10, 10)];
-//    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
-//    photo.image = eventdetails;
-//    photo.userGenerated = NO;
-//    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
-//    content.photos = @[photo];
-//    [FBSDKShareDialog showFromViewController:self
-//                                 withContent:content
-//                                    delegate:nil];
-    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
-    content.contentURL = [NSURL URLWithString:@"http://developers.facebook.com"];
+ UIImage *eventdetails = [self imageFromString:shareInfo attributes:attributes size: CGSizeMake(600, 200)];
+    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+    photo.image = eventdetails;
+    photo.userGenerated = NO;
+    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+    content.photos = @[photo];
     [FBSDKShareDialog showFromViewController:self
                                  withContent:content
                                     delegate:nil];
+//    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+//    content.contentURL = [NSURL URLWithString:@"http://developers.facebook.com"];
+//    [FBSDKShareDialog showFromViewController:self
+//                                 withContent:content
+//                                    delegate:nil];
 }
 
 //got this code from stackoverflow; https://stackoverflow.com/questions/23556269/how-to-convert-text-to-image, 
