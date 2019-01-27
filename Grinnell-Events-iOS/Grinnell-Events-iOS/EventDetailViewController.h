@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+@import GoogleMaps;
+
 @class GAEvent;
 
 @interface EventDetailViewController : UITableViewController<UIScrollViewDelegate>
@@ -15,5 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (weak, nonatomic) IBOutlet UITableViewCell *availabilityCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *addToCalendarCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *locationMapCell;
+
 
 @end

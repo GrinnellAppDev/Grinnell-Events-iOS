@@ -6,4 +6,5 @@ target 'Grinnell-Events-iOS' do
 	pod 'Parse'
 	pod 'Crashlytics'
 	pod 'Flurry-iOS-SDK'
+        pod 'GoogleMaps'
 end
