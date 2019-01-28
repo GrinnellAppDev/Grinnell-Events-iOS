@@ -345,7 +345,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="7VH-Wk-wwZ">
-                                                    <rect key="frame" x="10" y="9" width="353" height="101"/>
+                                                    <rect key="frame" x="10" y="9" width="352" height="101"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <string key="text">This is the desription. Of our event. Yay. I need to write more stuff here to fill it up. Oh my god, I'm running out of stuff to talk about. This is the desription. Of our event. Yay. I need to write more bullshit here to fill it up. Oh my god, I'm running out of bullshit to talk about.</string>
@@ -419,6 +419,7 @@
                         <outlet property="dateLabel" destination="l1N-al-e31" id="kTQ-Ev-oiu"/>
                         <outlet property="descriptionTextView" destination="7VH-Wk-wwZ" id="TxB-8F-Cpx"/>
                         <outlet property="locationLabel" destination="IMN-cY-Tfx" id="gxj-dq-muv"/>
+                        <outlet property="locationMap" destination="tdz-b2-3oQ" id="bdU-g9-fQj"/>
                         <outlet property="locationMapCell" destination="zeW-KB-m1k" id="UX8-Dn-l3N"/>
                         <outlet property="timeLabel" destination="vME-Qp-WzA" id="dgk-bx-MCQ"/>
                     </connections>

@@ -19,6 +19,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *conflictLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *conflictImageView;
+@property (weak, nonatomic) IBOutlet UIView *locationMap;
 
 
 @property (nonatomic, strong) EventKitController *eventKitController;
@@ -45,6 +46,17 @@
     else {
         self.descriptionTextView.text = @"Sorry. No details were given for this event :(";
     }
+    
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:1.285
+                                                            longitude:103.848
+                                                                 zoom:12];
+    GMSMapView *mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
+    mapView.myLocationEnabled = YES;
+    self.locationMap = mapView;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self updateFocusIfNeeded];
+    });
 
 }
 

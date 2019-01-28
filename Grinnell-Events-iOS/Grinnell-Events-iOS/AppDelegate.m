@@ -10,6 +10,8 @@
 #import "GAEvent.h"
 #import <Crashlytics/Crashlytics.h>
 
+@import GoogleMaps;
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -18,6 +20,7 @@
     NSDictionary *keysDict = [NSDictionary dictionaryWithContentsOfFile:strings_private];
     // Override point for customization after application launch.
     
+    [GMSServices provideAPIKey:@"GoogleMapAPIKey"];
     [Parse setApplicationId:[keysDict objectForKey:@"ParseAppID"] clientKey:[keysDict objectForKey:@"ParseClientKey"]];
     [GAEvent registerSubclass];
     [Crashlytics startWithAPIKey:[keysDict objectForKey:@"CrashlyticsAPIKey"]];
