@@ -19,7 +19,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *conflictLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *conflictImageView;
-@property (weak, nonatomic) IBOutlet UIView *locationMap;
+@property (weak, nonatomic) IBOutlet GMSMapView *locationMap;
 
 
 @property (nonatomic, strong) EventKitController *eventKitController;
@@ -46,13 +46,26 @@
     else {
         self.descriptionTextView.text = @"Sorry. No details were given for this event :(";
     }
+    [self.view layoutIfNeeded];
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:41.7489847
+                                                            longitude:-92.7195079
+                                                                 zoom:14];
+
+    self.locationMap.myLocationEnabled = YES;
+    float markerLong = 41.7489847;
+    float markerLat = -92.7195079;
+    if([self.theEvent.location containsString: @"Rosenfield Center"]){
+        markerLong = 41.7481692;
+        markerLat = -92.7180526;
+    }
     
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:1.285
-                                                            longitude:103.848
-                                                                 zoom:12];
-    GMSMapView *mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
-    mapView.myLocationEnabled = YES;
-    self.locationMap = mapView;
+    CLLocationCoordinate2D position = CLLocationCoordinate2DMake(markerLong, markerLat);
+    GMSMarker *marker = [GMSMarker markerWithPosition:position];
+    marker.title = @"Grinnell College";
+    marker.map = self.locationMap;
+    
+    self.locationMap.camera = camera;
+
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self updateFocusIfNeeded];

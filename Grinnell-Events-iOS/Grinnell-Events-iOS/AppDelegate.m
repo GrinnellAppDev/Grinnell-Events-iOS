@@ -20,7 +20,7 @@
     NSDictionary *keysDict = [NSDictionary dictionaryWithContentsOfFile:strings_private];
     // Override point for customization after application launch.
     
-    [GMSServices provideAPIKey:@"GoogleMapAPIKey"];
+    [GMSServices provideAPIKey:[keysDict objectForKey:@"GoogleMapAPIKey"]];
     [Parse setApplicationId:[keysDict objectForKey:@"ParseAppID"] clientKey:[keysDict objectForKey:@"ParseClientKey"]];
     [GAEvent registerSubclass];
     [Crashlytics startWithAPIKey:[keysDict objectForKey:@"CrashlyticsAPIKey"]];
