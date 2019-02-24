@@ -78,7 +78,6 @@
             NSArray *buildingDirections = [fromDict componentsSeparatedByString:@","];
             markerLong = [@([buildingDirections[0] floatValue]) floatValue];
             markerLat =  [@([buildingDirections[1] floatValue]) floatValue];
-            NSLog(@"DIRECTIONS: %f,%f", markerLong, markerLat);
         }
     }
     
