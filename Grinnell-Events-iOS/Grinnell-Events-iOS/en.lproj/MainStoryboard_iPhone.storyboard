@@ -337,7 +337,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pvv-xd-XiQ" userLabel="Location Map" customClass="GMSMapView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="157"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="156.5"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </view>
                                             </subviews>
