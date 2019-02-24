@@ -13,6 +13,7 @@
 		16AE9C7717FD270E00626F90 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16AE9C7617FD270E00626F90 /* EventKit.framework */; };
 		16AE9C7A17FD27C200626F90 /* EventKitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16AE9C7917FD27C200626F90 /* EventKitController.m */; };
 		16C22F5E17FCF5DF00F0C5FE /* NSDate+GADate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16C22F5D17FCF5DF00F0C5FE /* NSDate+GADate.m */; };
+		70E58A8222232B1E004E034D /* AddEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E58A8122232B1E004E034D /* AddEventViewController.m */; };
 		8B19A2081827711500F915D0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B19A2071827711500F915D0 /* Images.xcassets */; };
 		8B20D8561826D555006E7683 /* CalendarsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B20D8551826D555006E7683 /* CalendarsViewController.m */; };
 		8B21023E183C4A9700ED3226 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B21023D183C4A9700ED3226 /* SettingsViewController.m */; };
@@ -59,6 +60,8 @@
 		16C22F5D17FCF5DF00F0C5FE /* NSDate+GADate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+GADate.m"; sourceTree = "<group>"; };
 		3D45C1F6F656CBCCDB672155 /* Pods-Grinnell-Events-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grinnell-Events-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Grinnell-Events-iOS/Pods-Grinnell-Events-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		4A032D6430575DEA292444FC /* Pods-Grinnell-Events-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grinnell-Events-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Grinnell-Events-iOS/Pods-Grinnell-Events-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		70E58A8022232B1E004E034D /* AddEventViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddEventViewController.h; sourceTree = "<group>"; };
+		70E58A8122232B1E004E034D /* AddEventViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddEventViewController.m; sourceTree = "<group>"; };
 		8B12C6B8185505D9005DD470 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		8B19A2071827711500F915D0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8B20D8541826D555006E7683 /* CalendarsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarsViewController.h; sourceTree = "<group>"; };
@@ -145,6 +148,8 @@
 				8B20D8551826D555006E7683 /* CalendarsViewController.m */,
 				8B21023C183C4A9700ED3226 /* SettingsViewController.h */,
 				8B21023D183C4A9700ED3226 /* SettingsViewController.m */,
+				70E58A8022232B1E004E034D /* AddEventViewController.h */,
+				70E58A8122232B1E004E034D /* AddEventViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -267,7 +272,6 @@
 				ORGANIZATIONNAME = "Grinnell AppDev";
 				TargetAttributes = {
 					8B58DD5117DCFE360041EBD3 = {
-						DevelopmentTeam = FC7CAU5645;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -385,6 +389,7 @@
 				16C22F5E17FCF5DF00F0C5FE /* NSDate+GADate.m in Sources */,
 				8B20D8561826D555006E7683 /* CalendarsViewController.m in Sources */,
 				165D7D3517E6393600CFB87F /* GAEvent.m in Sources */,
+				70E58A8222232B1E004E034D /* AddEventViewController.m in Sources */,
 				162AD93D17E6418F00867115 /* GAEventCell.m in Sources */,
 				FA19A5C32173CB1A000FBD3D /* GAQuery.m in Sources */,
 				16AE9C7A17FD27C200626F90 /* EventKitController.m in Sources */,
@@ -518,7 +523,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = FC7CAU5645;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Grinnell-Events-iOS/Grinnell-Events-iOS-Prefix.pch";
@@ -543,7 +548,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = FC7CAU5645;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Grinnell-Events-iOS/Grinnell-Events-iOS-Prefix.pch";

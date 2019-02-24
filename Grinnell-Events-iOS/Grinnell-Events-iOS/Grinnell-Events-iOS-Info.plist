@@ -32,7 +32,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>DB</string>
+	<string>EB</string>
 	<key>FacebookAppID</key>
 	<string>2002956956436495</string>
 	<key>FacebookDisplayName</key>
@@ -51,7 +51,6 @@
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
 	</array>
-	<string>A6</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

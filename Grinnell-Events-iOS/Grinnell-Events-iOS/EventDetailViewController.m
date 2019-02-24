@@ -75,20 +75,26 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     
     NSString *shareInfo = [NSString stringWithFormat:@"Hey everyone! Join me at %@ on %@ , %@ at %@", self.title,self.dateLabel.text, self.timeLabel.text, self.locationLabel.text];
     NSLog(@"%@", shareInfo);
-    NSDictionary *attributes = @{NSFontAttributeName            : [UIFont systemFontOfSize:20],
-                                 NSForegroundColorAttributeName : [UIColor blueColor],
-                                 NSBackgroundColorAttributeName : [UIColor clearColor]};
+//    NSDictionary *attributes = @{NSFontAttributeName            : [UIFont systemFontOfSize:20],
+//                                 NSForegroundColorAttributeName : [UIColor blueColor],
+//                                 NSBackgroundColorAttributeName : [UIColor clearColor]};
   
 //    this part is commented out right now because photo doesn't work with simulator. if testing, uncomment this part and comment out the part from sharelink down
- UIImage *eventdetails = [self imageFromString:shareInfo attributes:attributes size: CGSizeMake(600, 200)];
-    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
-    photo.image = eventdetails;
-    photo.userGenerated = NO;
-    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
-    content.photos = @[photo];
+// UIImage *eventdetails = [self imageFromString:shareInfo attributes:attributes size: CGSizeMake(600, 200)];
+//    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+//    photo.image = eventdetails;
+//    photo.userGenerated = NO;
+//    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+//    content.photos = @[photo];
+//    [FBSDKShareDialog showFromViewController:self
+//                                 withContent:content
+//                                    delegate:nil];
+    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+    content.contentURL = [NSURL URLWithString:@""];
+    content.quote = shareInfo;
     [FBSDKShareDialog showFromViewController:self
-                                 withContent:content
-                                    delegate:nil];
+                              withContent:content
+                             delegate:nil];
 //    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
 //    content.contentURL = [NSURL URLWithString:@"http://developers.facebook.com"];
 //    [FBSDKShareDialog showFromViewController:self
