@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong,nonatomic) NSMutableArray *filteredEventsArray;
 
+@property (weak, nonatomic) IBOutlet UIButton *SubmitEventButton;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

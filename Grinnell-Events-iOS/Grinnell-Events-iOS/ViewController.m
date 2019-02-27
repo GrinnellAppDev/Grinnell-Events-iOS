@@ -25,6 +25,9 @@
 @property (nonatomic, strong) NSArray *filteredSortedDateKeys;
 @property (nonatomic, strong) NSDate *focusedDate;
 
+
+
+
 - (IBAction)goToToday:(id)sender;
 
 @end
@@ -37,6 +40,7 @@
 
 - (void)viewDidLoad
 {
+    
     self.tableView.scrollEnabled = NO;
     [super viewDidLoad];
     [GAEvent findAllEventsInBackground:^void (NSArray *events, NSError *error) {
@@ -139,6 +143,7 @@
             // Then display today in the picker and tableView
             [self goToTodayAnimated:NO];
             self.tableView.scrollEnabled = YES;
+            
         }
     }];
     
@@ -153,6 +158,8 @@
     self.dayPickerdateFormatter = [[NSDateFormatter alloc] init];
     [self.dayPickerdateFormatter setDateFormat:@"EE"];
     self.filteredEventsArray = [NSMutableArray arrayWithCapacity:self.flatEventsData.count];
+  
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -358,6 +365,7 @@ BOOL _dayPickerIsAnimating = NO;
 
 - (IBAction)didTapDays:(id)sender {
 }
+
 - (IBAction)goToToday:(id)sender {
     [self goToTodayAnimated:YES];
     //We scroll to that section. Sections are labeled by the date (sortedKeys)

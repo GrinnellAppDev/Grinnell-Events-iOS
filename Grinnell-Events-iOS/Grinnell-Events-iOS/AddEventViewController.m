@@ -2,24 +2,27 @@
 //  AddEventViewController.m
 //  Grinnell-Events-iOS
 //
-//  Created by Cherie Li on 2/24/19.
+//  Created by Cherie Li on 2/27/19.
 //  Copyright © 2019 Grinnell AppDev. All rights reserved.
 //
 
 #import "AddEventViewController.h"
 
 @interface AddEventViewController ()
+- (IBAction)returnButton:(id)sender;
 
 @end
 
 @implementation AddEventViewController
 
+
+- (IBAction)returnButton:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-}
-- (IBAction)cancel:(UIBarButtonItem *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 /*
