@@ -10,6 +10,7 @@
 
 @interface AddEventViewController ()
 - (IBAction)returnButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *SubmitButton;
 
 @property (weak, nonatomic) IBOutlet UITextField *personName;
 @property (weak, nonatomic) IBOutlet UITextField *eventName;
@@ -19,6 +20,16 @@
 @end
 
 @implementation AddEventViewController
+
+- (IBAction)submitButton:(id)sender {
+    
+    NSString *personNametext = self.eventName.text;
+    NSString *eventNametext = self.eventName.text;
+    NSString *clubNametext = self.eventName.text;
+    NSString *eventTimeDatetext = self.eventName.text;
+    
+}
+
 
 
 - (IBAction)returnButton:(id)sender {
