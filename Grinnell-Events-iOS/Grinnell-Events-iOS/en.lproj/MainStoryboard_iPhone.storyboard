@@ -226,24 +226,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="npo-cE-7ga">
-                                <rect key="frame" x="63" y="112" width="258" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Club/Sponsorer " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AH5-OG-8jK">
-                                <rect key="frame" x="63" y="260" width="258" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Time and Date " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rhe-E4-YJE">
-                                <rect key="frame" x="63" y="339" width="258" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mhh-Og-C0Y">
                                 <rect key="frame" x="155" y="467" width="49" height="30"/>
                                 <constraints>
@@ -254,28 +236,10 @@
                                     <action selector="submitButton:" destination="4Xa-50-kDG" eventType="touchUpInside" id="dRR-FJ-b4b"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name of Event" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dhw-HB-92X">
-                                <rect key="frame" x="63" y="186" width="258" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="npo-cE-7ga" secondAttribute="trailing" constant="38" id="09Q-cp-N6u"/>
-                            <constraint firstItem="AH5-OG-8jK" firstAttribute="leading" secondItem="Rhe-E4-YJE" secondAttribute="leading" id="Az0-w4-CBY"/>
-                            <constraint firstItem="AH5-OG-8jK" firstAttribute="top" secondItem="Dhw-HB-92X" secondAttribute="bottom" constant="44" id="BwA-3a-4Lb"/>
                             <constraint firstItem="mhh-Og-C0Y" firstAttribute="leading" secondItem="Yum-pR-6pe" secondAttribute="leading" constant="155" id="Egk-2B-bEp"/>
-                            <constraint firstItem="Dhw-HB-92X" firstAttribute="leading" secondItem="AH5-OG-8jK" secondAttribute="leading" id="LKJ-Ej-5rZ"/>
-                            <constraint firstItem="Dhw-HB-92X" firstAttribute="top" secondItem="npo-cE-7ga" secondAttribute="bottom" constant="44" id="Nbu-Zp-me6"/>
-                            <constraint firstItem="npo-cE-7ga" firstAttribute="leading" secondItem="Yum-pR-6pe" secondAttribute="leadingMargin" constant="47" id="SYA-a4-j0X"/>
-                            <constraint firstItem="Rhe-E4-YJE" firstAttribute="top" secondItem="AH5-OG-8jK" secondAttribute="bottom" constant="49" id="Tq9-Mc-aZu"/>
-                            <constraint firstItem="AH5-OG-8jK" firstAttribute="trailing" secondItem="Rhe-E4-YJE" secondAttribute="trailing" id="fLA-r7-jHd"/>
-                            <constraint firstItem="npo-cE-7ga" firstAttribute="top" secondItem="NGd-ne-9tt" secondAttribute="bottom" constant="48" id="fuT-Mj-A76"/>
-                            <constraint firstItem="Dhw-HB-92X" firstAttribute="trailing" secondItem="AH5-OG-8jK" secondAttribute="trailing" id="jOv-eP-LG7"/>
-                            <constraint firstItem="npo-cE-7ga" firstAttribute="trailing" secondItem="Dhw-HB-92X" secondAttribute="trailing" id="oCw-yu-SDE"/>
-                            <constraint firstItem="npo-cE-7ga" firstAttribute="leading" secondItem="Dhw-HB-92X" secondAttribute="leading" id="om3-ae-uA8"/>
                             <constraint firstItem="OLV-ja-OKB" firstAttribute="top" secondItem="mhh-Og-C0Y" secondAttribute="bottom" constant="170" id="vHn-VH-K03"/>
                         </constraints>
                     </view>
@@ -288,10 +252,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="SubmitButton" destination="mhh-Og-C0Y" id="c64-Fn-5Ih"/>
-                        <outlet property="clubName" destination="AH5-OG-8jK" id="qjV-kq-w0w"/>
-                        <outlet property="eventName" destination="Dhw-HB-92X" id="ONc-M2-jpm"/>
-                        <outlet property="eventTimeDate" destination="Rhe-E4-YJE" id="6Mf-EH-2gM"/>
-                        <outlet property="personName" destination="npo-cE-7ga" id="QtZ-mJ-bSM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="de6-XF-QYO" userLabel="First Responder" sceneMemberID="firstResponder"/>
