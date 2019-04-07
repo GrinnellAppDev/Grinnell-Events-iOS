@@ -264,6 +264,7 @@
     GAEventCell *cell = [self.tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     GAEvent *event;
     NSString *key = self.filteredSortedDateKeys[indexPath.section];
+    
     event = self.filteredEventsDictionary[key][indexPath.row];
     cell.title.hidden = false;
     cell.title.text = [event.title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];

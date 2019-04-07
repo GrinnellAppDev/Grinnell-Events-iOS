@@ -128,8 +128,8 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0B5-dF-KQg">
-                                <rect key="frame" x="298" y="553" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                                <rect key="frame" x="314" y="553" width="30" height="30"/>
+                                <state key="normal" title="+"/>
                                 <connections>
                                     <segue destination="MXJ-8j-HtH" kind="modal" id="fcy-rn-l7Q"/>
                                 </connections>
