@@ -164,18 +164,23 @@
             //Break up the start time into parts
             [self extractAMPM:startTime withAMPMString:&startAMPMString withHourString:&startTimeHour withMinutesString:&startTimeMinutes];
             //End time comes after the last ';'
-            NSArray* endTimeArray = [time[3] componentsSeparatedByString: @";"];
-            NSString *endTime = endTimeArray[1];
-            NSLog(@"End Time: %@", endTime);
             
             //Break up the end time into parts
             NSString *endAMPMString;
             NSString *endTimeHour;
             NSString *endTimeMinutes;
-            
-            [self extractAMPM:endTime withAMPMString:&endAMPMString withHourString:&endTimeHour withMinutesString:&endTimeMinutes];
-            //Format start time:
-            //Append minutes to start time
+            //There may not be an end time.
+            if ([time count] > 1) {
+                NSArray* endTimeArray = [time[3] componentsSeparatedByString: @";"];
+                NSString *endTime = endTimeArray[1];
+                NSLog(@"End Time: %@", endTime);
+                
+                [self extractAMPM:endTime withAMPMString:&endAMPMString withHourString:&endTimeHour withMinutesString:&endTimeMinutes];
+                //Format start time:
+                //Append minutes to start time
+            } else {
+                [self extractAMPM:startTime withAMPMString:&endAMPMString withHourString:&endTimeHour withMinutesString:&endTimeMinutes];
+            }
             
             
             NSString *finalStartTime = @"";
