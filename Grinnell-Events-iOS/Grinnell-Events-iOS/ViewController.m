@@ -11,7 +11,8 @@
 #import "GAEventCell.h"
 #import "NSDate+GADate.h"
 #import "EventDetailViewController.h"
-
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <Parse/Parse.h>
 
 
@@ -23,6 +24,9 @@
 @property (nonatomic, strong) NSArray *sortedDateKeys;
 @property (nonatomic, strong) NSArray *filteredSortedDateKeys;
 @property (nonatomic, strong) NSDate *focusedDate;
+
+
+
 
 - (IBAction)goToToday:(id)sender;
 
@@ -36,6 +40,7 @@
 
 - (void)viewDidLoad
 {
+    
     self.tableView.scrollEnabled = NO;
     [super viewDidLoad];
     [GAEvent findAllEventsInBackground:^void (NSArray *events, NSError *error) {
@@ -60,7 +65,7 @@
             NSMutableDictionary *theEvents = [[NSMutableDictionary alloc] init];
             
             for (GAEvent *event in events) {
-                NSString *eventDate = event.date;
+                NSString *eventDate = [event.date stringByTrimmingCharactersInSet:[NSCharacterSet  whitespaceAndNewlineCharacterSet]];
                 
                 if ( theEvents[eventDate] ) {
                     /* It has an array with this date. Add to event to existing array. */
@@ -75,10 +80,12 @@
             self.filteredEventsDictionary = theEvents;
             // Sort the keys by date
             NSArray *keys = [theEvents allKeys];
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            dateFormatter.dateFormat = @"yyyy/MM/dd";
             NSLog(@"%@ is the first key", keys.firstObject);
             self.sortedDateKeys =  [keys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
-                NSDate *date1 = [NSDate dateFromString:d1];
-                NSDate *date2 = [NSDate dateFromString:d2];
+                NSDate *date1 = [dateFormatter dateFromString:d1];
+                NSDate *date2 = [dateFormatter dateFromString:d2];
                 return [date1 compare:date2];
             }];
             NSLog(@"%@ is the first sorted key", self.sortedDateKeys.firstObject);
@@ -91,8 +98,7 @@
             //set dateformatter in order to convert string to date
             NSString *firstDateString = self.sortedDateKeys.firstObject;
             NSString *lastDateString = self.sortedDateKeys.lastObject;
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            dateFormatter.dateFormat = @"MM/dd/yyyy";
+            
             NSDate *firstDate = [dateFormatter dateFromString:firstDateString];
             NSDate *lastDate = [dateFormatter dateFromString:lastDateString];
             // Set start and end dates in dayPicker
@@ -137,6 +143,7 @@
             // Then display today in the picker and tableView
             [self goToTodayAnimated:NO];
             self.tableView.scrollEnabled = YES;
+            
         }
     }];
     
@@ -151,6 +158,8 @@
     self.dayPickerdateFormatter = [[NSDateFormatter alloc] init];
     [self.dayPickerdateFormatter setDateFormat:@"EE"];
     self.filteredEventsArray = [NSMutableArray arrayWithCapacity:self.flatEventsData.count];
+  
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -190,11 +199,12 @@
     //NSString *selectedDateString = [NSDate formattedStringFromDate:day.date];
     //NSDate *dateFromString = [dateFormatter dateFromString: selectedDateString];
     //get string back from NSDATE in correct format
-    dateFormatter.dateFormat = @"MM/dd/yyyy";
+    dateFormatter.dateFormat = @"yyyy/MM/dd";
     NSString *stringFromDate = [dateFormatter stringFromDate: day.date];
-    NSLog(@"%@ the selected date is", stringFromDate);
+    NSLog(@"the selected date is %@", stringFromDate);
     NSInteger index = [self.sortedDateKeys indexOfObject: stringFromDate];
-    NSLog(@"%d is the index", index);
+    NSLog(@"the selected date is %@", self.sortedDateKeys.firstObject); //OH NO!
+    NSLog(@"%ld is the index", (long)index);
     //This way we make sure it doesn't crash if things get glitchy and index isn't found.
     if (index != NSNotFound) {
         NSLog(@"index found gg");
@@ -203,6 +213,7 @@
 }
 - (void)dayPicker:(MZDayPicker *)dayPicker willSelectDay:(MZDay *)day
 {
+    
     NSLog(@"Will select day %@",day.day);
 }
 
@@ -253,6 +264,7 @@
     GAEventCell *cell = [self.tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     GAEvent *event;
     NSString *key = self.filteredSortedDateKeys[indexPath.section];
+    
     event = self.filteredEventsDictionary[key][indexPath.row];
     cell.title.hidden = false;
     cell.title.text = [event.title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -313,9 +325,12 @@ BOOL _dayPickerIsAnimating = NO;
     }
     self.filteredEventsDictionary = searchEvents;
     NSArray *newKeys = [searchEvents allKeys];
+    //initialize dateFormatter and dateFormat
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy/MM/dd";
     self.filteredSortedDateKeys =  [newKeys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
-        NSDate *date1 = [NSDate dateFromString:d1];
-        NSDate *date2 = [NSDate dateFromString:d2];
+        NSDate *date1 = [dateFormatter dateFromString:d1];
+        NSDate *date2 = [dateFormatter dateFromString:d2];
         return [date1 compare:date2];
     }];
 }
@@ -351,8 +366,28 @@ BOOL _dayPickerIsAnimating = NO;
 
 - (IBAction)didTapDays:(id)sender {
 }
+
 - (IBAction)goToToday:(id)sender {
     [self goToTodayAnimated:YES];
+    //We scroll to that section. Sections are labeled by the date (sortedKeys)
+    //initialize dateFormatter and dateFormat
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //need to set date
+    // dateFormatter.dateFormat = @"ccc MMM dd yyyy";
+    //NSString *selectedDateString = [NSDate formattedStringFromDate:day.date];
+    //NSDate *dateFromString = [dateFormatter dateFromString: selectedDateString];
+    //get string back from NSDATE in correct format
+    dateFormatter.dateFormat = @"yyyy/MM/dd";
+    NSString *stringFromDate = [dateFormatter stringFromDate:[NSDate date]];
+    NSLog(@"the selected date is %@", stringFromDate);
+    NSInteger index = [self.sortedDateKeys indexOfObject: stringFromDate];
+    NSLog(@"the selected date is %@", self.sortedDateKeys.firstObject); //OH NO!
+    NSLog(@"%ld is the index", (long)index);
+    //This way we make sure it doesn't crash if things get glitchy and index isn't found.
+    if (index != NSNotFound) {
+        NSLog(@"index found gg");
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
 }
 @end
 

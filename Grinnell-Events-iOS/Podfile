@@ -6,5 +6,10 @@ target 'Grinnell-Events-iOS' do
 	pod 'Parse'
 	pod 'Crashlytics'
 	pod 'Flurry-iOS-SDK'
-        pod 'GoogleMaps'
+  pod 'GoogleMaps'
+	pod 'FBSDKCoreKit'
+  pod 'FBSDKLoginKit'
+  pod 'FBSDKShareKit'
+  pod 'FBSDKPlacesKit'
+  pod 'FBSDKMessengerShareKit'
 end

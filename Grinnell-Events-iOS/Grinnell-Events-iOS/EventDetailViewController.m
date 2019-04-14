@@ -10,6 +10,9 @@
 #import "EventKitController.h"
 #import "NSDate+GADate.h"
 #import "GAEvent.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
@@ -20,8 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *conflictLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *conflictImageView;
 @property (weak, nonatomic) IBOutlet GMSMapView *locationMap;
-
-
+@property (weak, nonatomic) IBOutlet FBSDKShareButton *customShareButton;
 @property (nonatomic, strong) EventKitController *eventKitController;
 
 @end
@@ -47,7 +49,6 @@
         self.descriptionTextView.text = @"Sorry. No details were given for this event :(";
     }
     [self.view layoutIfNeeded];
-    
     
     NSDictionary *buildingLocations = [NSDictionary dictionaryWithObjectsAndKeys: @"41.7494722,-92.7199044", @"Rosenfield Center",
                                        @"41.752236, -92.719204",  @"Bear",
@@ -96,9 +97,65 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self updateFocusIfNeeded];
-    });
-
+    }); 
 }
+
+- (UIImage*)imageFromString:(NSString *)string attributes:(NSDictionary *)attributes size:(CGSize)size
+{
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    [string drawInRect:CGRectMake(0, 0, size.width, size.height) withAttributes:attributes];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker
+didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    
+    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+    photo.image = image;
+    photo.userGenerated = YES;
+    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+    content.photos = @[photo];
+}
+
+- (IBAction)shareButtonClicked:(id)sender {
+    
+    NSString *shareInfo = [NSString stringWithFormat:@"Hey everyone! Join me at %@ on %@ , %@ at %@", self.title,self.dateLabel.text, self.timeLabel.text, self.locationLabel.text];
+    NSLog(@"%@", shareInfo);
+//    NSDictionary *attributes = @{NSFontAttributeName            : [UIFont systemFontOfSize:20],
+//                                 NSForegroundColorAttributeName : [UIColor blueColor],
+//                                 NSBackgroundColorAttributeName : [UIColor clearColor]};
+  
+//    this part is commented out right now because photo doesn't work with simulator. if testing, uncomment this part and comment out the part from sharelink down
+// UIImage *eventdetails = [self imageFromString:shareInfo attributes:attributes size: CGSizeMake(600, 200)];
+//    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+//    photo.image = eventdetails;
+//    photo.userGenerated = NO;
+//    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+//    content.photos = @[photo];
+//    [FBSDKShareDialog showFromViewController:self
+//                                 withContent:content
+//                                    delegate:nil];
+    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+    content.contentURL = [NSURL URLWithString:@""];
+    content.quote = shareInfo;
+    [FBSDKShareDialog showFromViewController:self
+                              withContent:content
+                             delegate:nil];
+//    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+//    content.contentURL = [NSURL URLWithString:@"http://developers.facebook.com"];
+//    [FBSDKShareDialog showFromViewController:self
+//                                 withContent:content
+//                                    delegate:nil];
+}
+
+//got this code from stackoverflow; https://stackoverflow.com/questions/23556269/how-to-convert-text-to-image, 
+
+
 
 - (void) viewWillAppear:(BOOL)animated {
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
