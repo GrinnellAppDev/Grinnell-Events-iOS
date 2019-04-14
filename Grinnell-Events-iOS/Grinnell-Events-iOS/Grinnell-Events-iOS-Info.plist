@@ -60,6 +60,8 @@
 	</dict>
 	<key>NSCalendarsUsageDescription</key>
 	<string>Allows addition of events to personal calendars</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We are accessing your location!</string>
 	<key>UILaunchStoryboardName</key>
 	<string>MainStoryboard_iPhone</string>
 	<key>UIMainStoryboardFile</key>

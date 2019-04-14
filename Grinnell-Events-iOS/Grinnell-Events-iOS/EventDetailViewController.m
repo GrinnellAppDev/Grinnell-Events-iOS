@@ -22,6 +22,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *conflictLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *conflictImageView;
+@property (weak, nonatomic) IBOutlet GMSMapView *locationMap;
 @property (weak, nonatomic) IBOutlet FBSDKShareButton *customShareButton;
 @property (nonatomic, strong) EventKitController *eventKitController;
 
@@ -47,8 +48,58 @@
     else {
         self.descriptionTextView.text = @"Sorry. No details were given for this event :(";
     }
+    [self.view layoutIfNeeded];
     
+    NSDictionary *buildingLocations = [NSDictionary dictionaryWithObjectsAndKeys: @"41.7494722,-92.7199044", @"Rosenfield Center",
+                                       @"41.752236, -92.719204",  @"Bear",
+                                       @"41.752364, -92.720524", @"BRAC",
+                                       @"41.744403, -92.721935", @"Drake",
+                                       @"41.7486008,-92.7206037", @"Noyce",
+                                       @"41.747765, -92.721953", @"Herrick",
+                                       @"41.748446, -92.722068", @"HSSC",
+                                       @"41.7513931,-92.7208318", @"Harris",
+                                       @"41.746334, -92.721219", @"Bucksbaum",
+                                       @"41.7476997,-92.7218344", @"Burling",
+                                       @"41.7477214,-92.7221766", @"Forum",
+                                       @"41.7468593,-92.7186613", @"Mears",
+                                       @"41.7473434,-92.7242105", @"Steiner",
+                                       @"41.7469548,-92.7220218", @"Goodnow",
+                                       @"41.7484938,-92.7221005", @"ARH",
+                                       @"41.7479603,-92.7242302", @"Carnegie",
+                                       @"41.746788, -92.718160", @"Main",
+                                       nil];
+
+    
+    float markerLong;
+    float markerLat;
+    for (id key in buildingLocations.allKeys){
+
+        if([self.theEvent.location containsString: (NSString *) key]){
+            NSString *fromDict = [buildingLocations objectForKey:key];
+            NSArray *buildingDirections = [fromDict componentsSeparatedByString:@","];
+            markerLong = [@([buildingDirections[0] floatValue]) floatValue];
+            markerLat =  [@([buildingDirections[1] floatValue]) floatValue];
+        }
+    }
+    
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude: 41.7494722
+                                                            longitude: -92.7199044
+                                                                 zoom:14];
+    self.locationMap.myLocationEnabled = YES;
+    
+    CLLocationCoordinate2D position = CLLocationCoordinate2DMake(markerLong, markerLat);
+    GMSMarker *marker = [GMSMarker markerWithPosition:position];
+    marker.title = @"Grinnell College";
+    marker.map = self.locationMap;
+    
+    self.locationMap.camera = camera;
+
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self updateFocusIfNeeded];
+    }); 
 }
+
 - (UIImage*)imageFromString:(NSString *)string attributes:(NSDictionary *)attributes size:(CGSize)size
 {
     UIGraphicsBeginImageContextWithOptions(size, NO, 0);

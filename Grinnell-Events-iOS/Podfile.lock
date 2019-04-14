@@ -1,4 +1,9 @@
 PODS:
+  - GoogleMaps (2.7.0):
+    - GoogleMaps/Maps (= 2.7.0)
+  - GoogleMaps/Base (2.7.0)
+  - GoogleMaps/Maps (2.7.0):
+    - GoogleMaps/Base
   - Bolts (1.9.0):
     - Bolts/AppLinks (= 1.9.0)
     - Bolts/Tasks (= 1.9.0)
@@ -34,6 +39,7 @@ DEPENDENCIES:
   - FBSDKPlacesKit
   - FBSDKShareKit
   - Flurry-iOS-SDK
+  - GoogleMaps
   - MZDayPicker
   - Parse
 
@@ -48,10 +54,12 @@ SPEC REPOS:
     - FBSDKPlacesKit
     - FBSDKShareKit
     - Flurry-iOS-SDK
+    - GoogleMaps
     - MZDayPicker
     - Parse
 
 SPEC CHECKSUMS:
+  GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
@@ -63,7 +71,7 @@ SPEC CHECKSUMS:
   Flurry-iOS-SDK: 2ea1973a6c9c6b3675765d73ea290b281f8cb084
   MZDayPicker: 8cdcab1d8d3da920a57b1fd4fef5788d289234b2
   Parse: 3b31a3dd1777b07ee7f0caee32fafbff544483a5
-
+  
 PODFILE CHECKSUM: 25e4447055dd0547b6e0105f85befc8cc3430222
 
 COCOAPODS: 1.5.3
