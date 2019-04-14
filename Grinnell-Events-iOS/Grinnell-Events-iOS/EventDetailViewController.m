@@ -10,45 +10,37 @@
 #import "EventKitController.h"
 #import "NSDate+GADate.h"
 #import "GAEvent.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
 @interface EventDetailViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *conflictLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *conflictImageView;
-
-
+@property (weak, nonatomic) IBOutlet GMSMapView *locationMap;
+@property (weak, nonatomic) IBOutlet FBSDKShareButton *customShareButton;
 @property (nonatomic, strong) EventKitController *eventKitController;
 
 @end
 
 @implementation EventDetailViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        NSLog(@"EK allocated");
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.title = self.theEvent.title;
     self.eventKitController = [[EventKitController alloc] init];
     
     self.timeLabel.text =  [NSString stringWithFormat:@"%@ - %@", [NSDate timeStringFormatFromDate:self.theEvent.startTime], [NSDate timeStringFormatFromDate:self.theEvent.endTime]];
     
     self.dateLabel.text = self.theEvent.date;
-    self.titleLabel.text = self.theEvent.title;
     self.locationLabel.text = self.theEvent.location;
     if (self.theEvent.detailDescription) {
         self.descriptionTextView.text = self.theEvent.detailDescription;
@@ -56,20 +48,119 @@
     else {
         self.descriptionTextView.text = @"Sorry. No details were given for this event :(";
     }
+    [self.view layoutIfNeeded];
+    
+    NSDictionary *buildingLocations = [NSDictionary dictionaryWithObjectsAndKeys: @"41.7494722,-92.7199044", @"Rosenfield Center",
+                                       @"41.752236, -92.719204",  @"Bear",
+                                       @"41.752364, -92.720524", @"BRAC",
+                                       @"41.744403, -92.721935", @"Drake",
+                                       @"41.7486008,-92.7206037", @"Noyce",
+                                       @"41.747765, -92.721953", @"Herrick",
+                                       @"41.748446, -92.722068", @"HSSC",
+                                       @"41.7513931,-92.7208318", @"Harris",
+                                       @"41.746334, -92.721219", @"Bucksbaum",
+                                       @"41.7476997,-92.7218344", @"Burling",
+                                       @"41.7477214,-92.7221766", @"Forum",
+                                       @"41.7468593,-92.7186613", @"Mears",
+                                       @"41.7473434,-92.7242105", @"Steiner",
+                                       @"41.7469548,-92.7220218", @"Goodnow",
+                                       @"41.7484938,-92.7221005", @"ARH",
+                                       @"41.7479603,-92.7242302", @"Carnegie",
+                                       @"41.746788, -92.718160", @"Main",
+                                       nil];
 
+    
+    float markerLong;
+    float markerLat;
+    for (id key in buildingLocations.allKeys){
+
+        if([self.theEvent.location containsString: (NSString *) key]){
+            NSString *fromDict = [buildingLocations objectForKey:key];
+            NSArray *buildingDirections = [fromDict componentsSeparatedByString:@","];
+            markerLong = [@([buildingDirections[0] floatValue]) floatValue];
+            markerLat =  [@([buildingDirections[1] floatValue]) floatValue];
+        }
+    }
+    
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude: 41.7494722
+                                                            longitude: -92.7199044
+                                                                 zoom:14];
+    self.locationMap.myLocationEnabled = YES;
+    
+    CLLocationCoordinate2D position = CLLocationCoordinate2DMake(markerLong, markerLat);
+    GMSMarker *marker = [GMSMarker markerWithPosition:position];
+    marker.title = @"Grinnell College";
+    marker.map = self.locationMap;
+    
+    self.locationMap.camera = camera;
+
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self updateFocusIfNeeded];
+    }); 
 }
+
+- (UIImage*)imageFromString:(NSString *)string attributes:(NSDictionary *)attributes size:(CGSize)size
+{
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    [string drawInRect:CGRectMake(0, 0, size.width, size.height) withAttributes:attributes];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker
+didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    
+    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+    photo.image = image;
+    photo.userGenerated = YES;
+    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+    content.photos = @[photo];
+}
+
+- (IBAction)shareButtonClicked:(id)sender {
+    
+    NSString *shareInfo = [NSString stringWithFormat:@"Hey everyone! Join me at %@ on %@ , %@ at %@", self.title,self.dateLabel.text, self.timeLabel.text, self.locationLabel.text];
+    NSLog(@"%@", shareInfo);
+//    NSDictionary *attributes = @{NSFontAttributeName            : [UIFont systemFontOfSize:20],
+//                                 NSForegroundColorAttributeName : [UIColor blueColor],
+//                                 NSBackgroundColorAttributeName : [UIColor clearColor]};
+  
+//    this part is commented out right now because photo doesn't work with simulator. if testing, uncomment this part and comment out the part from sharelink down
+// UIImage *eventdetails = [self imageFromString:shareInfo attributes:attributes size: CGSizeMake(600, 200)];
+//    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+//    photo.image = eventdetails;
+//    photo.userGenerated = NO;
+//    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+//    content.photos = @[photo];
+//    [FBSDKShareDialog showFromViewController:self
+//                                 withContent:content
+//                                    delegate:nil];
+    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+    content.contentURL = [NSURL URLWithString:@""];
+    content.quote = shareInfo;
+    [FBSDKShareDialog showFromViewController:self
+                              withContent:content
+                             delegate:nil];
+//    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+//    content.contentURL = [NSURL URLWithString:@"http://developers.facebook.com"];
+//    [FBSDKShareDialog showFromViewController:self
+//                                 withContent:content
+//                                    delegate:nil];
+}
+
+//got this code from stackoverflow; https://stackoverflow.com/questions/23556269/how-to-convert-text-to-image, 
+
+
 
 - (void) viewWillAppear:(BOOL)animated {
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     [self updateConflictCell];
 }
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 
 - (IBAction)addEventToCalendar:(id)sender {
     
@@ -102,10 +193,6 @@
     NSArray *matches = [self.eventKitController.eventStore eventsMatchingPredicate:eventPredicate];
     NSMutableArray *matchingEvents = [NSMutableArray arrayWithArray:matches];
     
-    DLog(@"m: %@", matchingEvents);
-    DLog(@"m: %lu", (unsigned long)matchingEvents.count);
-
-    
     //Remove all "all-day" events;
     NSMutableArray *tmpArray = [NSMutableArray new];
     for (EKEvent *event in matchingEvents) {
@@ -116,15 +203,9 @@
     }
     [matchingEvents removeObjectsInArray:tmpArray];
     
-    DLog(@"me: %@", matchingEvents);
-
-    
-
-    
     if (matchingEvents.count > 0 ) {
         
         EKEvent *firstConflict = matchingEvents.firstObject;
-        DLog(@"even: %@", firstConflict);
         
         NSString *title = firstConflict.title;
         
@@ -135,10 +216,6 @@
         NSString *end = [NSDate timeStringFormatFromDate:firstConflict.endDate];
         NSString *conflictText = [NSString stringWithFormat:@"%@ (%@ - %@) conflicts with this event.", title, start, end];
        
-        
-       // DLog(@"%@", matchingEvents);
-        
-      //  NSString *firstConflicting = [matchingEvents.firstObject title];
         if ([title isEqualToString:self.theEvent.title]) {
             self.conflictLabel.text = @"Looks like you're going to this already!";
             self.conflictImageView.image = [UIImage imageNamed:@"checkmark"];
@@ -162,10 +239,6 @@
     }
 }
 
-- (IBAction)doSpecialThings:(id)sender {
-
-}
-
 #pragma mark - Table View Methods
 
 
@@ -174,8 +247,6 @@
     if (indexPath.section == 1) {
         
         float height = [self findHeightForText:self.theEvent.detailDescription havingWidth:300.0 andFont:[UIFont fontWithName:@"AvenirNext-Regular" size:13.0]];
-        
-        NSLog(@"HEIGHT: %f and STRING: %@", height, self.theEvent.detailDescription);
         
         if (height > 120) {
             return 120;

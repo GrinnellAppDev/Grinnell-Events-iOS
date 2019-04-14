@@ -25,6 +25,6 @@
 
 
 + (NSString *)parseClassName;
-+ (void)findAllEventsInBackground:(PFArrayResultBlock)resultBlock;
++ (void)findAllEventsInBackground:(void (^)(NSArray *, NSError *))resultBlock;
 
 @end
