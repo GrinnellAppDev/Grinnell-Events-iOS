@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00F772522263C5AD001A5CAB /* FontSizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F772512263C5AD001A5CAB /* FontSizeViewController.m */; };
 		162AD93D17E6418F00867115 /* GAEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 162AD93C17E6418F00867115 /* GAEventCell.m */; };
 		165D7D3517E6393600CFB87F /* GAEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 165D7D3417E6393600CFB87F /* GAEvent.m */; };
 		16AE9C7517FD1E8200626F90 /* EventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16AE9C7417FD1E8200626F90 /* EventDetailViewController.m */; };
@@ -39,6 +40,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		00F772502263C57F001A5CAB /* FontSizeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FontSizeViewController.h; sourceTree = "<group>"; };
+		00F772512263C5AD001A5CAB /* FontSizeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FontSizeViewController.m; sourceTree = "<group>"; };
 		162AD93B17E6418F00867115 /* GAEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAEventCell.h; path = ../GAEventCell.h; sourceTree = "<group>"; };
 		162AD93C17E6418F00867115 /* GAEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GAEventCell.m; path = ../GAEventCell.m; sourceTree = "<group>"; };
 		165D7D3317E6393600CFB87F /* GAEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAEvent.h; sourceTree = "<group>"; };
@@ -140,6 +143,8 @@
 		6708179219CA819700502DB6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				00F772502263C57F001A5CAB /* FontSizeViewController.h */,
+				00F772512263C5AD001A5CAB /* FontSizeViewController.m */,
 				8B58DD7317DCFE360041EBD3 /* ViewController.h */,
 				8B58DD7417DCFE360041EBD3 /* ViewController.m */,
 				16AE9C7317FD1E8200626F90 /* EventDetailViewController.h */,
@@ -286,6 +291,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 8B58DD4917DCFE360041EBD3;
@@ -416,6 +422,7 @@
 				162AD93D17E6418F00867115 /* GAEventCell.m in Sources */,
 				FA19A5C32173CB1A000FBD3D /* GAQuery.m in Sources */,
 				16AE9C7A17FD27C200626F90 /* EventKitController.m in Sources */,
+				00F772522263C5AD001A5CAB /* FontSizeViewController.m in Sources */,
 				8B21023E183C4A9700ED3226 /* SettingsViewController.m in Sources */,
 				8B58DD7517DCFE360041EBD3 /* ViewController.m in Sources */,
 				16AE9C7517FD1E8200626F90 /* EventDetailViewController.m in Sources */,
