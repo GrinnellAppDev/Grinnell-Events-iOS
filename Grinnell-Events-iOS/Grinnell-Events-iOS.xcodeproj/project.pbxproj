@@ -13,6 +13,7 @@
 		16AE9C7717FD270E00626F90 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16AE9C7617FD270E00626F90 /* EventKit.framework */; };
 		16AE9C7A17FD27C200626F90 /* EventKitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16AE9C7917FD27C200626F90 /* EventKitController.m */; };
 		16C22F5E17FCF5DF00F0C5FE /* NSDate+GADate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16C22F5D17FCF5DF00F0C5FE /* NSDate+GADate.m */; };
+		700A7BC622654B5600196AD9 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 700A7BC522654B5600196AD9 /* GTMNSString+HTML.m */; };
 		70EE588322266C0500D72787 /* AddEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EE588222266C0500D72787 /* AddEventViewController.m */; };
 		8B19A2081827711500F915D0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B19A2071827711500F915D0 /* Images.xcassets */; };
 		8B20D8561826D555006E7683 /* CalendarsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B20D8551826D555006E7683 /* CalendarsViewController.m */; };
@@ -60,6 +61,9 @@
 		16C22F5D17FCF5DF00F0C5FE /* NSDate+GADate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+GADate.m"; sourceTree = "<group>"; };
 		3D45C1F6F656CBCCDB672155 /* Pods-Grinnell-Events-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grinnell-Events-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Grinnell-Events-iOS/Pods-Grinnell-Events-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		4A032D6430575DEA292444FC /* Pods-Grinnell-Events-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grinnell-Events-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Grinnell-Events-iOS/Pods-Grinnell-Events-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		700A7BC522654B5600196AD9 /* GTMNSString+HTML.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
+		700A7BC722654BB400196AD9 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
+		700A7BC822654C3000196AD9 /* GTMDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		70EE588122266C0500D72787 /* AddEventViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddEventViewController.h; sourceTree = "<group>"; };
 		70EE588222266C0500D72787 /* AddEventViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddEventViewController.m; sourceTree = "<group>"; };
 		8B12C6B8185505D9005DD470 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -124,6 +128,9 @@
 				165D7D3417E6393600CFB87F /* GAEvent.m */,
 				FA19A5C12173CB1A000FBD3D /* GAQuery.h */,
 				FA19A5C22173CB1A000FBD3D /* GAQuery.m */,
+				700A7BC722654BB400196AD9 /* GTMNSString+HTML.h */,
+				700A7BC522654B5600196AD9 /* GTMNSString+HTML.m */,
+				700A7BC822654C3000196AD9 /* GTMDefines.h */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -419,6 +426,7 @@
 				8B21023E183C4A9700ED3226 /* SettingsViewController.m in Sources */,
 				8B58DD7517DCFE360041EBD3 /* ViewController.m in Sources */,
 				16AE9C7517FD1E8200626F90 /* EventDetailViewController.m in Sources */,
+				700A7BC622654B5600196AD9 /* GTMNSString+HTML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

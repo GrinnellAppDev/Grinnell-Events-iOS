@@ -7,9 +7,8 @@
 //
 
 #import "GAQuery.h"
-
+#import "GTMNSString+HTML.h"
 @implementation GAQuery
-
 @synthesize marrXMLData;
 @synthesize mstrXMLString;
 @synthesize mdictXMLPart;
@@ -240,7 +239,10 @@
             NSDate *endTimeDate = [timeFormat dateFromString: finalEndTime];
             mdictXMLPart.endTime = endTimeDate;
             mdictXMLPart.detailDescription = contents[dateIndex+2];
-            
+            NSString *original = mdictXMLPart.detailDescription;
+            //NSString *pattern2 = @"<.*?>";
+            NSString *new = [original gtm_stringByUnescapingFromHTML];
+            NSLog(@"new: %@", new);
             NSLog(@"Description: %@", mdictXMLPart.detailDescription);
             
             //        NSMutableString *time = contents[1];
