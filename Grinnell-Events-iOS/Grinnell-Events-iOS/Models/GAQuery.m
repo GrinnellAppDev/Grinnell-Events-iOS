@@ -243,6 +243,11 @@
             //NSString *pattern2 = @"<.*?>";
             NSString *new = [original gtm_stringByUnescapingFromHTML];
             NSLog(@"new: %@", new);
+            NSError *error = nil;
+            NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"<[^a].*?>" options:NSRegularExpressionCaseInsensitive error:&error];
+            NSString *modifiedString = [regex stringByReplacingMatchesInString:new options:0 range:NSMakeRange(0, [new length]) withTemplate:@""];
+            NSLog(@"%@", modifiedString);
+            mdictXMLPart.detailDescription = modifiedString; 
             NSLog(@"Description: %@", mdictXMLPart.detailDescription);
             
             //        NSMutableString *time = contents[1];
