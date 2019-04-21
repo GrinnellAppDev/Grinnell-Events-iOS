@@ -241,12 +241,14 @@
             mdictXMLPart.detailDescription = contents[dateIndex+2];
             NSString *original = mdictXMLPart.detailDescription;
             //NSString *pattern2 = @"<.*?>";
+            //make a new string parsing out the numeric character references
             NSString *new = [original gtm_stringByUnescapingFromHTML];
             NSLog(@"new: %@", new);
+            //now we use regular expression to parse out the html tags *except* for where it refers to a link.
+            //In this case we leave as is until we can deal with it later
             NSError *error = nil;
             NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"<[^a].*?>" options:NSRegularExpressionCaseInsensitive error:&error];
             NSString *modifiedString = [regex stringByReplacingMatchesInString:new options:0 range:NSMakeRange(0, [new length]) withTemplate:@""];
-            NSLog(@"%@", modifiedString);
             mdictXMLPart.detailDescription = modifiedString; 
             NSLog(@"Description: %@", mdictXMLPart.detailDescription);
             
