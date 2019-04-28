@@ -251,6 +251,11 @@
             NSString *modifiedString = [regex stringByReplacingMatchesInString:new options:0 range:NSMakeRange(0, [new length]) withTemplate:@""];
             mdictXMLPart.detailDescription = modifiedString; 
             NSLog(@"Description: %@", mdictXMLPart.detailDescription);
+            NSRegularExpression *regex2 = [NSRegularExpression regularExpressionWithPattern:@"(<a href=\".*?\".*?>)" options:NSRegularExpressionCaseInsensitive error:&error];
+            
+            NSString *parsedLink = [regex2 stringByReplacingMatchesInString:modifiedString options:0 range:NSMakeRange(0, [modifiedString length]) withTemplate:@""];
+            NSLog(@"parsedLink: %@", parsedLink);
+            mdictXMLPart.detailDescription = parsedLink;
             
             //        NSMutableString *time = contents[1];
             //        NSString *start = [time componentsSeparatedByString:@"&"][0];
