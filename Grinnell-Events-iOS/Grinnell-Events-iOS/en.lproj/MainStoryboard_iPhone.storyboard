@@ -435,9 +435,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7VH-Wk-wwZ">
-                                                    <rect key="frame" x="-10" y="9" width="356" height="101"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7VH-Wk-wwZ">
+                                                    <rect key="frame" x="8" y="8" width="358" height="103.5"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <string key="text">This is the desription. Of our event. Yay. I need to write more stuff here to fill it up. Oh my god, I'm running out of stuff to talk about. This is the desription. Of our event. Yay. I need to write more bullshit here to fill it up. Oh my god, I'm running out of bullshit to talk about.</string>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="13"/>
@@ -445,6 +444,12 @@
                                                     <dataDetectorType key="dataDetectorTypes" link="YES"/>
                                                 </textView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="7VH-Wk-wwZ" firstAttribute="leading" secondItem="wer-eo-9of" secondAttribute="leading" constant="8" id="7d8-VI-rDw"/>
+                                                <constraint firstAttribute="trailing" secondItem="7VH-Wk-wwZ" secondAttribute="trailing" constant="9" id="HQN-QQ-4tg"/>
+                                                <constraint firstAttribute="bottom" secondItem="7VH-Wk-wwZ" secondAttribute="bottom" constant="8" id="Vbi-xE-6kM"/>
+                                                <constraint firstItem="7VH-Wk-wwZ" firstAttribute="top" secondItem="wer-eo-9of" secondAttribute="top" constant="8" id="ozE-kX-g8H"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
