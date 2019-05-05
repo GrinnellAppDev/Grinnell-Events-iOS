@@ -6,13 +6,11 @@
 //  Copyright © 2018 Grinnell AppDev. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "GAEvent.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GAQuery : NSObject <NSXMLParserDelegate>
-
 // Parser properties - experiment
 @property (nonatomic, strong) NSMutableDictionary *dictData;
 @property (nonatomic,strong) NSMutableArray *marrXMLData;
