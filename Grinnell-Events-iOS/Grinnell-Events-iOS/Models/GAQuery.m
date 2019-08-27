@@ -7,9 +7,8 @@
 //
 
 #import "GAQuery.h"
-
+#import "GTMNSString+HTML.h"
 @implementation GAQuery
-
 @synthesize marrXMLData;
 @synthesize mstrXMLString;
 @synthesize mdictXMLPart;
@@ -103,14 +102,19 @@
     }
     
     if([elementName isEqualToString:@"published"]) {
-        // Convert string to date object
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
-        NSDate *date = [dateFormat dateFromString:mstrXMLString];
-        mdictXMLPart.date = [[[mstrXMLString substringToIndex:13] stringByReplacingOccurrencesOfString:@"-" withString:@"/"]  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        //NSLog(@"HEEEEYEYEYEYEYE LOOK %@", mdictXMLPart.date);
-        //mdictXMLPart.startTime = date;
-        //mdictXMLPart.endTime = [NSDate dateWithTimeInterval:3600 sinceDate:date];
+        //Convert start time to date
+        NSDateFormatter *timeFormat = [[NSDateFormatter alloc] init];
+        [timeFormat setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
+        [timeFormat setDateFormat: @"yyyy/MM/dd'T'HH:mm:ssZ"];
+        //Convert back into local time
+        NSDateFormatter *timeLocal = [[NSDateFormatter alloc] init];
+        [timeLocal setTimeZone:[NSTimeZone timeZoneWithName:@"CDT"]];
+        [timeLocal setDateFormat:@"yyyy/MM/dd"];
+        //Get publish time and convert to UTC time before converting back to Grinnell time in NSString
+        NSString* date = [[[mstrXMLString substringToIndex:23] stringByReplacingOccurrencesOfString:@"-" withString:@"/"]  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSDate *curDate = [timeFormat dateFromString:date];
+        mdictXMLPart.date = [timeLocal stringFromDate:curDate];
+        NSLog(@"The date is %@!!!!!!%@", mdictXMLPart.date, date);
     }
     
     
@@ -222,8 +226,7 @@
             NSLog(@"Formatted end time: %@", finalEndTime);
             
             //Convert start time to date
-            NSDateFormatter *timeFormat =
-            [[NSDateFormatter alloc] init];
+            NSDateFormatter *timeFormat = [[NSDateFormatter alloc] init];
             
             //Date format of string we already have
             [timeFormat setDateFormat:@"hh:mma"];
@@ -232,15 +235,27 @@
             
             mdictXMLPart.startTime = startTimeDate;
             
-            
             //Convert end time to date
             NSDate *endTimeDate = [timeFormat dateFromString: finalEndTime];
             mdictXMLPart.endTime = endTimeDate;
-            
             mdictXMLPart.detailDescription = contents[dateIndex+2];
-            
-            
+            NSString *original = mdictXMLPart.detailDescription;
+            //NSString *pattern2 = @"<.*?>";
+            //make a new string parsing out the numeric character references
+            NSString *new = [original gtm_stringByUnescapingFromHTML];
+            NSLog(@"new: %@", new);
+            //now we use regular expression to parse out the html tags *except* for where it refers to a link.
+            //In this case we leave as is until we can deal with it later
+            NSError *error = nil;
+            NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"<[^a].*?>" options:NSRegularExpressionCaseInsensitive error:&error];
+            NSString *modifiedString = [regex stringByReplacingMatchesInString:new options:0 range:NSMakeRange(0, [new length]) withTemplate:@""];
+            mdictXMLPart.detailDescription = modifiedString; 
             NSLog(@"Description: %@", mdictXMLPart.detailDescription);
+            NSRegularExpression *regex2 = [NSRegularExpression regularExpressionWithPattern:@"(<a href=\".*?\".*?>)" options:NSRegularExpressionCaseInsensitive error:&error];
+            
+            NSString *parsedLink = [regex2 stringByReplacingMatchesInString:modifiedString options:0 range:NSMakeRange(0, [modifiedString length]) withTemplate:@""];
+            NSLog(@"parsedLink: %@", parsedLink);
+            mdictXMLPart.detailDescription = parsedLink;
             
             //        NSMutableString *time = contents[1];
             //        NSString *start = [time componentsSeparatedByString:@"&"][0];
