@@ -91,8 +91,10 @@
     }
 }
 
+// This method is responsible for parsing information from different element. Those elements can be title, date, content...
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
+    // extract title element
     if ([elementName isEqualToString:@"title"]) {
         NSString *title = [mstrXMLString copy];
         mdictXMLPart.title = title;
@@ -101,6 +103,7 @@
         mdictXMLPart.eventid = @"123";
     }
     
+    // extract published element, this is the date and time that the event was published
     if([elementName isEqualToString:@"published"]) {
         //Convert start time to date
         NSDateFormatter *timeFormat = [[NSDateFormatter alloc] init];
@@ -117,7 +120,7 @@
         NSLog(@"The date is %@!!!!!!%@", mdictXMLPart.date, date);
     }
     
-    
+    // extract content element.
     if ([elementName isEqualToString:@"content"]) {
         NSArray* contents = [mstrXMLString componentsSeparatedByString:@"<br/>"];
         
@@ -131,7 +134,6 @@
             NSLog(@"Location: %@", mdictXMLPart.location);
             dateIndex=0;
         }
-        
         else{
             
             mdictXMLPart.location = contents[0];
@@ -142,18 +144,36 @@
         //Extracting portion of xml with date and time
         NSArray* dateTime = [contents[dateIndex] componentsSeparatedByString:@","];
         
+        // variables to hold start time and and end time
+        NSString *startAMPMString;
+        NSString *startTimeHour;
+        NSString *startTimeMinutes;
+        
+        NSString *endAMPMString;
+        NSString *endTimeHour;
+        NSString *endTimeMinutes;
+        
+        BOOL overnight = NO;
+        
         //If event spans more than one day:
         if ([dateTime count] > 4){
-            /*NSLog(@"Not written yet.");
-             mdictXMLPart.startTime = 0;
-             mdictXMLPart.endTime = 0;
-             mdictXMLPart.detailDescription = @"none";
-             mdictXMLPart.date = @"11/11/11";
-             */
+            NSArray *time = [dateTime[3] componentsSeparatedByString:@"&"];
+            NSString *startTime = time[0];
+            
+            //Break up the start time into parts
+            [self extractAMPM:startTime withAMPMString:&startAMPMString withHourString:&startTimeHour withMinutesString:&startTimeMinutes];
+            
+            // End time is the last element in datetime array
+            NSString *endTime = dateTime[sizeof(dateTime) / sizeof(dateTime[0])];
+            
+            //Break up the start time into parts
+            [self extractAMPM:endTime withAMPMString:&endAMPMString withHourString:&endTimeHour withMinutesString:&endTimeMinutes];
+            
+            overnight = YES;
         }
         else{
             //Extracting time from event
-            NSArray* time = [dateTime[3] componentsSeparatedByString: @"&"];
+            NSArray *time = [dateTime[3] componentsSeparatedByString: @"&"];
             
             
             //Start time comes before the first '&'
@@ -161,18 +181,11 @@
             NSString *startTime = time[0];
             NSLog(@"Start Time: %@", startTime);
             
-            NSString *startAMPMString;
-            NSString *startTimeHour;
-            NSString *startTimeMinutes;
-            
             //Break up the start time into parts
             [self extractAMPM:startTime withAMPMString:&startAMPMString withHourString:&startTimeHour withMinutesString:&startTimeMinutes];
             //End time comes after the last ';'
             
             //Break up the end time into parts
-            NSString *endAMPMString;
-            NSString *endTimeHour;
-            NSString *endTimeMinutes;
             //There may not be an end time.
             if ([time count] > 1) {
                 NSArray* endTimeArray = [time[3] componentsSeparatedByString: @";"];
@@ -185,90 +198,101 @@
             } else {
                 [self extractAMPM:startTime withAMPMString:&endAMPMString withHourString:&endTimeHour withMinutesString:&endTimeMinutes];
             }
-            
-            
-            NSString *finalStartTime = @"";
-            
-            if (startTimeHour.length == 1){
-                finalStartTime = [finalStartTime stringByAppendingString: @"0"];
-            }
-            finalStartTime =[finalStartTime stringByAppendingString: startTimeHour];
-            finalStartTime = [finalStartTime stringByAppendingString: @":"];
-            
-            if (startTimeMinutes == NULL){
-                finalStartTime = [finalStartTime stringByAppendingString: @"00"];
-            } else{
-                finalStartTime = [finalStartTime stringByAppendingString: startTimeMinutes];
-            }
-            
-            //Append am/pm to start time
-            if (startAMPMString == NULL){
-                //If start time didn't have am/pm, use the end time one
-                finalStartTime = [finalStartTime stringByAppendingString: endAMPMString];
-            } else{
-                finalStartTime = [finalStartTime stringByAppendingString: startAMPMString];
-            }
-            
-            NSLog(@"Formatted start time: %@", finalStartTime);
-            
-            //Format endtime:
-            //Append minutes to start time
-            NSString *finalEndTime = [endTimeHour stringByAppendingString: @":"];
-            if (endTimeMinutes == NULL){
-                finalEndTime = [finalEndTime stringByAppendingString: @"00"];
-            } else{
-                finalEndTime = [finalEndTime stringByAppendingString: endTimeMinutes];
-            }
-            
-            //Append am/pm to start time
-            finalEndTime = [finalEndTime stringByAppendingString: endAMPMString];
-            
-            NSLog(@"Formatted end time: %@", finalEndTime);
-            
-            //Convert start time to date
-            NSDateFormatter *timeFormat = [[NSDateFormatter alloc] init];
-            
-            //Date format of string we already have
-            [timeFormat setDateFormat:@"hh:mma"];
-            
-            NSDate *startTimeDate = [timeFormat dateFromString:finalStartTime];
-            
-            mdictXMLPart.startTime = startTimeDate;
-            
-            //Convert end time to date
-            NSDate *endTimeDate = [timeFormat dateFromString: finalEndTime];
-            mdictXMLPart.endTime = endTimeDate;
-            mdictXMLPart.detailDescription = contents[dateIndex+2];
-            NSString *original = mdictXMLPart.detailDescription;
-            //NSString *pattern2 = @"<.*?>";
-            //make a new string parsing out the numeric character references
-            NSString *new = [original gtm_stringByUnescapingFromHTML];
-            NSLog(@"new: %@", new);
-            //now we use regular expression to parse out the html tags *except* for where it refers to a link.
-            //In this case we leave as is until we can deal with it later
-            NSError *error = nil;
-            NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"<[^a].*?>" options:NSRegularExpressionCaseInsensitive error:&error];
-            NSString *modifiedString = [regex stringByReplacingMatchesInString:new options:0 range:NSMakeRange(0, [new length]) withTemplate:@""];
-            mdictXMLPart.detailDescription = modifiedString; 
-            NSLog(@"Description: %@", mdictXMLPart.detailDescription);
-            NSRegularExpression *regex2 = [NSRegularExpression regularExpressionWithPattern:@"(<a href=\".*?\".*?>)" options:NSRegularExpressionCaseInsensitive error:&error];
-            
-            NSString *parsedLink = [regex2 stringByReplacingMatchesInString:modifiedString options:0 range:NSMakeRange(0, [modifiedString length]) withTemplate:@""];
-            NSLog(@"parsedLink: %@", parsedLink);
-            mdictXMLPart.detailDescription = parsedLink;
-            
-            //        NSMutableString *time = contents[1];
-            //        NSString *start = [time componentsSeparatedByString:@"&"][0];
-            //        NSString *end = [time componentsSeparatedByString:@"&"][0];
-            //        NSLog(@"%@", start);
-            //
-            //        // Convert string to date object
-            //        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-            //        [dateFormat setDateFormat:@"yyyy-MM-ddThh:mm:ssZ"];
-            //        mdictXMLPart.startTime = [dateFormat dateFromString:start];
-            //        mdictXMLPart.endTime = [dateFormat dateFromString:end];
-            ////
         }
+        
+        // Formatting to the start time
+        NSString *finalStartTime = @"";
+        
+        if (startTimeHour.length == 1){
+            finalStartTime = [finalStartTime stringByAppendingString: @"0"];
+        }
+        finalStartTime =[finalStartTime stringByAppendingString: startTimeHour];
+        finalStartTime = [finalStartTime stringByAppendingString: @":"];
+        
+        if (startTimeMinutes == NULL){
+            finalStartTime = [finalStartTime stringByAppendingString: @"00"];
+        } else{
+            finalStartTime = [finalStartTime stringByAppendingString: startTimeMinutes];
+        }
+        
+        //Append am/pm to start time
+        if (startAMPMString == NULL){
+            //If start time didn't have am/pm, use the end time one
+            finalStartTime = [finalStartTime stringByAppendingString: endAMPMString];
+        } else{
+            finalStartTime = [finalStartTime stringByAppendingString: startAMPMString];
+        }
+        
+        NSLog(@"Formatted start time: %@", finalStartTime);
+        
+        // Formating to the end time
+        // Append minutes to start time
+        NSString *finalEndTime = [endTimeHour stringByAppendingString: @":"];
+        if (endTimeMinutes == NULL){
+            finalEndTime = [finalEndTime stringByAppendingString: @"00"];
+        } else{
+            finalEndTime = [finalEndTime stringByAppendingString: endTimeMinutes];
+        }
+        
+        //Append am/pm to start time
+        finalEndTime = [finalEndTime stringByAppendingString: endAMPMString];
+        
+        if (overnight) {
+            finalEndTime = [finalEndTime stringByAppendingString: @" (Overnight!)"];
+        }
+        
+        NSLog(@"Formatted end time: %@", finalEndTime);
+        
+        //Convert start time to date
+        NSDateFormatter *timeFormat = [[NSDateFormatter alloc] init];
+        
+        //Date format of string we already have
+        [timeFormat setDateFormat:@"hh:mma"];
+        
+        NSDate *startTimeDate = [timeFormat dateFromString:finalStartTime];
+        
+        mdictXMLPart.startTime = startTimeDate;
+        
+        //Convert end time to date
+        NSDate *endTimeDate = [timeFormat dateFromString: finalEndTime];
+        mdictXMLPart.endTime = endTimeDate;
+        mdictXMLPart.detailDescription = contents[dateIndex+2];
+        
+        if(overnight) {
+            mdictXMLPart.overnight = @"(Overnight)";
+        } else {
+            mdictXMLPart.overnight = @"";
+        }
+        
+        NSString *original = mdictXMLPart.detailDescription;
+        //NSString *pattern2 = @"<.*?>";
+        //make a new string parsing out the numeric character references
+        NSString *new = [original gtm_stringByUnescapingFromHTML];
+        NSLog(@"new: %@", new);
+        //now we use regular expression to parse out the html tags *except* for where it refers to a link.
+        //In this case we leave as is until we can deal with it later
+        NSError *error = nil;
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"<[^a].*?>" options:NSRegularExpressionCaseInsensitive error:&error];
+        NSString *modifiedString = [regex stringByReplacingMatchesInString:new options:0 range:NSMakeRange(0, [new length]) withTemplate:@""];
+        mdictXMLPart.detailDescription = modifiedString;
+        NSLog(@"Description: %@", mdictXMLPart.detailDescription);
+        NSRegularExpression *regex2 = [NSRegularExpression regularExpressionWithPattern:@"(<a href=\".*?\".*?>)" options:NSRegularExpressionCaseInsensitive error:&error];
+        
+        NSString *parsedLink = [regex2 stringByReplacingMatchesInString:modifiedString options:0 range:NSMakeRange(0, [modifiedString length]) withTemplate:@""];
+        NSLog(@"parsedLink: %@", parsedLink);
+        mdictXMLPart.detailDescription = parsedLink;
+        
+        //        NSMutableString *time = contents[1];
+        //        NSString *start = [time componentsSeparatedByString:@"&"][0];
+        //        NSString *end = [time componentsSeparatedByString:@"&"][0];
+        //        NSLog(@"%@", start);
+        //
+        //        // Convert string to date object
+        //        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        //        [dateFormat setDateFormat:@"yyyy-MM-ddThh:mm:ssZ"];
+        //        mdictXMLPart.startTime = [dateFormat dateFromString:start];
+        //        mdictXMLPart.endTime = [dateFormat dateFromString:end];
+        ////
         NSDateComponents* comps = [[NSDateComponents alloc]init];
         comps.year = 2018;
         comps.month = 10;
@@ -279,6 +303,8 @@
         //mdictXMLPart.startTime = date;
         //mdictXMLPart.endTime = [NSDate dateWithTimeInterval:3600 sinceDate:date];
     }
+    
+    // extracting element entry
     if ([elementName isEqualToString:@"entry"]) {
         [marrXMLData addObject:mdictXMLPart];
     }

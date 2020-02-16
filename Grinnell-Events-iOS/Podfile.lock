@@ -5,33 +5,42 @@ PODS:
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
-  - Crashlytics (3.12.0):
-    - Fabric (~> 1.9.0)
-  - Fabric (1.9.0)
-  - FBSDKCoreKit (4.44.1):
-    - Bolts (~> 1.9)
-  - FBSDKLoginKit (4.44.1):
-    - FBSDKCoreKit
+  - Crashlytics (3.14.0):
+    - Fabric (~> 1.10.2)
+  - Fabric (1.10.2)
+  - FBSDKCoreKit (6.0.0):
+    - FBSDKCoreKit/Basics (= 6.0.0)
+    - FBSDKCoreKit/Core (= 6.0.0)
+  - FBSDKCoreKit/Basics (6.0.0)
+  - FBSDKCoreKit/Core (6.0.0):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (6.0.0):
+    - FBSDKLoginKit/Login (= 6.0.0)
+  - FBSDKLoginKit/Login (6.0.0):
+    - FBSDKCoreKit (~> 6.0.0)
   - FBSDKMessengerShareKit (1.3.2)
-  - FBSDKPlacesKit (4.44.1):
-    - FBSDKCoreKit
-  - FBSDKShareKit (4.44.1):
-    - FBSDKCoreKit
-  - Flurry-iOS-SDK (9.3.1):
-    - Flurry-iOS-SDK/FlurrySDK (= 9.3.1)
-  - Flurry-iOS-SDK/FlurrySDK (9.3.1)
+  - FBSDKPlacesKit (6.0.0):
+    - FBSDKCoreKit (~> 6.0.0)
+  - FBSDKShareKit (6.0.0):
+    - FBSDKShareKit/Share (= 6.0.0)
+  - FBSDKShareKit/Share (6.0.0):
+    - FBSDKCoreKit (~> 6.0.0)
+  - Flurry-iOS-SDK (10.2.0):
+    - Flurry-iOS-SDK/FlurrySDK (= 10.2.0)
+  - Flurry-iOS-SDK/FlurrySDK (10.2.0)
   - GoogleMaps (2.7.0):
     - GoogleMaps/Maps (= 2.7.0)
   - GoogleMaps/Base (2.7.0)
   - GoogleMaps/Maps (2.7.0):
     - GoogleMaps/Base
   - MZDayPicker (0.0.5)
-  - Parse (1.17.2):
-    - Parse/Core (= 1.17.2)
-  - Parse/Core (1.17.2):
+  - Parse (1.17.3):
+    - Parse/Core (= 1.17.3)
+  - Parse/Core (1.17.3):
     - Bolts/Tasks (~> 1.9)
 
 DEPENDENCIES:
+  - Bolts
   - Crashlytics
   - FBSDKCoreKit
   - FBSDKLoginKit
@@ -44,7 +53,7 @@ DEPENDENCIES:
   - Parse
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Bolts
     - Crashlytics
     - Fabric
@@ -60,18 +69,18 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
-  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
-  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
-  FBSDKCoreKit: a823ae35bdb60ebb8d7a7e51abe7c5d87d2bfced
-  FBSDKLoginKit: 54ae59987f2a8703021557c90a9aebb9e5c2bef6
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
+  FBSDKCoreKit: fe738b172590e622c86735b45e20d196848b54df
+  FBSDKLoginKit: fa57df1b967fe0e147b25bede6ea4e9cdf4d64be
   FBSDKMessengerShareKit: bdd14265f5845e6d1c95a128ab33705a68ca1c21
-  FBSDKPlacesKit: 51ea17fa8c831088177676ce10b740e4497934b0
-  FBSDKShareKit: 526d4cfb713d24855fa23d0dd74e191accd3a720
-  Flurry-iOS-SDK: 5d782d740c5e95389c327d38245b3db4bb471fd7
+  FBSDKPlacesKit: ffe9e349b0b63e736b400e2edfbcdc2087f7c175
+  FBSDKShareKit: 210dcda2603042cf73f31983fc99df4dac06f1d8
+  Flurry-iOS-SDK: ca3540dd9607a05a8a13a7dd36dfffdd5e0fd0ef
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   MZDayPicker: 8cdcab1d8d3da920a57b1fd4fef5788d289234b2
-  Parse: 3b31a3dd1777b07ee7f0caee32fafbff544483a5
+  Parse: c1ad2a04d2cab2b54b6fb7da05f741abf2cf57d1
 
-PODFILE CHECKSUM: 8607d95df59bb64181b33f4cd664eedaa340f787
+PODFILE CHECKSUM: 2a7190afdc5f2321c0e47a8cd2db2b76295cdc46
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.4

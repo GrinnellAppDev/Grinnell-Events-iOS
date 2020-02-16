@@ -12,4 +12,6 @@ target 'Grinnell-Events-iOS' do
   pod 'FBSDKShareKit'
   pod 'FBSDKPlacesKit'
   pod 'FBSDKMessengerShareKit'
+	pod 'Parse'
+	pod 'Bolts'
 end

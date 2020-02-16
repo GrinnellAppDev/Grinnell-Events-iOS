@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSDate *startTime;
 @property (nonatomic, strong) NSDate *endTime;
 @property (nonatomic, strong) NSString *eventid;
+@property (nonatomic, strong) NSString *overnight;
 
 //+ (instancetype) eventWithTitle:(NSString *)aTitle andCategory:(NSString *)aCategory andDate:(NSDate *)aDate;
 

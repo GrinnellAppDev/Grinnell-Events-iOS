@@ -23,7 +23,7 @@
 		8B58DD6617DCFE360041EBD3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B58DD6517DCFE360041EBD3 /* AppDelegate.m */; };
 		8B58DD6F17DCFE360041EBD3 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B58DD6D17DCFE360041EBD3 /* MainStoryboard_iPhone.storyboard */; };
 		8B58DD7517DCFE360041EBD3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B58DD7417DCFE360041EBD3 /* ViewController.m */; };
-		942B14AAEE012A666913BC2C /* Pods_Grinnell_Events_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D739BBE08CA07CC90DA3B23B /* Pods_Grinnell_Events_iOS.framework */; };
+		BFDA9D81649A675D85EFE2E2 /* Pods_Grinnell_Events_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D739BBE08CA07CC90DA3B23B /* Pods_Grinnell_Events_iOS.framework */; };
 		D0371F6B19C934F500C180BF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F4917FCDA7B00F0C5FE /* AudioToolbox.framework */; };
 		D0371F6C19C934FB00C180BF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C22F4B17FCDA8300F0C5FE /* CFNetwork.framework */; };
 		D0371F6D19C9350200C180BF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B58DD5917DCFE360041EBD3 /* CoreGraphics.framework */; };
@@ -100,6 +100,7 @@
 			files = (
 				D0371F7719C9359000C180BF /* MessageUI.framework in Frameworks */,
 				D0371F7619C9352E00C180BF /* SystemConfiguration.framework in Frameworks */,
+				BFDA9D81649A675D85EFE2E2 /* Pods_Grinnell_Events_iOS.framework in Frameworks */,
 				D0371F7519C9352800C180BF /* StoreKit.framework in Frameworks */,
 				D0371F7319C9352200C180BF /* Security.framework in Frameworks */,
 				D0371F7219C9351E00C180BF /* QuartzCore.framework in Frameworks */,
@@ -110,7 +111,6 @@
 				D0371F6C19C934FB00C180BF /* CFNetwork.framework in Frameworks */,
 				D0371F6B19C934F500C180BF /* AudioToolbox.framework in Frameworks */,
 				16AE9C7717FD270E00626F90 /* EventKit.framework in Frameworks */,
-				942B14AAEE012A666913BC2C /* Pods_Grinnell_Events_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,7 +453,7 @@
 		8B58DD7617DCFE360041EBD3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
