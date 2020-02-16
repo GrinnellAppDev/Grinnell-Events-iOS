@@ -38,7 +38,7 @@
     self.title = self.theEvent.title;
     self.eventKitController = [[EventKitController alloc] init];
     
-    self.timeLabel.text =  [NSString stringWithFormat:@"%@ - %@", [NSDate timeStringFormatFromDate:self.theEvent.startTime], [NSDate timeStringFormatFromDate:self.theEvent.endTime]];
+    self.timeLabel.text =  [[NSString stringWithFormat:@"%@ - %@", [NSDate timeStringFormatFromDate:self.theEvent.startTime], [NSDate timeStringFormatFromDate:self.theEvent.endTime]] stringByAppendingString:self.theEvent.overnight];
     
     self.dateLabel.text = self.theEvent.date;
     self.locationLabel.text = self.theEvent.location;

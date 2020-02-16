@@ -226,6 +226,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+
+// prepare for moving to showEventDetail view
 #pragma mark - Segue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showEventDetail"]) {
@@ -269,7 +271,7 @@
     cell.title.hidden = false;
     cell.title.text = [event.title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     cell.location.text = [event.location stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    cell.date.text =  [NSString stringWithFormat:@"%@ - %@", [NSDate timeStringFormatFromDate:event.startTime], [NSDate timeStringFormatFromDate:event.endTime]];
+    cell.date.text =  [[NSString stringWithFormat:@"%@ - %@", [NSDate timeStringFormatFromDate:event.startTime], [NSDate timeStringFormatFromDate:event.endTime]] stringByAppendingString:event.overnight];
     
     return cell;
 }

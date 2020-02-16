@@ -157,19 +157,20 @@
         
         //If event spans more than one day:
         if ([dateTime count] > 4){
-            NSArray *time = [dateTime[3] componentsSeparatedByString:@"&"];
+            NSArray *time = [dateTime[2] componentsSeparatedByString:@"&"];
             NSString *startTime = time[0];
             
             //Break up the start time into parts
             [self extractAMPM:startTime withAMPMString:&startAMPMString withHourString:&startTimeHour withMinutesString:&startTimeMinutes];
             
             // End time is the last element in datetime array
-            NSString *endTime = dateTime[sizeof(dateTime) / sizeof(dateTime[0])];
+            NSString *endTime = dateTime[5];
             
             //Break up the start time into parts
             [self extractAMPM:endTime withAMPMString:&endAMPMString withHourString:&endTimeHour withMinutesString:&endTimeMinutes];
             
             overnight = YES;
+            NSLog(@"Overnight debug: %@ - %@", startTime, endTime);
         }
         else{
             //Extracting time from event
@@ -237,10 +238,6 @@
         //Append am/pm to start time
         finalEndTime = [finalEndTime stringByAppendingString: endAMPMString];
         
-        if (overnight) {
-            finalEndTime = [finalEndTime stringByAppendingString: @" (Overnight!)"];
-        }
-        
         NSLog(@"Formatted end time: %@", finalEndTime);
         
         //Convert start time to date
@@ -259,7 +256,7 @@
         mdictXMLPart.detailDescription = contents[dateIndex+2];
         
         if(overnight) {
-            mdictXMLPart.overnight = @"(Overnight)";
+            mdictXMLPart.overnight = @" (Overnight)";
         } else {
             mdictXMLPart.overnight = @"";
         }
