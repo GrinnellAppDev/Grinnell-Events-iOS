@@ -110,31 +110,14 @@
             NSLog(@"Last date is %@", lastDate.description);
             //sets calendar day to current date
             NSCalendar *curCal = [NSCalendar currentCalendar];
-            //actually I realize we don't need these lines because we can just directly use NSDate
-            //NSDateComponents *firstComponents = [curCal components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
-            //sets first year/month/day to appear on calendar to day of first event
-//            NSInteger firstYear = [firstComponents year];
-//            NSInteger firstMonth = [firstComponents month];
-//            NSInteger firstDay = [firstComponents day];
-//            NSLog(@"%d is the first year", firstYear);
-//            NSLog(@"%d is the first month", firstMonth);
-//            NSLog(@"%d is the first day", firstDay);
             
-            //NSDateComponents *lastComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:lastDate];
-            //            NSInteger lastYear = [dateComponents year];
-            //            NSInteger lastMonth = [dateComponents month];
-            //            NSInteger day = [dateComponents day];
+            //Find the number of days between the first and last dates
+            NSTimeInterval secondsBetween = [lastDate timeIntervalSinceDate:firstDate];
+            NSInteger numberOfDays = secondsBetween / 86400;
             
-            //            NSInteger lastYear = [lastComponents year];
-            //            NSLog(@"year %d", lastYear);
-            //            NSInteger lastMonth = [lastComponents month];
-            //            NSLog(@"month %d", lastYear);
-            //            NSInteger lastDay = [lastComponents day];
-            //            NSLog(@"day %d", lastYear);
-            //right now i've set the end date manually as current date + 7 because we the last date from the parsed events is the same as the initial start date
-            //initialize 7 day offset
+            //Set end date using number of days between first and last dates
             NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
-            dayComponent.day = 7;
+            dayComponent.day = numberOfDays + 1;
             NSDate *weekFromCurrentDate = [curCal dateByAddingComponents:dayComponent toDate:[NSDate date] options:0];
             [self.dayPicker setStartDate: firstDate endDate:weekFromCurrentDate];
             [self.dayPicker setCurrentDate:[NSDate date] animated:NO];
@@ -143,7 +126,6 @@
             // Then display today in the picker and tableView
             [self goToTodayAnimated:NO];
             self.tableView.scrollEnabled = YES;
-            
         }
     }];
     
