@@ -126,7 +126,6 @@
             // Then display today in the picker and tableView
             [self goToTodayAnimated:NO];
             self.tableView.scrollEnabled = YES;
-            
         }
     }];
     
