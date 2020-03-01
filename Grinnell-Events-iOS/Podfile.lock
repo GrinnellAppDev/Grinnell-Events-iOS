@@ -53,7 +53,7 @@ DEPENDENCIES:
   - Parse
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Bolts
     - Crashlytics
     - Fabric

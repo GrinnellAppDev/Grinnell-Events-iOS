@@ -259,7 +259,7 @@
 }
 
 #pragma mark - Scrollview Delegate Methods
-BOOL _dayPickerIsAnimating = NO;
+BOOL _dayPickerIsAnimating = YES;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -267,8 +267,11 @@ BOOL _dayPickerIsAnimating = NO;
     UITableViewCell *firstVisibleCell = [visibleRows objectAtIndex:0];
     NSIndexPath *path = [self.tableView indexPathForCell:firstVisibleCell];
     //Scroll to the selected date.
-    NSDate *toDate = [NSDate dateFromString:self.filteredSortedDateKeys[path.section] ];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy/MM/dd";
+    NSDate *toDate = [dateFormatter dateFromString:self.filteredSortedDateKeys[path.section] ];
     BOOL selectedDateIsCurrentlyViewed = [toDate isEqualToDate:self.focusedDate];
+    NSInteger section = path.section;
     
     if (!selectedDateIsCurrentlyViewed){
         self.focusedDate = toDate;
@@ -279,6 +282,7 @@ BOOL _dayPickerIsAnimating = NO;
         NSDate *followingDay = [NSDate dateFromDay:day+1 month:month year:year];
         [self.dayPicker setCurrentDate:followingDay animated:YES];
     }
+    section = 1;
 }
 
 #pragma mark Content Filtering

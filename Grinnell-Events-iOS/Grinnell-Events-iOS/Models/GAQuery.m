@@ -19,7 +19,6 @@
     NSCharacterSet *ampmSet = [NSCharacterSet characterSetWithCharactersInString: @":ampm"];
     
     //Take hour
-    
     [scanner scanUpToCharactersFromSet:ampmSet intoString: hour];
     //Throw away colon
     [scanner scanString:@":" intoString:NULL];
@@ -81,6 +80,52 @@
     
 }
 
+
+// take an in put like "March 1" and return formatted date: "03:01". This is not the most beautiful code but, we will improve it later on
+-(NSString *) formatDayMonth: (NSString *) monthDayStr {
+    NSString *month;
+    NSString *day;
+    
+    // Warning the array contains an empty string at the beginning !!!
+    NSArray *tokens = [monthDayStr componentsSeparatedByString:@" "];
+    
+    // get the month
+    if ([tokens[1] isEqualToString:@"January"]) {
+        month = @"01:";
+    } else if ([tokens[1] isEqualToString:@"February"]) {
+        month = @"02:";
+    } else if ([tokens[1] isEqualToString:@"March"]) {
+        month = @"03:";
+    } else if ([tokens[1] isEqualToString:@"April"]) {
+        month = @"04:";
+    } else if ([tokens[1] isEqualToString:@"May"]) {
+        month = @"05:";
+    } else if ([tokens[1] isEqualToString:@"June"]) {
+        month = @"06:";
+    } else if ([tokens[1] isEqualToString:@"July"]) {
+        month = @"07:";
+    } else if ([tokens[1] isEqualToString:@"August"]) {
+        month = @"08:";
+    } else if ([tokens[1] isEqualToString:@"September"]) {
+        month = @"09:";
+    } else if ([tokens[1] isEqualToString:@"October"]) {
+        month = @"10:";
+    } else if ([tokens[1] isEqualToString:@"November"]) {
+        month = @"11:";
+    } else {
+        month = @"12:";
+    }
+    
+    // get the day. The number of the day can be 1 digit or 2 digits, we want them to be all 2 digit
+    if ([tokens[2] length] == 1) {
+        day = [NSString stringWithFormat:@"0%@", tokens[2]];
+    } else {
+        day = [NSString stringWithFormat: @"%@", tokens[2]];
+    }
+    
+    return [NSString stringWithFormat:@"%@%@", month, day];
+}
+
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
     if (!mstrXMLString) {
@@ -96,7 +141,7 @@
 {
     // extract title element
     if ([elementName isEqualToString:@"title"]) {
-        NSString *title = [mstrXMLString copy];
+        NSString *title = [[[mstrXMLString copy] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
         mdictXMLPart.title = title;
         NSLog(@"Title: %@", mdictXMLPart.title);
         //mdictXMLPart.title = @"Bucksbaum";
@@ -135,8 +180,8 @@
             dateIndex=0;
         }
         else{
-            
-            mdictXMLPart.location = contents[0];
+            mdictXMLPart.location = [[contents[0] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
+                                     stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
             NSLog(@"Location: %@", mdictXMLPart.location);
             dateIndex = 1;
         }
@@ -148,10 +193,12 @@
         NSString *startAMPMString;
         NSString *startTimeHour;
         NSString *startTimeMinutes;
+        NSString *startDate;
         
         NSString *endAMPMString;
         NSString *endTimeHour;
         NSString *endTimeMinutes;
+        NSString *endDate;
         
         BOOL overnight = NO;
         
@@ -159,7 +206,6 @@
         if ([dateTime count] > 4){
             NSArray *time = [dateTime[2] componentsSeparatedByString:@"&"];
             NSString *startTime = time[0];
-            
             //Break up the start time into parts
             [self extractAMPM:startTime withAMPMString:&startAMPMString withHourString:&startTimeHour withMinutesString:&startTimeMinutes];
             
@@ -171,6 +217,14 @@
             
             overnight = YES;
             NSLog(@"Overnight debug: %@ - %@", startTime, endTime);
+            
+            // create date string with format "MM:DD:YYYY"
+            startDate = [NSString stringWithFormat:@"%@:%@",
+                         [self formatDayMonth:dateTime[1]],
+                         [dateTime[4] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
+            endDate = [NSString stringWithFormat:@"%@:%@",
+                       [self formatDayMonth:dateTime[3]],
+                       [dateTime[4] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
         }
         else{
             //Extracting time from event
@@ -199,6 +253,14 @@
             } else {
                 [self extractAMPM:startTime withAMPMString:&endAMPMString withHourString:&endTimeHour withMinutesString:&endTimeMinutes];
             }
+            
+            // create date string with format "MM:DD:YYYY"
+            startDate = [NSString stringWithFormat:@"%@:%@",
+                         [self formatDayMonth:dateTime[1]],
+                         [dateTime[2] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
+            endDate = [NSString stringWithFormat:@"%@:%@",
+                       [self formatDayMonth:dateTime[1]],
+                       [dateTime[2] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
         }
         
         // Formatting to the start time
@@ -223,7 +285,6 @@
         } else{
             finalStartTime = [finalStartTime stringByAppendingString: startAMPMString];
         }
-        
         NSLog(@"Formatted start time: %@", finalStartTime);
         
         // Formating to the end time
@@ -234,27 +295,27 @@
         } else{
             finalEndTime = [finalEndTime stringByAppendingString: endTimeMinutes];
         }
-        
         //Append am/pm to start time
         finalEndTime = [finalEndTime stringByAppendingString: endAMPMString];
-        
         NSLog(@"Formatted end time: %@", finalEndTime);
         
-        //Convert start time to date
+        // Initialize the dateFormatter
         NSDateFormatter *timeFormat = [[NSDateFormatter alloc] init];
+        [timeFormat setDateFormat:@"MM:dd:yyyy'T'hh:mma"];
         
-        //Date format of string we already have
-        [timeFormat setDateFormat:@"hh:mma"];
-        
-        NSDate *startTimeDate = [timeFormat dateFromString:finalStartTime];
-        
-        mdictXMLPart.startTime = startTimeDate;
-        
+        //Convert start time to date
+        NSDate *startDateTime = [timeFormat dateFromString:[NSString stringWithFormat:@"%@T%@", startDate, finalStartTime]];
         //Convert end time to date
-        NSDate *endTimeDate = [timeFormat dateFromString: finalEndTime];
-        mdictXMLPart.endTime = endTimeDate;
-        mdictXMLPart.detailDescription = contents[dateIndex+2];
+        NSDate *endDateTime= [timeFormat dateFromString:[NSString stringWithFormat:@"%@T%@", endDate, finalEndTime]];
         
+        //Set start time and end time for the event
+        mdictXMLPart.startTime = startDateTime;
+        mdictXMLPart.endTime = endDateTime;
+        
+        // Set detail description
+         mdictXMLPart.detailDescription = [[contents[dateIndex+2] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+        
+        // Set overnight property
         if(overnight) {
             mdictXMLPart.overnight = @" (Overnight)";
         } else {
@@ -290,12 +351,12 @@
         //        mdictXMLPart.startTime = [dateFormat dateFromString:start];
         //        mdictXMLPart.endTime = [dateFormat dateFromString:end];
         ////
-        NSDateComponents* comps = [[NSDateComponents alloc]init];
-        comps.year = 2018;
-        comps.month = 10;
-        comps.day = 14;
-        comps.hour = 16;
-        NSCalendar* calendar = [NSCalendar currentCalendar];
+//        NSDateComponents* comps = [[NSDateComponents alloc]init];
+//        comps.year = 2018;
+//        comps.month = 10;
+//        comps.day = 14;
+//        comps.hour = 16;
+//        NSCalendar* calendar = [NSCalendar currentCalendar];
         //NSDate *date2 = [calendar dateFromComponents:comps];
         //mdictXMLPart.startTime = date;
         //mdictXMLPart.endTime = [NSDate dateWithTimeInterval:3600 sinceDate:date];

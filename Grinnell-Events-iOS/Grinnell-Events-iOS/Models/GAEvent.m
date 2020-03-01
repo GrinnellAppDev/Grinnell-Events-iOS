@@ -16,6 +16,7 @@
 @dynamic location;
 @dynamic date;
 @dynamic startTime;
+@dynamic overnight;
 @dynamic endTime;
 @dynamic detailDescription;
 @dynamic eventid;
