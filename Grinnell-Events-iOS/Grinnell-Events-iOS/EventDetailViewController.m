@@ -175,7 +175,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         
         [alert show];
     } else {
-            [self.eventKitController addEventToCalendar:self.theEvent];
+        NSString *title = self.theEvent.title;
+        [self.eventKitController addEventToCalendar:self.theEvent];
     }
     
     [self updateConflictCell];
