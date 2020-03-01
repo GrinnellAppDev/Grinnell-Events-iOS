@@ -169,9 +169,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     NSPredicate *eventPredicate = [self.eventKitController.eventStore predicateForEventsWithStartDate:self.theEvent.startTime endDate:self.theEvent.endTime calendars:allCalendars];
     NSArray *matchingEvents = [self.eventKitController.eventStore eventsMatchingPredicate:eventPredicate];
     
-    
-    
-    if (matchingEvents) {
+    if ([matchingEvents count] != 0) {
         NSString *firstConflicting = [matchingEvents.firstObject title];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh-oh! You have conflicts with this event!" message: [NSString stringWithFormat:@"%@ conflicts", firstConflicting]  delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add Anyway", nil];
         

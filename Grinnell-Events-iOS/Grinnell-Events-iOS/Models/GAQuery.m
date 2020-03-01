@@ -19,7 +19,6 @@
     NSCharacterSet *ampmSet = [NSCharacterSet characterSetWithCharactersInString: @":ampm"];
     
     //Take hour
-    
     [scanner scanUpToCharactersFromSet:ampmSet intoString: hour];
     //Throw away colon
     [scanner scanString:@":" intoString:NULL];
