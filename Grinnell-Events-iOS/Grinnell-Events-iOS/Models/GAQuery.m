@@ -141,7 +141,7 @@
 {
     // extract title element
     if ([elementName isEqualToString:@"title"]) {
-        NSString *title = [[mstrXMLString copy] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *title = [[[mstrXMLString copy] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
         mdictXMLPart.title = title;
         NSLog(@"Title: %@", mdictXMLPart.title);
         //mdictXMLPart.title = @"Bucksbaum";
@@ -180,7 +180,8 @@
             dateIndex=0;
         }
         else{
-            mdictXMLPart.location = [contents[0] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            mdictXMLPart.location = [[contents[0] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
+                                     stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
             NSLog(@"Location: %@", mdictXMLPart.location);
             dateIndex = 1;
         }
@@ -312,7 +313,7 @@
         mdictXMLPart.endTime = endDateTime;
         
         // Set detail description
-         mdictXMLPart.detailDescription = [contents[dateIndex+2] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+         mdictXMLPart.detailDescription = [[contents[dateIndex+2] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
         
         // Set overnight property
         if(overnight) {
