@@ -186,6 +186,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     
     NSArray *allCalendars = [self.eventKitController.eventStore calendarsForEntityType: EKEntityTypeEvent];
     
+    
+    
     NSPredicate *eventPredicate = [self.eventKitController.eventStore predicateForEventsWithStartDate:self.theEvent.startTime endDate:self.theEvent.endTime calendars:allCalendars];
     
     
