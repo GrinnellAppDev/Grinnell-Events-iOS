@@ -40,6 +40,15 @@
 
 - (void)viewDidLoad
 {
+    self.searchTextView.delegate = self;
+    self.searchTextView.editable = TRUE;
+    self.searchTextView.text=@" Search Events Here...";
+    self.searchTextView.textColor = [UIColor lightGrayColor];
+    self.searchTextView.scrollEnabled = FALSE;
+    self.searchTextView.textContainer.maximumNumberOfLines = 1;
+    self.searchTextView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
+    self.searchTextView.clipsToBounds = YES;
+    self.searchTextView.layer.cornerRadius = 10.0f;
     
     self.tableView.scrollEnabled = NO;
     [super viewDidLoad];
@@ -88,11 +97,9 @@
                 NSDate *date2 = [dateFormatter dateFromString:d2];
                 return [date1 compare:date2];
             }];
+            self.filteredSortedDateKeys=self.sortedDateKeys;
             NSLog(@"%@ is the first sorted key", self.sortedDateKeys.firstObject);
             NSLog(@"%@ is the last sorted key", self.sortedDateKeys.lastObject);
-            
-            [self filterContentForSearchText:@"" scope:
-             [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
             
             [self.tableView reloadData];
             //set dateformatter in order to convert string to date
@@ -119,7 +126,7 @@
             NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
             dayComponent.day = numberOfDays + 1;
             NSDate *weekFromCurrentDate = [curCal dateByAddingComponents:dayComponent toDate:[NSDate date] options:0];
-            [self.dayPicker setStartDate: firstDate endDate:weekFromCurrentDate];
+            [self.dayPicker setStartDate: firstDate endDate:lastDate];
             [self.dayPicker setCurrentDate:[NSDate date] animated:NO];
             //commented this line out similarly because last date is 11/04/2018
             //[self.dayPicker setStartDate:[NSDate dateFromDay:firstDay month:firstMonth year:firstYear] endDate:[NSDate dateFromDay:lastDay month:lastMonth year:lastYear]];
@@ -140,8 +147,6 @@
     self.dayPickerdateFormatter = [[NSDateFormatter alloc] init];
     [self.dayPickerdateFormatter setDateFormat:@"EE"];
     self.filteredEventsArray = [NSMutableArray arrayWithCapacity:self.flatEventsData.count];
-  
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -149,23 +154,30 @@
 }
 
 
+#pragma mark - MZDayPickerDelegate methods
+
 -(void)goToTodayAnimated:(BOOL)animated {
-    NSCalendar *cal = [NSCalendar currentCalendar];
-    NSDateComponents *comps1 = [cal components:(NSCalendarUnitMonth| NSCalendarUnitYear | NSCalendarUnitDay) fromDate:[NSDate date]];
-    
-    for (int i = 0 ; i < self.sortedDateKeys.count; i++){
-        NSDateComponents *comps2 = [cal components:(NSCalendarUnitMonth| NSCalendarUnitYear | NSCalendarUnitDay) fromDate:[NSDate dateFromString:self.sortedDateKeys[i]]];
-        if (comps1.day == comps2.day && comps1.month == comps2.month && comps1.year == comps2.year){
-            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection: i] atScrollPosition:UITableViewScrollPositionTop animated:animated];
-            break;
-        }
+    //We scroll to that section. Sections are labeled by the date (sortedKeys)
+    //initialize dateFormatter and dateFormat
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //need to set date
+    // dateFormatter.dateFormat = @"ccc MMM dd yyyy";
+    //NSString *selectedDateString = [NSDate formattedStringFromDate:day.date];
+    //NSDate *dateFromString = [dateFormatter dateFromString: selectedDateString];
+    //get string back from NSDATE in correct format
+    dateFormatter.dateFormat = @"yyyy/MM/dd";
+    NSString *stringFromDate = [dateFormatter stringFromDate:[NSDate date]];
+    NSLog(@"the selected date is %@", stringFromDate);
+    NSInteger index = [self.filteredSortedDateKeys indexOfObject: stringFromDate];
+    //This way we make sure it doesn't crash if things get glitchy and index isn't found.
+    if (index != NSNotFound) {
+        NSLog(@"index found gg");
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index] atScrollPosition:UITableViewScrollPositionTop animated:animated];
     }
     
     [self.dayPicker setCurrentDate:[NSDate date] animated:animated];
 }
 
-
-#pragma mark - MZDayPickerDelegate methods
 - (NSString *)dayPicker:(MZDayPicker *)dayPicker titleForCellDayNameLabelInDay:(MZDay *)day
 {
     return [self.dayPickerdateFormatter stringFromDate:day.date];
@@ -184,7 +196,7 @@
     dateFormatter.dateFormat = @"yyyy/MM/dd";
     NSString *stringFromDate = [dateFormatter stringFromDate: day.date];
     NSLog(@"the selected date is %@", stringFromDate);
-    NSInteger index = [self.sortedDateKeys indexOfObject: stringFromDate];
+    NSInteger index = [self.filteredSortedDateKeys indexOfObject: stringFromDate];
     NSLog(@"the selected date is %@", self.sortedDateKeys.firstObject); //OH NO!
     NSLog(@"%ld is the index", (long)index);
     //This way we make sure it doesn't crash if things get glitchy and index isn't found.
@@ -195,37 +207,10 @@
 }
 - (void)dayPicker:(MZDayPicker *)dayPicker willSelectDay:(MZDay *)day
 {
-    
     NSLog(@"Will select day %@",day.day);
 }
 
-#pragma mark - UITableView Delegate Methods
-
 #pragma mark - TableView Delegate
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Perform segue to event detail
-    [self performSegueWithIdentifier:@"showEventDetail" sender:tableView];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-
-// prepare for moving to showEventDetail view
-#pragma mark - Segue
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:@"showEventDetail"]) {
-        EventDetailViewController *eventDetailViewController = [segue destinationViewController];
-        GAEvent *event;
-        NSIndexPath *indexPath;
-        if (sender == self.searchDisplayController.searchResultsTableView) {
-            indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
-        } else if (sender == self.tableView) {
-            indexPath = [self.tableView indexPathForSelectedRow];
-        }
-        NSString *key = self.filteredSortedDateKeys[indexPath.section];
-        event = self.filteredEventsDictionary[key][indexPath.row];
-        eventDetailViewController.theEvent = event;
-    }
-}
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
@@ -234,12 +219,20 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[self.filteredEventsDictionary allKeys] count];
+    NSLog(@"numberOfSections %lu",(unsigned long)[self.filteredSortedDateKeys count]);
+    return [self.filteredSortedDateKeys count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"%@,%lu",(NSString*)(self.filteredSortedDateKeys[section]),(unsigned long)[self.filteredEventsDictionary[self.filteredSortedDateKeys[section]] count]);
     return [self.filteredEventsDictionary[self.filteredSortedDateKeys[section]] count];
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Perform segue to event detail
+    [self performSegueWithIdentifier:@"showEventDetail" sender:tableView];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -258,12 +251,34 @@
     return cell;
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.searchTextView resignFirstResponder];
+}
+
+// prepare for moving to showEventDetail view
+#pragma mark - Segue
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"showEventDetail"]) {
+        EventDetailViewController *eventDetailViewController = [segue destinationViewController];
+        GAEvent *event;
+        NSIndexPath *indexPath;
+        indexPath = [self.tableView indexPathForSelectedRow];
+        
+        NSString *key = self.filteredSortedDateKeys[indexPath.section];
+        event = self.filteredEventsDictionary[key][indexPath.row];
+        eventDetailViewController.theEvent = event;
+    }
+}
+
 #pragma mark - Scrollview Delegate Methods
 BOOL _dayPickerIsAnimating = YES;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     NSArray *visibleRows = [self.tableView visibleCells];
+    if ([visibleRows count]==0) {
+        return;
+    }
     UITableViewCell *firstVisibleCell = [visibleRows objectAtIndex:0];
     NSIndexPath *path = [self.tableView indexPathForCell:firstVisibleCell];
     //Scroll to the selected date.
@@ -271,7 +286,6 @@ BOOL _dayPickerIsAnimating = YES;
     dateFormatter.dateFormat = @"yyyy/MM/dd";
     NSDate *toDate = [dateFormatter dateFromString:self.filteredSortedDateKeys[path.section] ];
     BOOL selectedDateIsCurrentlyViewed = [toDate isEqualToDate:self.focusedDate];
-    NSInteger section = path.section;
     
     if (!selectedDateIsCurrentlyViewed){
         self.focusedDate = toDate;
@@ -282,11 +296,14 @@ BOOL _dayPickerIsAnimating = YES;
         NSDate *followingDay = [NSDate dateFromDay:day+1 month:month year:year];
         [self.dayPicker setCurrentDate:followingDay animated:YES];
     }
-    section = 1;
+}
+
+- (IBAction)goToToday:(id)sender {
+    [self goToTodayAnimated:YES];
 }
 
 #pragma mark Content Filtering
--(void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
+-(void)filterContentForSearchText:(NSString*)searchText {
     // Remove all objects from the filtered search array
     [self.filteredEventsArray removeAllObjects];
     // Update the filtered array based on the search text and scope.
@@ -323,59 +340,39 @@ BOOL _dayPickerIsAnimating = YES;
     }];
 }
 
-#pragma mark - UISearchDisplayController Delegate Methods
--(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
-    // Tells the table data source to reload when text changes
-    [self filterContentForSearchText:searchString scope:
-     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
-    // Return YES to cause the search result table view to be reloaded.
-    return YES;
-}
+#pragma mark - UITextViewDelegate
 
--(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
-    // Tells the table data source to reload when scope bar selection changes
-    [self filterContentForSearchText:self.searchDisplayController.searchBar.text scope:
-     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
-    // Return YES to cause the search result table view to be reloaded.
-    return YES;
-}
-
-- (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
-{
-    //Search Results Table View has a different Row height - Fix it to use the height of our prototype cell
-    tableView.rowHeight = 72;
-}
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)SearchBar {
-    [self filterContentForSearchText:@"" scope:
-     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
-    [self.tableView reloadData];
-}
-
-- (IBAction)didTapDays:(id)sender {
-}
-
-- (IBAction)goToToday:(id)sender {
-    [self goToTodayAnimated:YES];
-    //We scroll to that section. Sections are labeled by the date (sortedKeys)
-    //initialize dateFormatter and dateFormat
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    //need to set date
-    // dateFormatter.dateFormat = @"ccc MMM dd yyyy";
-    //NSString *selectedDateString = [NSDate formattedStringFromDate:day.date];
-    //NSDate *dateFromString = [dateFormatter dateFromString: selectedDateString];
-    //get string back from NSDATE in correct format
-    dateFormatter.dateFormat = @"yyyy/MM/dd";
-    NSString *stringFromDate = [dateFormatter stringFromDate:[NSDate date]];
-    NSLog(@"the selected date is %@", stringFromDate);
-    NSInteger index = [self.sortedDateKeys indexOfObject: stringFromDate];
-    NSLog(@"the selected date is %@", self.sortedDateKeys.firstObject); //OH NO!
-    NSLog(@"%ld is the index", (long)index);
-    //This way we make sure it doesn't crash if things get glitchy and index isn't found.
-    if (index != NSNotFound) {
-        NSLog(@"index found gg");
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    if ([textView.text isEqualToString:@" Search Events Here..."]) {
+        textView.text=@"";
+        textView.textColor=[UIColor blackColor];
     }
 }
+
+- (void)textViewDidChange:(UITextView *)textView {
+    NSString* searchText = textView.text;
+    [self filterContentForSearchText:searchText];
+
+    // hand over the filtered results to our search results table
+    [self.tableView reloadData];
+
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    if ([self.searchTextView.text isEqualToString:@""]) {
+        self.searchTextView.text=@" Search Events Here...";
+        self.searchTextView.textColor = [UIColor lightGrayColor];
+    }
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if([text isEqualToString:@"\n"])
+    {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
+}
+
 @end
 

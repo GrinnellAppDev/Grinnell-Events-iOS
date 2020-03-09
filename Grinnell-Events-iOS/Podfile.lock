@@ -8,23 +8,23 @@ PODS:
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
   - Fabric (1.10.2)
-  - FBSDKCoreKit (6.0.0):
-    - FBSDKCoreKit/Basics (= 6.0.0)
-    - FBSDKCoreKit/Core (= 6.0.0)
-  - FBSDKCoreKit/Basics (6.0.0)
-  - FBSDKCoreKit/Core (6.0.0):
+  - FBSDKCoreKit (5.15.1):
+    - FBSDKCoreKit/Basics (= 5.15.1)
+    - FBSDKCoreKit/Core (= 5.15.1)
+  - FBSDKCoreKit/Basics (5.15.1)
+  - FBSDKCoreKit/Core (5.15.1):
     - FBSDKCoreKit/Basics
-  - FBSDKLoginKit (6.0.0):
-    - FBSDKLoginKit/Login (= 6.0.0)
-  - FBSDKLoginKit/Login (6.0.0):
-    - FBSDKCoreKit (~> 6.0.0)
+  - FBSDKLoginKit (5.15.1):
+    - FBSDKLoginKit/Login (= 5.15.1)
+  - FBSDKLoginKit/Login (5.15.1):
+    - FBSDKCoreKit (~> 5.0)
   - FBSDKMessengerShareKit (1.3.2)
-  - FBSDKPlacesKit (6.0.0):
-    - FBSDKCoreKit (~> 6.0.0)
-  - FBSDKShareKit (6.0.0):
-    - FBSDKShareKit/Share (= 6.0.0)
-  - FBSDKShareKit/Share (6.0.0):
-    - FBSDKCoreKit (~> 6.0.0)
+  - FBSDKPlacesKit (5.15.0):
+    - FBSDKCoreKit (~> 5.0)
+  - FBSDKShareKit (5.15.1):
+    - FBSDKShareKit/Share (= 5.15.1)
+  - FBSDKShareKit/Share (5.15.1):
+    - FBSDKCoreKit (~> 5.0)
   - Flurry-iOS-SDK (10.2.0):
     - Flurry-iOS-SDK/FlurrySDK (= 10.2.0)
   - Flurry-iOS-SDK/FlurrySDK (10.2.0)
@@ -71,11 +71,11 @@ SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
-  FBSDKCoreKit: fe738b172590e622c86735b45e20d196848b54df
-  FBSDKLoginKit: fa57df1b967fe0e147b25bede6ea4e9cdf4d64be
+  FBSDKCoreKit: 1d5acf7c9d7a2f92bb1a242dc60cae5b7adb91df
+  FBSDKLoginKit: f1ea8026a58b52d30c9f2e6a58ca7d813619fb83
   FBSDKMessengerShareKit: bdd14265f5845e6d1c95a128ab33705a68ca1c21
-  FBSDKPlacesKit: ffe9e349b0b63e736b400e2edfbcdc2087f7c175
-  FBSDKShareKit: 210dcda2603042cf73f31983fc99df4dac06f1d8
+  FBSDKPlacesKit: 26d4033cb8cc8640f1e0eadb3635e7dd29c4d073
+  FBSDKShareKit: 259737eab3cc807087374553abdf588b3096ba55
   Flurry-iOS-SDK: ca3540dd9607a05a8a13a7dd36dfffdd5e0fd0ef
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   MZDayPicker: 8cdcab1d8d3da920a57b1fd4fef5788d289234b2
@@ -83,4 +83,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 2a7190afdc5f2321c0e47a8cd2db2b76295cdc46
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.0

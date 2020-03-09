@@ -122,40 +122,39 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     content.photos = @[photo];
 }
 
+//FBSDKSharingDelegate
+- (void)sharer:(id<FBSDKSharing>)sharer didCompleteWithResults:(NSDictionary *)results {
+    NSLog(@"completed");
+}
+
+- (void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error {
+    NSLog(@"fail %@",error.description);
+}
+
+- (void)sharerDidCancel:(id<FBSDKSharing>)sharer {
+    NSLog(@"cancel");
+}
+
 - (IBAction)shareButtonClicked:(id)sender {
     
     NSString *shareInfo = [NSString stringWithFormat:@"Hey everyone! Join me at %@ on %@ , %@ at %@", self.title,self.dateLabel.text, self.timeLabel.text, self.locationLabel.text];
     NSLog(@"%@", shareInfo);
-//    NSDictionary *attributes = @{NSFontAttributeName            : [UIFont systemFontOfSize:20],
-//                                 NSForegroundColorAttributeName : [UIColor blueColor],
-//                                 NSBackgroundColorAttributeName : [UIColor clearColor]};
+    NSDictionary *attributes = @{NSFontAttributeName            : [UIFont systemFontOfSize:50],
+                                 NSForegroundColorAttributeName : [UIColor whiteColor],
+                                 NSBackgroundColorAttributeName : [UIColor blackColor]
+    };
   
-//    this part is commented out right now because photo doesn't work with simulator. if testing, uncomment this part and comment out the part from sharelink down
-// UIImage *eventdetails = [self imageFromString:shareInfo attributes:attributes size: CGSizeMake(600, 200)];
-//    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
-//    photo.image = eventdetails;
-//    photo.userGenerated = NO;
-//    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
-//    content.photos = @[photo];
-//    [FBSDKShareDialog showFromViewController:self
-//                                 withContent:content
-//                                    delegate:nil];
-    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
-    content.contentURL = [NSURL URLWithString:@""];
-    content.quote = shareInfo;
+    //this part is commented out right now because photo doesn't work with simulator. if testing, uncomment this part and comment out the part from sharelink down
+    UIImage *eventdetails = [self imageFromString:shareInfo attributes:attributes size: CGSizeMake(500, 500)];
+    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+    photo.image = eventdetails;
+    photo.userGenerated = NO;
+    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+    content.photos = @[photo];
     [FBSDKShareDialog showFromViewController:self
-                              withContent:content
-                             delegate:nil];
-//    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
-//    content.contentURL = [NSURL URLWithString:@"http://developers.facebook.com"];
-//    [FBSDKShareDialog showFromViewController:self
-//                                 withContent:content
-//                                    delegate:nil];
+                                 withContent:content
+                                    delegate:self];
 }
-
-//got this code from stackoverflow; https://stackoverflow.com/questions/23556269/how-to-convert-text-to-image, 
-
-
 
 - (void) viewWillAppear:(BOOL)animated {
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
@@ -175,7 +174,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         
         [alert show];
     } else {
-        NSString *title = self.theEvent.title;
         [self.eventKitController addEventToCalendar:self.theEvent];
     }
     

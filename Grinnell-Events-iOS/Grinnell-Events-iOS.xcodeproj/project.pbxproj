@@ -14,7 +14,6 @@
 		16AE9C7A17FD27C200626F90 /* EventKitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16AE9C7917FD27C200626F90 /* EventKitController.m */; };
 		16C22F5E17FCF5DF00F0C5FE /* NSDate+GADate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16C22F5D17FCF5DF00F0C5FE /* NSDate+GADate.m */; };
 		700A7BC622654B5600196AD9 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 700A7BC522654B5600196AD9 /* GTMNSString+HTML.m */; };
-		70EE588322266C0500D72787 /* AddEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EE588222266C0500D72787 /* AddEventViewController.m */; };
 		8B19A2081827711500F915D0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B19A2071827711500F915D0 /* Images.xcassets */; };
 		8B20D8561826D555006E7683 /* CalendarsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B20D8551826D555006E7683 /* CalendarsViewController.m */; };
 		8B21023E183C4A9700ED3226 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B21023D183C4A9700ED3226 /* SettingsViewController.m */; };
@@ -64,8 +63,6 @@
 		700A7BC522654B5600196AD9 /* GTMNSString+HTML.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
 		700A7BC722654BB400196AD9 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
 		700A7BC822654C3000196AD9 /* GTMDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
-		70EE588122266C0500D72787 /* AddEventViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddEventViewController.h; sourceTree = "<group>"; };
-		70EE588222266C0500D72787 /* AddEventViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddEventViewController.m; sourceTree = "<group>"; };
 		8B12C6B8185505D9005DD470 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		8B19A2071827711500F915D0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8B20D8541826D555006E7683 /* CalendarsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarsViewController.h; sourceTree = "<group>"; };
@@ -155,8 +152,6 @@
 				8B20D8551826D555006E7683 /* CalendarsViewController.m */,
 				8B21023C183C4A9700ED3226 /* SettingsViewController.h */,
 				8B21023D183C4A9700ED3226 /* SettingsViewController.m */,
-				70EE588122266C0500D72787 /* AddEventViewController.h */,
-				70EE588222266C0500D72787 /* AddEventViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -417,7 +412,6 @@
 				16C22F5E17FCF5DF00F0C5FE /* NSDate+GADate.m in Sources */,
 				8B20D8561826D555006E7683 /* CalendarsViewController.m in Sources */,
 				165D7D3517E6393600CFB87F /* GAEvent.m in Sources */,
-				70EE588322266C0500D72787 /* AddEventViewController.m in Sources */,
 				162AD93D17E6418F00867115 /* GAEventCell.m in Sources */,
 				FA19A5C32173CB1A000FBD3D /* GAQuery.m in Sources */,
 				16AE9C7A17FD27C200626F90 /* EventKitController.m in Sources */,
@@ -561,7 +555,7 @@
 				INFOPLIST_FILE = "Grinnell-Events-iOS/Grinnell-Events-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.events.appdev.grinnell;
 				PRODUCT_NAME = "Grinnell-Events";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -587,7 +581,7 @@
 				INFOPLIST_FILE = "Grinnell-Events-iOS/Grinnell-Events-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.events.appdev.grinnell;
 				PRODUCT_NAME = "Grinnell-Events";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
