@@ -251,10 +251,6 @@
     return cell;
 }
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [self.searchTextView resignFirstResponder];
-}
-
 // prepare for moving to showEventDetail view
 #pragma mark - Segue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -271,31 +267,41 @@
 }
 
 #pragma mark - Scrollview Delegate Methods
-BOOL _dayPickerIsAnimating = YES;
+BOOL isDragging = FALSE;
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    NSArray *visibleRows = [self.tableView visibleCells];
-    if ([visibleRows count]==0) {
-        return;
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.searchTextView resignFirstResponder];
+    isDragging = TRUE;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (isDragging) {
+        NSArray *visibleRows = [self.tableView visibleCells];
+        if ([visibleRows count]==0) {
+            return;
+        }
+        UITableViewCell *firstVisibleCell = [visibleRows objectAtIndex:0];
+        NSIndexPath *path = [self.tableView indexPathForCell:firstVisibleCell];
+        //Scroll to the selected date.
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateFormat = @"yyyy/MM/dd";
+        NSDate *toDate = [dateFormatter dateFromString:self.filteredSortedDateKeys[path.section] ];
+        BOOL selectedDateIsCurrentlyViewed = [toDate isEqualToDate:self.focusedDate];
+        
+        if (!selectedDateIsCurrentlyViewed){
+            self.focusedDate = toDate;
+            NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:self.focusedDate];
+            NSInteger year = [firstComponents year];
+            NSInteger month = [firstComponents month];
+            NSInteger day = [firstComponents day];
+            NSDate *followingDay = [NSDate dateFromDay:day+1 month:month year:year];
+            [self.dayPicker setCurrentDate:followingDay animated:YES];
+        }
     }
-    UITableViewCell *firstVisibleCell = [visibleRows objectAtIndex:0];
-    NSIndexPath *path = [self.tableView indexPathForCell:firstVisibleCell];
-    //Scroll to the selected date.
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"yyyy/MM/dd";
-    NSDate *toDate = [dateFormatter dateFromString:self.filteredSortedDateKeys[path.section] ];
-    BOOL selectedDateIsCurrentlyViewed = [toDate isEqualToDate:self.focusedDate];
-    
-    if (!selectedDateIsCurrentlyViewed){
-        self.focusedDate = toDate;
-        NSDateComponents *firstComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:self.focusedDate];
-        NSInteger year = [firstComponents year];
-        NSInteger month = [firstComponents month];
-        NSInteger day = [firstComponents day];
-        NSDate *followingDay = [NSDate dateFromDay:day+1 month:month year:year];
-        [self.dayPicker setCurrentDate:followingDay animated:YES];
-    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    isDragging = FALSE;
 }
 
 - (IBAction)goToToday:(id)sender {
@@ -352,10 +358,12 @@ BOOL _dayPickerIsAnimating = YES;
 - (void)textViewDidChange:(UITextView *)textView {
     NSString* searchText = textView.text;
     [self filterContentForSearchText:searchText];
-
+    
     // hand over the filtered results to our search results table
     [self.tableView reloadData];
-
+    if ([self.filteredEventsArray count] != 0) {
+        [self.tableView setContentOffset:CGPointZero animated:NO];
+    }
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
