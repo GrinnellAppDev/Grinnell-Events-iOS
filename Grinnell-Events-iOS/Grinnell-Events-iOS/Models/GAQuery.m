@@ -288,8 +288,15 @@
         NSLog(@"Formatted start time: %@", finalStartTime);
         
         // Formating to the end time
+        NSString *finalEndTime = @"";
+        
+        if (endTimeHour.length == 1){
+            finalEndTime = [finalEndTime stringByAppendingString: @"0"];
+        }
+        finalEndTime = [finalEndTime stringByAppendingString: endTimeHour];
+        finalEndTime = [finalEndTime stringByAppendingString: @":"];
+        
         // Append minutes to start time
-        NSString *finalEndTime = [endTimeHour stringByAppendingString: @":"];
         if (endTimeMinutes == NULL){
             finalEndTime = [finalEndTime stringByAppendingString: @"00"];
         } else{
@@ -301,12 +308,17 @@
         
         // Initialize the dateFormatter
         NSDateFormatter *timeFormat = [[NSDateFormatter alloc] init];
-        [timeFormat setDateFormat:@"MM:dd:yyyy'T'hh:mma"];
+
+        [timeFormat setTimeStyle:NSDateFormatterShortStyle];
+        [timeFormat setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
+        [timeFormat setDateFormat:@"MM:dd:yyyy-hh:mma"];
+        //[timeFormat setDateFormat:@"MM:dd:yyyy"];
+
         
         //Convert start time to date
-        NSDate *startDateTime = [timeFormat dateFromString:[NSString stringWithFormat:@"%@T%@", startDate, finalStartTime]];
+        NSDate *startDateTime = [timeFormat dateFromString:[NSString stringWithFormat:@"%@-%@", startDate,finalStartTime]];
         //Convert end time to date
-        NSDate *endDateTime= [timeFormat dateFromString:[NSString stringWithFormat:@"%@T%@", endDate, finalEndTime]];
+        NSDate *endDateTime= [timeFormat dateFromString:[NSString stringWithFormat:@"%@-%@", endDate, finalEndTime]];
         
         //Set start time and end time for the event
         mdictXMLPart.startTime = startDateTime;

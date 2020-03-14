@@ -37,8 +37,13 @@
     
     self.title = self.theEvent.title;
     self.eventKitController = [[EventKitController alloc] init];
+    NSDateFormatter *timeFormat = [[NSDateFormatter alloc] init];
+
+    [timeFormat setTimeStyle:NSDateFormatterShortStyle];
+    [timeFormat setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
+    [timeFormat setDateFormat:@"hh:mm a"];
     
-    self.timeLabel.text =  [[NSString stringWithFormat:@"%@ - %@", [NSDate timeStringFormatFromDate:self.theEvent.startTime], [NSDate timeStringFormatFromDate:self.theEvent.endTime]] stringByAppendingString:self.theEvent.overnight];
+    self.timeLabel.text =  [[NSString stringWithFormat:@"%@ - %@", [timeFormat stringFromDate:self.theEvent.startTime], [timeFormat stringFromDate:self.theEvent.endTime]] stringByAppendingString:self.theEvent.overnight];
     
     self.dateLabel.text = self.theEvent.date;
     self.locationLabel.text = self.theEvent.location;

@@ -75,7 +75,7 @@
             
             for (GAEvent *event in events) {
                 NSString *eventDate = [event.date stringByTrimmingCharactersInSet:[NSCharacterSet  whitespaceAndNewlineCharacterSet]];
-                
+                NSLog(@"STARTTTTT %@",event.startTime);
                 if ( theEvents[eventDate] ) {
                     /* It has an array with this date. Add to event to existing array. */
                     [theEvents[eventDate] addObject:event];
@@ -90,7 +90,9 @@
             // Sort the keys by date
             NSArray *keys = [theEvents allKeys];
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            dateFormatter.dateFormat = @"yyyy/MM/dd";
+            [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+            [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
+            [dateFormatter setDateFormat:@"yyyy/MM/dd"];
             NSLog(@"%@ is the first key", keys.firstObject);
             self.sortedDateKeys =  [keys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
                 NSDate *date1 = [dateFormatter dateFromString:d1];
@@ -115,8 +117,6 @@
             NSLog(@"First date is %@", firstDate.description);
             //right now last Date is same as first Date...
             NSLog(@"Last date is %@", lastDate.description);
-            //sets calendar day to current date
-            NSCalendar *curCal = [NSCalendar currentCalendar];
             
             //Find the number of days between the first and last dates
             NSTimeInterval secondsBetween = [lastDate timeIntervalSinceDate:firstDate];
@@ -125,13 +125,13 @@
             //Set end date using number of days between first and last dates
             NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
             dayComponent.day = numberOfDays + 1;
-            NSDate *weekFromCurrentDate = [curCal dateByAddingComponents:dayComponent toDate:[NSDate date] options:0];
             [self.dayPicker setStartDate: firstDate endDate:lastDate];
-            [self.dayPicker setCurrentDate:[NSDate date] animated:NO];
+            
             //commented this line out similarly because last date is 11/04/2018
             //[self.dayPicker setStartDate:[NSDate dateFromDay:firstDay month:firstMonth year:firstYear] endDate:[NSDate dateFromDay:lastDay month:lastMonth year:lastYear]];
             // Then display today in the picker and tableView
             [self goToTodayAnimated:NO];
+            
             self.tableView.scrollEnabled = YES;
         }
     }];
@@ -146,6 +146,7 @@
     self.dayPicker.dayLabelFontSize = 18.0f;
     self.dayPickerdateFormatter = [[NSDateFormatter alloc] init];
     [self.dayPickerdateFormatter setDateFormat:@"EE"];
+    [self.dayPicker setCurrentDate:[NSDate date] animated:NO];
     self.filteredEventsArray = [NSMutableArray arrayWithCapacity:self.flatEventsData.count];
 }
 
@@ -167,7 +168,6 @@
     //get string back from NSDATE in correct format
     dateFormatter.dateFormat = @"yyyy/MM/dd";
     NSString *stringFromDate = [dateFormatter stringFromDate:[NSDate date]];
-    NSLog(@"the selected date is %@", stringFromDate);
     NSInteger index = [self.filteredSortedDateKeys indexOfObject: stringFromDate];
     //This way we make sure it doesn't crash if things get glitchy and index isn't found.
     if (index != NSNotFound) {
@@ -246,7 +246,13 @@
     cell.title.hidden = false;
     cell.title.text = [event.title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     cell.location.text = [event.location stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    cell.date.text =  [[NSString stringWithFormat:@"%@ - %@", [NSDate timeStringFormatFromDate:event.startTime], [NSDate timeStringFormatFromDate:event.endTime]] stringByAppendingString:event.overnight];
+    
+    NSDateFormatter *timeFormat = [[NSDateFormatter alloc] init];
+
+    [timeFormat setTimeStyle:NSDateFormatterShortStyle];
+    [timeFormat setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
+    [timeFormat setDateFormat:@"hh:mm a"];
+    cell.date.text =  [[NSString stringWithFormat:@"%@ - %@", [timeFormat stringFromDate: event.startTime], [timeFormat stringFromDate:event.endTime]] stringByAppendingString:event.overnight];
     
     return cell;
 }
@@ -284,7 +290,9 @@ BOOL isDragging = FALSE;
         NSIndexPath *path = [self.tableView indexPathForCell:firstVisibleCell];
         //Scroll to the selected date.
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat = @"yyyy/MM/dd";
+        [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+        [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
+        [dateFormatter setDateFormat:@"yyyy/MM/dd"];
         NSDate *toDate = [dateFormatter dateFromString:self.filteredSortedDateKeys[path.section] ];
         BOOL selectedDateIsCurrentlyViewed = [toDate isEqualToDate:self.focusedDate];
         
@@ -338,7 +346,9 @@ BOOL isDragging = FALSE;
     NSArray *newKeys = [searchEvents allKeys];
     //initialize dateFormatter and dateFormat
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"yyyy/MM/dd";
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
+    [dateFormatter setDateFormat:@"yyyy/MM/dd"];
     self.filteredSortedDateKeys =  [newKeys sortedArrayUsingComparator: ^(NSString *d1, NSString *d2) {
         NSDate *date1 = [dateFormatter dateFromString:d1];
         NSDate *date2 = [dateFormatter dateFromString:d2];

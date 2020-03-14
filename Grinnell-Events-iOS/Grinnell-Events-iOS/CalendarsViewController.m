@@ -51,13 +51,13 @@
     
     for (EKCalendar *cal in self.writableCalendars) {
         
-        if ([calendarTable objectForKey:cal.source.title] != nil) {
-            [[calendarTable objectForKey:cal.source.title] addObject:cal];
+        if ([calendarTable objectForKey:cal.title] != nil) {
+            [[calendarTable objectForKey:cal.title] addObject:cal];
         }
         else {
             NSMutableArray *sourceArray = [[NSMutableArray alloc] init];
             [sourceArray addObject:cal];
-            [calendarTable setObject:sourceArray forKey:cal.source.title];
+            [calendarTable setObject:sourceArray forKey:cal.title];
         }
     }
     
