@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="CKB-Ui-aIa">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -149,53 +148,12 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
                     <connections>
                         <outlet property="dayPicker" destination="eRA-bo-7W4" id="g1T-cT-MdW"/>
-                        <outlet property="searchDisplayController" destination="Lqc-PV-O8r" id="vda-Ed-DHJ"/>
                         <outlet property="searchTextView" destination="znH-XA-JIL" id="gfd-ub-DvE"/>
                         <outlet property="tableView" destination="F10-Zi-7Tq" id="Ad8-dE-Cyw"/>
                         <segue destination="1Fx-fm-IMF" kind="push" identifier="showEventDetail" id="4cJ-ye-hAv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="fMR-xf-Jq0">
-                    <connections>
-                        <outlet property="delegate" destination="2" id="nlX-7Q-3Mn"/>
-                        <outlet property="searchContentsController" destination="2" id="CO4-TC-pZc"/>
-                        <outlet property="searchResultsDataSource" destination="2" id="cgK-IS-cRD"/>
-                        <outlet property="searchResultsDelegate" destination="2" id="vhe-L9-G5b"/>
-                    </connections>
-                </searchDisplayController>
-                <searchDisplayController id="hrJ-Cl-zQw">
-                    <connections>
-                        <outlet property="delegate" destination="2" id="veb-wT-qkJ"/>
-                        <outlet property="searchContentsController" destination="2" id="r2h-0e-H1r"/>
-                        <outlet property="searchResultsDataSource" destination="2" id="kbk-k8-BRe"/>
-                        <outlet property="searchResultsDelegate" destination="2" id="Ma2-Ou-HNS"/>
-                    </connections>
-                </searchDisplayController>
-                <searchDisplayController id="Cri-7k-oL5">
-                    <connections>
-                        <outlet property="delegate" destination="2" id="sDM-Af-x5d"/>
-                        <outlet property="searchContentsController" destination="2" id="p07-B7-pFG"/>
-                        <outlet property="searchResultsDataSource" destination="2" id="Ga8-wr-4Xh"/>
-                        <outlet property="searchResultsDelegate" destination="2" id="oxy-LI-V5z"/>
-                    </connections>
-                </searchDisplayController>
-                <searchDisplayController id="gS1-HN-hfx">
-                    <connections>
-                        <outlet property="delegate" destination="2" id="IcQ-Bf-DYZ"/>
-                        <outlet property="searchContentsController" destination="2" id="pFg-0n-aBl"/>
-                        <outlet property="searchResultsDataSource" destination="2" id="QBW-NJ-ell"/>
-                        <outlet property="searchResultsDelegate" destination="2" id="ERG-0v-HU9"/>
-                    </connections>
-                </searchDisplayController>
-                <searchDisplayController id="Lqc-PV-O8r">
-                    <connections>
-                        <outlet property="delegate" destination="2" id="a3H-WH-m9b"/>
-                        <outlet property="searchContentsController" destination="2" id="dJu-eb-F4d"/>
-                        <outlet property="searchResultsDataSource" destination="2" id="jgx-Gj-PUC"/>
-                        <outlet property="searchResultsDelegate" destination="2" id="NaL-sU-XLQ"/>
-                    </connections>
-                </searchDisplayController>
                 <tapGestureRecognizer delaysTouchesBegan="YES" numberOfTapsRequired="2" id="M6H-bw-0vI">
                     <connections>
                         <action selector="didDoubleTapDays:" destination="2" id="g2z-9m-W1w"/>
