@@ -32,7 +32,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>4</string>
+	<string>1E</string>
 	<key>FacebookAppID</key>
 	<string>2002956956436495</string>
 	<key>FacebookDisplayName</key>
@@ -58,8 +58,14 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<false/>
 	</dict>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Use Bluetooth to get user's location, so that user can know their location relative to the event's location.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Use Bluetooth to get user's location, so that user can know their location relative to the event's location.</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>Allows addition of events to personal calendars</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>To show user's location on the map view so that the user can know their location relative to the event's location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We are accessing your location!</string>
 	<key>UILaunchStoryboardName</key>
