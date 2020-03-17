@@ -32,7 +32,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1E</string>
+	<string>3</string>
 	<key>FacebookAppID</key>
 	<string>2002956956436495</string>
 	<key>FacebookDisplayName</key>
@@ -65,9 +65,9 @@
 	<key>NSCalendarsUsageDescription</key>
 	<string>Allows addition of events to personal calendars</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>To show user's location on the map view so that the user can know their location relative to the event's location.</string>
+	<string>We show a map view inside the detail page for each event, where it shows the location of the event. The user can see themselves on the map view as well if they turn on their location. Our app only stores the location on the user's own device and never collect that information into our server. This functionality is for the user to know their location relative to the event's location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We are accessing your location!</string>
+	<string>We are accessing your location so that you can see yourself on the map view!</string>
 	<key>UILaunchStoryboardName</key>
 	<string>MainStoryboard_iPhone</string>
 	<key>UIMainStoryboardFile</key>
